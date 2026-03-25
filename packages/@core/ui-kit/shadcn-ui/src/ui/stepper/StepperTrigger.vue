@@ -3,7 +3,8 @@ import type { StepperTriggerProps } from 'reka-ui';
 
 import type { HTMLAttributes } from 'vue';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@vben-core/shared/utils';
+
 import { reactiveOmit } from '@vueuse/core';
 import { StepperTrigger, useForwardProps } from 'reka-ui';
 
