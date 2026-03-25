@@ -39,6 +39,64 @@ export namespace AuthApi {
   }
 }
 
+export interface SendVerificationCodeRequest {
+  /**
+   * 账户(手机号/邮箱)
+   */
+  account: string;
+  /**
+   * 认证服务
+   */
+  authServiceEnums: AuthServiceEnums;
+  /**
+   * 使用用途(注册:REGISTER/重置:RESET/登陆:LOGIN)
+   */
+  useMethod: UseMethod;
+  /**
+   * 校验方式(手机号:PHONE/邮箱:EMAIL)
+   */
+  verificationMethod: VerificationMethod;
+}
+
+export interface RegisterRequest {
+  /**
+   * 认证策略
+   */
+  authServiceEnums: AuthServiceEnums;
+  /**
+   * 枚举注册(用户名:USERNAME;手机号:PHONE)
+   */
+  registerEnums: RegisterEnums;
+  /**
+   * 密码
+   */
+  password?: string;
+  /**
+   * 手机号
+   */
+  phone?: string;
+  /**
+   * 邮箱
+   */
+  email?: string;
+  /**
+   * 昵称
+   */
+  nickname?: string;
+  /**
+   * 随机字符串
+   */
+  nonce?: string;
+  /**
+   * 用户名
+   */
+  username?: string;
+  /**
+   * 凭证
+   */
+  voucher?: string;
+}
+
 /**
  * 认证服务
  */
@@ -73,6 +131,14 @@ export enum QueryEnums {
 }
 
 /**
+ * 枚举注册(用户名:USERNAME;手机号:PHONE)
+ */
+export enum RegisterEnums {
+  Phone = 'PHONE',
+  Username = 'USERNAME',
+}
+
+/**
  * @description: 获取公钥
  */
 export async function getPublicKeyApi() {
@@ -102,4 +168,22 @@ export async function logoutApi() {
   return baseRequestClient.post('/auth/logout', {
     withCredentials: true,
   });
+}
+
+/**
+ * @param {SendVerificationCodeRequest} data
+ * @description: 发送验证码
+ */
+export async function sendVerificationCodeApi(
+  data: SendVerificationCodeRequest,
+) {
+  return requestClient.post('/auth/sendVerificationCode', data);
+}
+
+/**
+ * @param {RegisterRequest} data
+ * @description: 用户注册
+ */
+export async function registerApi(data: RegisterRequest) {
+  return requestClient.post('/auth/register', data);
 }

@@ -44,6 +44,8 @@
   "codeSubtitle": "Enter your phone number to start managing your project",
   "code": "Security code",
   "codeTip": "Security code required {0} characters",
+  "nickname": "Nickname",
+  "nicknameTip": "Please enter nickname",
   "mobile": "Mobile",
   "mobileLogin": "Mobile Login",
   "mobileTip": "Please enter mobile number",
