@@ -16,6 +16,23 @@ export namespace AuthApi {
     data: string;
     status: number;
   }
+
+  /** 获取公钥接口返回值 */
+  export interface GetPublicKeyResponse {
+    /** 随机字符串 */
+    nonce: string;
+    /** 公钥 */
+    publicKey: string;
+  }
+}
+
+/**
+ * @description: 获取公钥
+ */
+export async function getPublicKeyApi() {
+  return requestClient.get<AuthApi.GetPublicKeyResponse>(
+    '/admin/auth/getPublicKey',
+  );
 }
 
 /**

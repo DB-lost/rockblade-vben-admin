@@ -10,8 +10,15 @@ import { resetAllStores, useAccessStore, useUserStore } from '@vben/stores';
 import { notification } from 'antdv-next';
 import { defineStore } from 'pinia';
 
-import { getAccessCodesApi, getUserInfoApi, loginApi, logoutApi } from '#/api';
+import {
+  getAccessCodesApi,
+  getPublicKeyApi,
+  getUserInfoApi,
+  loginApi,
+  logoutApi,
+} from '#/api';
 import { $t } from '#/locales';
+import { cryptoUtil } from '#/utils/crypto';
 
 export const useAuthStore = defineStore('auth', () => {
   const accessStore = useAccessStore();
@@ -33,6 +40,19 @@ export const useAuthStore = defineStore('auth', () => {
     let userInfo: null | UserInfo = null;
     try {
       loginLoading.value = true;
+      // 获取公钥
+      const { publicKey, nonce } = await getPublicKeyApi();
+      // 存储公钥和随机字符串到加密工具
+      cryptoUtil.setPublicKey(publicKey, nonce);
+      // 使用公钥加密密码
+      const encryptedPassword = cryptoUtil.encryptWithRSA(params.password);
+      if (!encryptedPassword) {
+        notification.error({
+          description: '密码加密失败，请稍后再试',
+        });
+        return;
+      }
+      params.password = encryptedPassword;
       const { accessToken } = await loginApi(params);
 
       // 如果成功获取到 accessToken
