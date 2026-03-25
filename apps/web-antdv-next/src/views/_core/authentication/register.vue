@@ -10,9 +10,40 @@ import { $t } from '@vben/locales';
 defineOptions({ name: 'Register' });
 
 const loading = ref(false);
-
+const CODE_LENGTH = 6;
 const formSchema = computed((): VbenFormSchema[] => {
   return [
+    {
+      component: 'VbenInput',
+      componentProps: {
+        placeholder: 'example@example.com',
+      },
+      fieldName: 'email',
+      label: $t('authentication.email'),
+      rules: z
+        .string()
+        .min(1, { message: $t('authentication.emailTip') })
+        .email($t('authentication.emailValidErrorTip')),
+    },
+    {
+      component: 'VbenPinInput',
+      componentProps: {
+        codeLength: CODE_LENGTH,
+        createText: (countdown: number) => {
+          const text =
+            countdown > 0
+              ? $t('authentication.sendText', [countdown])
+              : $t('authentication.sendCode');
+          return text;
+        },
+        placeholder: $t('authentication.code'),
+      },
+      fieldName: 'code',
+      label: $t('authentication.code'),
+      rules: z.string().length(CODE_LENGTH, {
+        message: $t('authentication.codeTip', [CODE_LENGTH]),
+      }),
+    },
     {
       component: 'VbenInput',
       componentProps: {
