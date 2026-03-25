@@ -3,13 +3,26 @@ import { baseRequestClient, requestClient } from '#/api/request';
 export namespace AuthApi {
   /** 登录接口参数 */
   export interface LoginParams {
-    password?: string;
-    username?: string;
-  }
-
-  /** 登录接口返回值 */
-  export interface LoginResult {
-    accessToken: string;
+    /**
+     * 账户(用户名/手机号/邮箱)
+     */
+    account: string;
+    /**
+     * 账户凭证
+     */
+    accountVoucher: string;
+    /**
+     * 认证策略
+     */
+    authServiceEnums: AuthServiceEnums;
+    /**
+     * 身份验证方法(用户名:USERNAME;手机号:PHONE;邮箱:EMAIL)
+     */
+    queryEnums: QueryEnums;
+    /**
+     * 随机字符串
+     */
+    nonce?: string;
   }
 
   export interface RefreshTokenResult {
@@ -27,19 +40,50 @@ export namespace AuthApi {
 }
 
 /**
+ * 认证服务
+ */
+export enum AuthServiceEnums {
+  Base = 'BASE',
+}
+
+/**
+ * 使用用途(注册:REGISTER/重置:RESET/登陆:LOGIN)
+ */
+export enum UseMethod {
+  Login = 'LOGIN',
+  Register = 'REGISTER',
+  Reset = 'RESET',
+}
+
+/**
+ * 校验方式(手机号:PHONE/邮箱:EMAIL)
+ */
+export enum VerificationMethod {
+  Email = 'EMAIL',
+  Phone = 'PHONE',
+}
+
+/**
+ * 身份验证方法(用户名:USERNAME;手机号:PHONE;邮箱:EMAIL)
+ */
+export enum QueryEnums {
+  Email = 'EMAIL',
+  Phone = 'PHONE',
+  Username = 'USERNAME',
+}
+
+/**
  * @description: 获取公钥
  */
 export async function getPublicKeyApi() {
-  return requestClient.get<AuthApi.GetPublicKeyResponse>(
-    '/admin/auth/getPublicKey',
-  );
+  return requestClient.get<AuthApi.GetPublicKeyResponse>('/auth/getPublicKey');
 }
 
 /**
  * 登录
  */
 export async function loginApi(data: AuthApi.LoginParams) {
-  return requestClient.post<AuthApi.LoginResult>('/auth/login', data);
+  return requestClient.post<string>('/auth/login', data);
 }
 
 /**
