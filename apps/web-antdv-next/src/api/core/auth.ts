@@ -97,6 +97,36 @@ export interface RegisterRequest {
   voucher?: string;
 }
 
+export interface ResetPasswordRequest {
+  /**
+   * 账户(手机号/邮箱)
+   */
+  account: string;
+  /**
+   * 认证服务
+   */
+  authServiceEnums: AuthServiceEnums;
+  /**
+   * 新密码
+   */
+  newPassword: string;
+  /**
+   * 使用用途(注册:REGISTER/重置:RESET/登陆:LOGIN)
+   */
+  useMethod: UseMethod;
+  /**
+   * 校验方式(手机号:PHONE/邮箱:EMAIL)
+   */
+  verificationMethod: VerificationMethod;
+  /**
+   * 凭证
+   */
+  voucher: string;
+
+  /** 随机字符串 */
+  nonce: string;
+}
+
 /**
  * 认证服务
  */
@@ -186,4 +216,12 @@ export async function sendVerificationCodeApi(
  */
 export async function registerApi(data: RegisterRequest) {
   return requestClient.post('/auth/register', data);
+}
+
+/**
+ * @param {ResetPasswordRequest} data
+ * @description: 重置密码（忘记密码流程）
+ */
+export async function resetPasswordApi(data: ResetPasswordRequest) {
+  return requestClient.post('auth/resetPassword', data);
 }

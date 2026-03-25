@@ -25,8 +25,8 @@ defineOptions({ name: 'Register' });
 
 const loading = ref(false);
 const CODE_LENGTH = 6;
-const loginRef =
-  useTemplateRef<InstanceType<typeof AuthenticationRegister>>('loginRef');
+const registerRef =
+  useTemplateRef<InstanceType<typeof AuthenticationRegister>>('registerRef');
 
 const formSchema = computed((): VbenFormSchema[] => {
   return [
@@ -54,7 +54,7 @@ const formSchema = computed((): VbenFormSchema[] => {
           return text;
         },
         handleSendCode: async () => {
-          const formApi = loginRef.value?.getFormApi();
+          const formApi = registerRef.value?.getFormApi();
           if (!formApi) {
             throw new Error('formApi is not ready');
           }
@@ -217,14 +217,12 @@ async function handleSubmit(value: Recordable<any>) {
     });
     await router.push('/auth/login');
   });
-
-  void value;
 }
 </script>
 
 <template>
   <AuthenticationRegister
-    ref="loginRef"
+    ref="registerRef"
     :form-schema="formSchema"
     :loading="loading"
     @submit="handleSubmit"
