@@ -15,4 +15,17 @@ export const overridesPreferences = defineOverridesPreferences({
     fit: 'contain',
     source: '/logo.svg',
   },
+  theme: {
+    builtinType: 'gray',
+    mode: 'auto',
+  },
+  copyright: {
+    companyName: 'RockBlade',
+    companySiteLink: '',
+    date: '2026',
+    enable: true,
+    icp: '',
+    icpLink: '',
+    settingShow: true,
+  },
 });
