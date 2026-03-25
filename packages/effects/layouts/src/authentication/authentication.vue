@@ -7,7 +7,6 @@ import { preferences, usePreferences } from '@vben/preferences';
 
 import { Copyright } from '../basic/copyright';
 import AuthenticationFormView from './form.vue';
-import SloganIcon from './icons/slogan.vue';
 import Toolbar from './toolbar.vue';
 
 interface Props {
@@ -125,12 +124,12 @@ const logoSrc = computed(() => {
             />
           </template>
           <SloganIcon v-else :alt="appName" class="h-64 w-2/5 animate-float" />
-          <div class="text-1xl mt-6 font-sans text-foreground lg:text-2xl">
+          <!-- <div class="text-1xl mt-6 font-sans text-foreground lg:text-2xl">
             {{ pageTitle }}
           </div>
           <div class="mt-2 dark:text-muted-foreground">
             {{ pageDescription }}
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -173,24 +172,15 @@ const logoSrc = computed(() => {
 
 <style scoped>
 .login-background {
-  background: linear-gradient(
-    154deg,
-    #07070915 30%,
-    hsl(var(--primary) / 30%) 48%,
-    #07070915 64%
-  );
-  filter: blur(100px);
+  background-image: url('/auth_bg.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
 
 .dark {
   .login-background {
-    background: linear-gradient(
-      154deg,
-      #07070915 30%,
-      hsl(var(--primary) / 20%) 48%,
-      #07070915 64%
-    );
-    filter: blur(100px);
+    background-image: url('/auth_bg_dark.jpg');
   }
 }
 </style>
