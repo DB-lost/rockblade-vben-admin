@@ -26,6 +26,7 @@
     "#/*": "./src/*"
   },
   "dependencies": {
+    "@vben-core/shadcn-ui": "workspace:*",
     "@vben/access": "workspace:*",
     "@vben/common-ui": "workspace:*",
     "@vben/constants": "workspace:*",
@@ -42,9 +43,15 @@
     "@vben/utils": "workspace:*",
     "@vueuse/core": "catalog:",
     "antdv-next": "catalog:",
+    "crypto-js": "catalog:",
     "dayjs": "catalog:",
+    "jsencrypt": "catalog:",
     "pinia": "catalog:",
     "vue": "catalog:",
     "vue-router": "catalog:"
+  },
+  "devDependencies": {
+    "@types/crypto-js": "catalog:",
+    "lucide-vue-next": "catalog:"
   }
 }

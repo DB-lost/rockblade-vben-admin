@@ -10,4 +10,22 @@ export const overridesPreferences = defineOverridesPreferences({
   app: {
     name: import.meta.env.VITE_APP_TITLE,
   },
+  logo: {
+    enable: true,
+    fit: 'contain',
+    source: '/logo.svg',
+  },
+  theme: {
+    builtinType: 'gray',
+    mode: 'auto',
+  },
+  copyright: {
+    companyName: 'RockBlade',
+    companySiteLink: '',
+    date: '2026',
+    enable: true,
+    icp: '',
+    icpLink: '',
+    settingShow: true,
+  },
 });

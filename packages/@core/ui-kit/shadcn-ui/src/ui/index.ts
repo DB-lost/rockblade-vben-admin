@@ -22,6 +22,7 @@ export * from './scroll-area';
 export * from './select';
 export * from './separator';
 export * from './sheet';
+export * from './stepper';
 export * from './switch';
 export * from './tabs';
 export * from './textarea';
