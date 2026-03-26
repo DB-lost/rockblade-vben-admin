@@ -5,21 +5,21 @@ import { requestClient } from '#/api/request';
 export namespace SystemMenuApi {
   /** 徽标颜色集合 */
   export const BadgeVariants = [
-    'default',
-    'destructive',
-    'primary',
-    'success',
-    'warning',
+    'DEFAULT',
+    'DESTRUCTIVE',
+    'PRIMARY',
+    'SUCCESS',
+    'WARNING',
   ] as const;
   /** 徽标类型集合 */
-  export const BadgeTypes = ['dot', 'normal'] as const;
+  export const BadgeTypes = ['DOT', 'NORMAL'] as const;
   /** 菜单类型集合 */
   export const MenuTypes = [
-    'catalog',
-    'menu',
-    'embedded',
-    'link',
-    'button',
+    'CATALOG',
+    'MENU',
+    'EMBEDDED',
+    'LINK',
+    'BUTTON',
   ] as const;
   /** 系统菜单 */
   export interface SystemMenu {
@@ -91,30 +91,47 @@ export namespace SystemMenuApi {
 }
 
 /**
+ * MenuValueExistsRequest，菜单权限主键
+ */
+export interface MenuValueExistsRequest {
+  /**
+   * id
+   */
+  id?: string;
+  /**
+   * 菜单值存在枚举
+   */
+  menuValueExistsEnums: MenuValueExistsEnums;
+  /**
+   * 值
+   */
+  value: string;
+  [property: string]: any;
+}
+
+/**
+ * 菜单值存在枚举
+ */
+export enum MenuValueExistsEnums {
+  ActivePath = 'ACTIVE_PATH',
+  Name = 'NAME',
+  Path = 'PATH',
+}
+
+/**
  * 获取菜单数据列表
  */
 async function getMenuList() {
-  return requestClient.get<Array<SystemMenuApi.SystemMenu>>(
-    '/system/menu/list',
-  );
+  return requestClient.get<Array<SystemMenuApi.SystemMenu>>('/menu/tree');
 }
 
-async function isMenuNameExists(
-  name: string,
-  id?: SystemMenuApi.SystemMenu['id'],
-) {
-  return requestClient.get<boolean>('/system/menu/name-exists', {
-    params: { id, name },
-  });
-}
-
-async function isMenuPathExists(
-  path: string,
-  id?: SystemMenuApi.SystemMenu['id'],
-) {
-  return requestClient.get<boolean>('/system/menu/path-exists', {
-    params: { id, path },
-  });
+/**
+ * 值是否存在
+ * @param request
+ * @returns
+ */
+async function valueExists(request: MenuValueExistsRequest) {
+  return requestClient.post<boolean>('/menu/valueExists', request);
 }
 
 /**
@@ -124,7 +141,7 @@ async function isMenuPathExists(
 async function createMenu(
   data: Omit<SystemMenuApi.SystemMenu, 'children' | 'id'>,
 ) {
-  return requestClient.post('/system/menu', data);
+  return requestClient.post('/menu', data);
 }
 
 /**
@@ -134,10 +151,9 @@ async function createMenu(
  * @param data 菜单数据
  */
 async function updateMenu(
-  id: string,
   data: Omit<SystemMenuApi.SystemMenu, 'children' | 'id'>,
 ) {
-  return requestClient.put(`/system/menu/${id}`, data);
+  return requestClient.put(`/menu`, data);
 }
 
 /**
@@ -145,14 +161,7 @@ async function updateMenu(
  * @param id 菜单 ID
  */
 async function deleteMenu(id: string) {
-  return requestClient.delete(`/system/menu/${id}`);
+  return requestClient.delete(`/menu/${id}`);
 }
 
-export {
-  createMenu,
-  deleteMenu,
-  getMenuList,
-  isMenuNameExists,
-  isMenuPathExists,
-  updateMenu,
-};
+export { createMenu, deleteMenu, getMenuList, updateMenu, valueExists };

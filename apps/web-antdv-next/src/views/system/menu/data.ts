@@ -8,16 +8,16 @@ export function getMenuTypeOptions() {
     {
       color: 'processing',
       label: $t('system.menu.typeCatalog'),
-      value: 'catalog',
+      value: 'CATALOG',
     },
-    { color: 'default', label: $t('system.menu.typeMenu'), value: 'menu' },
-    { color: 'error', label: $t('system.menu.typeButton'), value: 'button' },
+    { color: 'default', label: $t('system.menu.typeMenu'), value: 'MENU' },
+    { color: 'error', label: $t('system.menu.typeButton'), value: 'BUTTON' },
     {
       color: 'success',
       label: $t('system.menu.typeEmbedded'),
-      value: 'embedded',
+      value: 'EMBEDDED',
     },
-    { color: 'warning', label: $t('system.menu.typeLink'), value: 'link' },
+    { color: 'warning', label: $t('system.menu.typeLink'), value: 'LINK' },
   ];
 }
 
@@ -58,14 +58,14 @@ export function useColumns(
       field: 'component',
       formatter: ({ row }) => {
         switch (row.type) {
-          case 'catalog':
-          case 'menu': {
+          case 'CATALOG':
+          case 'MENU': {
             return row.component ?? '';
           }
-          case 'embedded': {
+          case 'EMBEDDED': {
             return row.meta?.iframeSrc ?? '';
           }
-          case 'link': {
+          case 'LINK': {
             return row.meta?.link ?? '';
           }
         }
