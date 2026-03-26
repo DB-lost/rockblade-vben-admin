@@ -26,6 +26,7 @@
     "#/*": "./src/*"
   },
   "dependencies": {
+    "@vben-core/menu-ui": "workspace:*",
     "@vben-core/shadcn-ui": "workspace:*",
     "@vben/access": "workspace:*",
     "@vben/common-ui": "workspace:*",
@@ -42,6 +43,7 @@
     "@vben/types": "workspace:*",
     "@vben/utils": "workspace:*",
     "@vueuse/core": "catalog:",
+    "ant-design-vue": "catalog:",
     "antdv-next": "catalog:",
     "crypto-js": "catalog:",
     "dayjs": "catalog:",
