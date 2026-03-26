@@ -30,15 +30,15 @@ const routes: RouteRecordRaw[] = [
         },
         component: () => import('#/views/system/dept/list.vue'),
       },
-      // {
-      //   path: '/system/role',
-      //   name: 'SystemRole',
-      //   meta: {
-      //     icon: 'mdi:account-group',
-      //     title: $t('system.role.title'),
-      //   },
-      //   component: () => import('#/views/system/role/list.vue'),
-      // },
+      {
+        path: '/system/role',
+        name: 'SystemRole',
+        meta: {
+          icon: 'mdi:account-group',
+          title: $t('system.role.title'),
+        },
+        component: () => import('#/views/system/role/list.vue'),
+      },
     ],
   },
 ];
