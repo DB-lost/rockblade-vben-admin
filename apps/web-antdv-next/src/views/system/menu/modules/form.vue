@@ -495,6 +495,12 @@ async function onSubmit() {
       data.meta = { ...data.meta, iframeSrc: data.linkSrc };
     }
     delete data.linkSrc;
+
+    // 更新时补充主键
+    if (formData.value?.id) {
+      data.id = formData.value.id;
+    }
+
     try {
       await (formData.value?.id ? updateMenu(data) : createMenu(data));
       drawerApi.close();
