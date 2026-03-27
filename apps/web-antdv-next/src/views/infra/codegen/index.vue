@@ -5,7 +5,7 @@ import type {
 } from '#/adapter/vxe-table';
 import type { CodegenTablePageResponse } from '#/api';
 
-import { Page, useVbenDrawer } from '@vben/common-ui';
+import { Page, useVbenDrawer, useVbenModal } from '@vben/common-ui';
 
 import { Button, message } from 'ant-design-vue';
 
@@ -15,15 +15,21 @@ import { $t } from '#/locales';
 
 import { useColumns, useGridFormSchema } from './data';
 import Form from './modules/form.vue';
+import Table from './modules/table.vue';
 
 const [FormDrawer, formDrawerApi] = useVbenDrawer({
   connectedComponent: Form,
   destroyOnClose: true,
 });
 
+const [TableModal, modalApi] = useVbenModal({
+  connectedComponent: Table,
+  destroyOnClose: true,
+  fullscreen: true,
+});
+
 const [Grid, gridApi] = useVbenVxeGrid({
   formOptions: {
-    fieldMappingTime: [['createTime', ['startTime', 'endTime']]],
     schema: useGridFormSchema(),
   },
   gridOptions: {
@@ -100,17 +106,18 @@ function onRefresh() {
   gridApi.query();
 }
 
-function onCreate() {
-  formDrawerApi.setData({}).open();
+function onImport() {
+  modalApi.open();
 }
 </script>
 <template>
   <Page auto-content-height>
     <FormDrawer @success="onRefresh" />
+    <TableModal @success="onRefresh" />
     <Grid :table-title="$t('infra.codegen.list')">
       <template #toolbar-tools>
-        <Button type="primary" @click="onCreate">
-          {{ $t('ui.actionTitle.create', [$t('infra.codegen.name')]) }}
+        <Button type="primary" @click="onImport">
+          {{ $t('ui.actionTitle.import', [$t('infra.codegen.name')]) }}
         </Button>
       </template>
     </Grid>

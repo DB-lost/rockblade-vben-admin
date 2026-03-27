@@ -279,6 +279,34 @@ export interface CodegenTableResponse {
 }
 
 /**
+ * TableInfoResponse，表信息响应
+ */
+export interface TableInfoResponse {
+  /**
+   * 表描述
+   */
+  tableComment: string;
+  /**
+   * 表名称
+   */
+  tableName: string;
+}
+
+/**
+ * CodegenTableRequest，代码生成表字段定义
+ */
+export interface CodegenTableRequest {
+  /**
+   * 数据源Key
+   */
+  dataSourceKey: string;
+  /**
+   * 表名称
+   */
+  tableName: string;
+}
+
+/**
  * 前端类型：VUE3_SHADCN_VUE
  */
 export enum FrontType {
@@ -335,7 +363,7 @@ async function queryById(id: string) {
  * 根据主键更新代码生成表
  */
 async function updateCodegenTable(data: Recordable<CodegenTableRequest>) {
-  return requestClient.put<boolean>('/codegenTable', {
+  return requestClient.put<string>('/codegenTable', {
     data,
   });
 }
@@ -347,10 +375,31 @@ async function deleteCodegenTable(id: string) {
   return requestClient.delete<boolean>(`/codegenTable/${id}`);
 }
 
+/**
+ * 分页查询数据库表
+ */
+async function codegenTablePage(params: Recordable<CodegenPageRequest>) {
+  return requestClient.get<Array<TableInfoResponse>>(
+    '/codegenTable/pageTable',
+    {
+      params,
+    },
+  );
+}
+
+/**
+ * 保存代码生成表
+ */
+async function saveCodegenTable(data: Recordable<CodegenTableRequest>) {
+  return requestClient.post<string>('/codegenTable', data);
+}
+
 export {
   codegenPage,
+  codegenTablePage,
   dataSourceList,
   deleteCodegenTable,
   queryById,
+  saveCodegenTable,
   updateCodegenTable,
 };

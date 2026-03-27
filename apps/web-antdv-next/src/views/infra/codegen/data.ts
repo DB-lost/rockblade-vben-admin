@@ -1,6 +1,6 @@
 import type { VbenFormSchema } from '#/adapter/form';
 import type { OnActionClickFn, VxeTableGridColumns } from '#/adapter/vxe-table';
-import type { SystemRoleApi } from '#/api';
+import type { CodegenTablePageResponse, TableInfoResponse } from '#/api';
 
 import { dataSourceList } from '#/api';
 import { $t } from '#/locales';
@@ -75,7 +75,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
   ];
 }
 
-export function useColumns<T = SystemRoleApi.SystemRole>(
+export function useColumns<T = CodegenTablePageResponse>(
   onActionClick: OnActionClickFn<T>,
 ): VxeTableGridColumns {
   return [
@@ -122,6 +122,63 @@ export function useColumns<T = SystemRoleApi.SystemRole>(
       fixed: 'right',
       title: $t('system.role.operation'),
       width: 130,
+    },
+  ];
+}
+
+export function useTableColumns<T = TableInfoResponse>(
+  onActionClick: OnActionClickFn<T>,
+): VxeTableGridColumns {
+  return [
+    {
+      field: 'tableName',
+      title: $t('infra.codegen.tableName'),
+      width: 200,
+    },
+    {
+      field: 'tableComment',
+      title: $t('infra.codegen.tableComment'),
+      width: 200,
+    },
+    {
+      field: 'dataSourceKey',
+      title: $t('infra.codegen.dataSource'),
+      width: 200,
+    },
+    {
+      field: 'scene',
+      title: $t('infra.codegen.scene'),
+      width: 200,
+    },
+    {
+      field: 'frontType',
+      title: $t('infra.codegen.frontType'),
+      width: 200,
+    },
+    {
+      field: 'lastGenTime',
+      title: $t('infra.codegen.lastGenTime'),
+    },
+    {
+      align: 'center',
+      cellRender: {
+        attrs: {
+          onClick: onActionClick,
+        },
+        name: 'CellOperation',
+        options: [
+          {
+            code: 'add',
+            danger: false,
+            text: $t('ui.actionTitle.import'),
+            type: 'link',
+          },
+        ],
+      },
+      field: 'operation',
+      fixed: 'right',
+      title: $t('system.role.operation'),
+      width: 100,
     },
   ];
 }
