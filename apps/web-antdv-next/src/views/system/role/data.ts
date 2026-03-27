@@ -13,6 +13,12 @@ export function useFormSchema(): VbenFormSchema[] {
       rules: 'required',
     },
     {
+      component: 'Input',
+      fieldName: 'code',
+      label: $t('system.role.code'),
+      rules: 'required',
+    },
+    {
       component: 'RadioGroup',
       componentProps: {
         buttonStyle: 'solid',
@@ -48,7 +54,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
       fieldName: 'name',
       label: $t('system.role.roleName'),
     },
-    { component: 'Input', fieldName: 'id', label: $t('system.role.id') },
+    // { component: 'Input', fieldName: 'id', label: $t('system.role.id') },
     {
       component: 'Select',
       componentProps: {
@@ -66,11 +72,11 @@ export function useGridFormSchema(): VbenFormSchema[] {
       fieldName: 'remark',
       label: $t('system.role.remark'),
     },
-    {
-      component: 'RangePicker',
-      fieldName: 'createTime',
-      label: $t('system.role.createTime'),
-    },
+    // {
+    //   component: 'RangePicker',
+    //   fieldName: 'createTime',
+    //   label: $t('system.role.createTime'),
+    // },
   ];
 }
 
@@ -81,7 +87,7 @@ export function useColumns<T = SystemRoleApi.SystemRole>(
   return [
     {
       field: 'name',
-      title: $t('system.role.roleName'),
+      title: $t('system.role.name'),
       width: 200,
     },
     {

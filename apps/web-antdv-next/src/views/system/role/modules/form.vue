@@ -38,7 +38,11 @@ const [Drawer, drawerApi] = useVbenDrawer({
     if (!valid) return;
     const values = await formApi.getValues();
     drawerApi.lock();
-    (id.value ? updateRole(id.value, values) : createRole(values))
+    // 更新时补充主键
+    // if (formData.value?.id) {
+    //   data.id = formData.value.id;
+    // }
+    (id.value ? updateRole(values) : createRole(values))
       .then(() => {
         emits('success');
         drawerApi.close();

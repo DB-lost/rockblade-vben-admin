@@ -59,6 +59,7 @@
     "id": "角色ID",
     "status": "状态",
     "remark": "备注",
+    "code": "角色编码",
     "createTime": "创建时间",
     "operation": "操作",
     "permissions": "权限",

@@ -43,6 +43,10 @@ const [Grid, gridApi] = useVbenVxeGrid({
           });
         },
       },
+      response: {
+        result: 'records',
+        total: 'totalRow',
+      },
     },
     rowConfig: {
       keyField: 'id',
@@ -110,7 +114,7 @@ async function onStatusChange(
       `你要将${row.name}的状态切换为 【${status[newStatus.toString()]}】 吗？`,
       `切换状态`,
     );
-    await updateRole(row.id, { status: newStatus });
+    await updateRole({ status: newStatus });
     return true;
   } catch {
     return false;

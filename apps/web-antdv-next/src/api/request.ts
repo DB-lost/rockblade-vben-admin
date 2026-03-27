@@ -100,7 +100,7 @@ function createRequestClient(baseURL: string, options?: RequestClientOptions) {
       const errorMessage = responseData?.msg ?? responseData?.error ?? '';
       // 如果没有错误信息，则会根据状态码进行提示
       message.error(errorMessage || msg);
-    }),
+    }, doReAuthenticate),
   );
 
   return client;
