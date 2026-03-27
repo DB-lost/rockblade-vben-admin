@@ -39,6 +39,38 @@ export function useSchema(): VbenFormSchema[] {
       label: $t('system.dept.parentDept'),
     },
     {
+      component: 'Input',
+      fieldName: 'leader',
+      label: $t('system.dept.leader'),
+      rules: z
+        .string()
+        .min(2, $t('ui.formRules.minLength', [$t('system.dept.leader'), 2]))
+        .max(20, $t('ui.formRules.maxLength', [$t('system.dept.leader'), 20]))
+        .optional(),
+    },
+    {
+      component: 'Input',
+      fieldName: 'phone',
+      label: $t('system.dept.mobile'),
+      rules: z
+        .string()
+        .min(1, { message: $t('authentication.mobileTip') })
+        .refine((v) => /^\d{11}$/.test(v), {
+          message: $t('authentication.mobileErrortip'),
+        })
+        .optional(),
+    },
+    {
+      component: 'Input',
+      fieldName: 'email',
+      label: $t('system.dept.email'),
+      rules: z
+        .string()
+        .min(1, { message: $t('authentication.emailTip') })
+        .email($t('authentication.emailValidErrorTip'))
+        .optional(),
+    },
+    {
       component: 'RadioGroup',
       componentProps: {
         buttonStyle: 'solid',

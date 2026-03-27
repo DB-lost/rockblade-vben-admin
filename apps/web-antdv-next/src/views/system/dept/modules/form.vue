@@ -39,9 +39,11 @@ const [Modal, modalApi] = useVbenModal({
       modalApi.lock();
       const data = await formApi.getValues();
       try {
-        await (formData.value?.id
-          ? updateDept(formData.value.id, data)
-          : createDept(data));
+        // 更新时补充主键
+        if (formData.value?.id) {
+          data.id = formData.value.id;
+        }
+        await (formData.value?.id ? updateDept(data) : createDept(data));
         modalApi.close();
         emit('success');
       } finally {

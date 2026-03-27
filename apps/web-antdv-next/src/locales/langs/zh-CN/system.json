@@ -9,7 +9,14 @@
     "parentDept": "上级部门",
     "remark": "备注",
     "status": "状态",
-    "title": "部门管理"
+    "title": "部门管理",
+    "mobile": "部门手机号码",
+    "mobileTip": "请输入手机号",
+    "mobileErrortip": "手机号码格式错误",
+    "emailTip": "请输入邮箱",
+    "emailValidErrorTip": "你输入的邮箱格式不正确",
+    "email": "部门邮箱",
+    "leader": "负责人"
   },
   "menu": {
     "list": "菜单列表",

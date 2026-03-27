@@ -15,9 +15,7 @@ export namespace SystemDeptApi {
  * 获取部门列表数据
  */
 async function getDeptList() {
-  return requestClient.get<Array<SystemDeptApi.SystemDept>>(
-    '/system/dept/list',
-  );
+  return requestClient.get<Array<SystemDeptApi.SystemDept>>('/dept/tree');
 }
 
 /**
@@ -27,7 +25,7 @@ async function getDeptList() {
 async function createDept(
   data: Omit<SystemDeptApi.SystemDept, 'children' | 'id'>,
 ) {
-  return requestClient.post('/system/dept', data);
+  return requestClient.post('/dept', data);
 }
 
 /**
@@ -37,10 +35,9 @@ async function createDept(
  * @param data 部门数据
  */
 async function updateDept(
-  id: string,
   data: Omit<SystemDeptApi.SystemDept, 'children' | 'id'>,
 ) {
-  return requestClient.put(`/system/dept/${id}`, data);
+  return requestClient.put(`/dept`, data);
 }
 
 /**
@@ -48,7 +45,7 @@ async function updateDept(
  * @param id 部门 ID
  */
 async function deleteDept(id: string) {
-  return requestClient.delete(`/system/dept/${id}`);
+  return requestClient.delete(`/dept/${id}`);
 }
 
 export { createDept, deleteDept, getDeptList, updateDept };

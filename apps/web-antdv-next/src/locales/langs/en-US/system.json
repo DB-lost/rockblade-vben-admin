@@ -8,7 +8,14 @@
     "createTime": "Create Time",
     "remark": "Remark",
     "operation": "Operation",
-    "parentDept": "Parent Department"
+    "parentDept": "Parent Department",
+    "mobile": "Department Mobile Number",
+    "mobileTip": "Please enter your mobile number",
+    "mobileErrortip": "Invalid mobile number format",
+    "emailTip": "Please enter your email",
+    "emailValidErrorTip": "Invalid email format",
+    "email": "Department Email",
+    "leader": "Leader"
   },
   "menu": {
     "title": "Menu Management",
