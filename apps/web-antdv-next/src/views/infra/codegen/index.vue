@@ -6,11 +6,12 @@ import type {
 import type { CodegenTablePageResponse } from '#/api';
 
 import { Page, useVbenDrawer, useVbenModal } from '@vben/common-ui';
+import { downloadFileFromBlobPart } from '@vben/utils';
 
 import { Button, message } from 'ant-design-vue';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
-import { codegenPage, deleteCodegenTable } from '#/api';
+import { codegenPage, codegenTable, deleteCodegenTable } from '#/api';
 import { $t } from '#/locales';
 
 import { useColumns, useGridFormSchema } from './data';
@@ -68,6 +69,10 @@ const [Grid, gridApi] = useVbenVxeGrid({
 
 function onActionClick(e: OnActionClickParams<CodegenTablePageResponse>) {
   switch (e.code) {
+    case 'codegen': {
+      onCodegen(e.row);
+      break;
+    }
     case 'delete': {
       onDelete(e.row);
       break;
@@ -77,6 +82,29 @@ function onActionClick(e: OnActionClickParams<CodegenTablePageResponse>) {
       break;
     }
   }
+}
+
+function onCodegen(row: CodegenTablePageResponse) {
+  const hideLoading = message.loading({
+    content: $t('infra.codegen.generating', [row.tableName]),
+    duration: 0,
+    key: 'codegen_msg',
+  });
+
+  codegenTable(row.id)
+    .then((blob) => {
+      downloadFileFromBlobPart({
+        fileName: `${row.tableName}.zip`,
+        source: blob as Blob,
+      });
+      message.success({
+        content: $t('infra.codegen.codegenSuccess', [row.tableName]),
+        key: 'codegen_msg',
+      });
+    })
+    .catch(() => {
+      hideLoading();
+    });
 }
 
 function onEdit(row: CodegenTablePageResponse) {

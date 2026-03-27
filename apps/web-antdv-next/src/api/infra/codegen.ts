@@ -388,6 +388,13 @@ async function codegenTablePage(params: Recordable<CodegenPageRequest>) {
 }
 
 /**
+ * 代码生成 - 下载zip文件
+ */
+async function codegenTable(id: string): Promise<Blob> {
+  return requestClient.download<Blob>(`/codegenTable/codegen/${id}`);
+}
+
+/**
  * 保存代码生成表
  */
 async function saveCodegenTable(data: Recordable<CodegenTableRequest>) {
@@ -396,6 +403,7 @@ async function saveCodegenTable(data: Recordable<CodegenTableRequest>) {
 
 export {
   codegenPage,
+  codegenTable,
   codegenTablePage,
   dataSourceList,
   deleteCodegenTable,

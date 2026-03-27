@@ -112,16 +112,32 @@ export function useColumns<T = CodegenTablePageResponse>(
       align: 'center',
       cellRender: {
         attrs: {
-          nameField: 'name',
-          nameTitle: $t('infra.codegen.name'),
           onClick: onActionClick,
         },
         name: 'CellOperation',
+        options: [
+          {
+            code: 'codegen',
+            text: $t('infra.codegen.generate'),
+            type: 'link',
+          },
+          {
+            code: 'edit',
+            text: $t('common.edit'),
+            type: 'link',
+          },
+          {
+            code: 'delete',
+            danger: true,
+            text: $t('common.delete'),
+            type: 'link',
+          },
+        ],
       },
       field: 'operation',
       fixed: 'right',
-      title: $t('system.role.operation'),
-      width: 130,
+      title: $t('infra.codegen.operation'),
+      width: 240,
     },
   ];
 }
@@ -133,31 +149,11 @@ export function useTableColumns<T = TableInfoResponse>(
     {
       field: 'tableName',
       title: $t('infra.codegen.tableName'),
-      width: 200,
+      width: 300,
     },
     {
       field: 'tableComment',
       title: $t('infra.codegen.tableComment'),
-      width: 200,
-    },
-    {
-      field: 'dataSourceKey',
-      title: $t('infra.codegen.dataSource'),
-      width: 200,
-    },
-    {
-      field: 'scene',
-      title: $t('infra.codegen.scene'),
-      width: 200,
-    },
-    {
-      field: 'frontType',
-      title: $t('infra.codegen.frontType'),
-      width: 200,
-    },
-    {
-      field: 'lastGenTime',
-      title: $t('infra.codegen.lastGenTime'),
     },
     {
       align: 'center',
@@ -177,7 +173,7 @@ export function useTableColumns<T = TableInfoResponse>(
       },
       field: 'operation',
       fixed: 'right',
-      title: $t('system.role.operation'),
+      title: $t('infra.codegen.operation'),
       width: 100,
     },
   ];

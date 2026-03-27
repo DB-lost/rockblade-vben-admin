@@ -9,6 +9,9 @@
     "dataSource": "Data Source",
     "scene": "Scene",
     "frontType": "Front Type",
-    "lastGenTime": "Last Generation Time"
+    "lastGenTime": "Last Generation Time",
+    "operation": "Operation",
+    "codegenSuccess": "Code generation successful",
+    "generate": "Generate"
   }
 }

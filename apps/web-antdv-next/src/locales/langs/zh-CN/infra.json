@@ -9,6 +9,9 @@
     "dataSource": "数据源",
     "scene": "场景",
     "frontType": "前端类型",
-    "lastGenTime": "最后生成时间"
+    "lastGenTime": "最后生成时间",
+    "operation": "操作",
+    "codegenSuccess": "代码生成成功",
+    "generate": "代码生成"
   }
 }
