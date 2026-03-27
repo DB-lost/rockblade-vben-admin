@@ -114,7 +114,13 @@ async function onStatusChange(
       `你要将${row.name}的状态切换为 【${status[newStatus.toString()]}】 吗？`,
       `切换状态`,
     );
-    await updateRole({ status: newStatus });
+    // TODO: 不增加接口的临时处理
+    await updateRole({
+      id: row.id,
+      name: row.name,
+      code: row.code,
+      status: newStatus,
+    });
     return true;
   } catch {
     return false;

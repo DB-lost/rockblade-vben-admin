@@ -45,7 +45,7 @@ async function updateRole(data: Omit<SystemRoleApi.SystemRole, 'id'>) {
  * @param id 角色 ID
  */
 async function deleteRole(id: string) {
-  return requestClient.delete(`/system/role/${id}`);
+  return requestClient.delete(`/role/${id}`);
 }
 
 export { createRole, deleteRole, getRoleList, updateRole };
