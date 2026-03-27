@@ -1,6 +1,9 @@
 {
   "title": "基础设施",
   "codegen": {
-    "title": "代码生成"
+    "title": "代码生成",
+    "tableName": "表名",
+    "tableComment": "表注释",
+    "dataSource": "数据源"
   }
 }

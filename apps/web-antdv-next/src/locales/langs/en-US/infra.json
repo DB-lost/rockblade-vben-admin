@@ -1,6 +1,9 @@
 {
   "title": "Infrastructure",
   "codegen": {
-    "title": "Code Generation"
+    "title": "Code Generation",
+    "tableName": "Table Name",
+    "tableComment": "Table Comment",
+    "dataSource": "Data Source"
   }
 }
