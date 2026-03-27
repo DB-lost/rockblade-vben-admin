@@ -3,14 +3,14 @@ import type {
   OnActionClickParams,
   VxeTableGridOptions,
 } from '#/adapter/vxe-table';
-import type { SystemRoleApi } from '#/api';
+import type { CodegenTablePageResponse } from '#/api';
 
 import { Page, useVbenDrawer } from '@vben/common-ui';
 
 import { Button, message } from 'ant-design-vue';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
-import { codegenPage, deleteRole } from '#/api';
+import { codegenPage, deleteCodegenTable } from '#/api';
 import { $t } from '#/locales';
 
 import { useColumns, useGridFormSchema } from './data';
@@ -57,10 +57,10 @@ const [Grid, gridApi] = useVbenVxeGrid({
       search: true,
       zoom: true,
     },
-  } as VxeTableGridOptions<SystemRoleApi.SystemRole>,
+  } as VxeTableGridOptions<CodegenTablePageResponse>,
 });
 
-function onActionClick(e: OnActionClickParams<SystemRoleApi.SystemRole>) {
+function onActionClick(e: OnActionClickParams<CodegenTablePageResponse>) {
   switch (e.code) {
     case 'delete': {
       onDelete(e.row);
@@ -73,20 +73,20 @@ function onActionClick(e: OnActionClickParams<SystemRoleApi.SystemRole>) {
   }
 }
 
-function onEdit(row: SystemRoleApi.SystemRole) {
+function onEdit(row: CodegenTablePageResponse) {
   formDrawerApi.setData(row).open();
 }
 
-function onDelete(row: SystemRoleApi.SystemRole) {
+function onDelete(row: CodegenTablePageResponse) {
   const hideLoading = message.loading({
-    content: $t('ui.actionMessage.deleting', [row.name]),
+    content: $t('ui.actionMessage.deleting', [row.tableName]),
     duration: 0,
     key: 'action_process_msg',
   });
-  deleteRole(row.id)
+  deleteCodegenTable(row.id)
     .then(() => {
       message.success({
-        content: $t('ui.actionMessage.deleteSuccess', [row.name]),
+        content: $t('ui.actionMessage.deleteSuccess', [row.tableName]),
         key: 'action_process_msg',
       });
       onRefresh();

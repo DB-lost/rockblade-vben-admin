@@ -1,16 +1,7 @@
 <script lang="ts" setup>
-import type { DataNode } from 'ant-design-vue/es/tree';
-
-import type { Recordable } from '@vben/types';
-
-import type { SystemRoleApi } from '#/api/system/role';
-
 import { computed, nextTick, ref } from 'vue';
 
-import { Tree, useVbenDrawer } from '@vben/common-ui';
-import { IconifyIcon } from '@vben/icons';
-
-import { Spin } from 'ant-design-vue';
+import { useVbenDrawer } from '@vben/common-ui';
 
 import { useVbenForm } from '#/adapter/form';
 import { queryById, updateCodegenTable } from '#/api/infra/codegen';
@@ -20,15 +11,10 @@ import { useFormSchema } from '../data';
 
 const emits = defineEmits(['success']);
 
-const formData = ref<SystemRoleApi.SystemRole>();
-
 const [Form, formApi] = useVbenForm({
   schema: useFormSchema(),
   showDefaultActions: false,
 });
-
-const permissions = ref<DataNode[]>([]);
-const loadingPermissions = ref(false);
 
 const id = ref();
 const [Drawer, drawerApi] = useVbenDrawer({
@@ -37,10 +23,7 @@ const [Drawer, drawerApi] = useVbenDrawer({
     if (!valid) return;
     const values = await formApi.getValues();
     drawerApi.lock();
-    // 更新时补充主键
-    if (formData.value?.id) {
-      values.id = formData.value.id;
-    }
+
     updateCodegenTable(values)
       .then(() => {
         emits('success');
@@ -59,6 +42,7 @@ const [Drawer, drawerApi] = useVbenDrawer({
       await nextTick();
 
       if (data) {
+        id.value = data.id;
         // 编辑时加载数据
         await queryById(data.id).then((data) => {
           formApi.setValues(data);
@@ -71,44 +55,14 @@ const [Drawer, drawerApi] = useVbenDrawer({
 });
 
 const getDrawerTitle = computed(() => {
-  return formData.value?.id
-    ? $t('common.edit', $t('system.role.name'))
-    : $t('common.create', $t('system.role.name'));
+  return id.value
+    ? $t('common.edit', $t('infra.codegen.name'))
+    : $t('common.create', $t('infra.codegen.name'));
 });
-
-function getNodeClass(node: Recordable<any>) {
-  const classes: string[] = [];
-  if (node.value?.type === 'button') {
-    classes.push('inline-flex');
-  }
-
-  return classes.join(' ');
-}
 </script>
 <template>
   <Drawer :title="getDrawerTitle">
-    <Form>
-      <template #permissions="slotProps">
-        <Spin :spinning="loadingPermissions" wrapper-class-name="w-full">
-          <Tree
-            :tree-data="permissions"
-            multiple
-            bordered
-            :default-expanded-level="2"
-            :get-node-class="getNodeClass"
-            v-bind="slotProps"
-            value-field="id"
-            label-field="meta.title"
-            icon-field="meta.icon"
-          >
-            <template #node="{ value }">
-              <IconifyIcon v-if="value.meta.icon" :icon="value.meta.icon" />
-              {{ $t(value.meta.title) }}
-            </template>
-          </Tree>
-        </Spin>
-      </template>
-    </Form>
+    <Form />
   </Drawer>
 </template>
 <style lang="css" scoped>

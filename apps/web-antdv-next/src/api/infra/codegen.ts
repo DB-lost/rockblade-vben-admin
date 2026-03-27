@@ -43,7 +43,7 @@ export interface CodegenTablePageResponse {
   /**
    * 主键ID
    */
-  id?: string;
+  id: string;
   /**
    * 上次生成时间
    */
@@ -73,7 +73,7 @@ export interface CodegenTablePageResponse {
 /**
  * UpdateCodegenTableRequest，代码生成表字段定义主键
  */
-export interface UpdateCodegenTableRequest {
+export interface CodegenTableRequest {
   /**
    * API包名
    */
@@ -334,10 +334,23 @@ async function queryById(id: string) {
 /**
  * 根据主键更新代码生成表
  */
-async function updateCodegenTable(data: Recordable<UpdateCodegenTableRequest>) {
+async function updateCodegenTable(data: Recordable<CodegenTableRequest>) {
   return requestClient.put<boolean>('/codegenTable', {
     data,
   });
 }
 
-export { codegenPage, dataSourceList, queryById, updateCodegenTable };
+/**
+ * 根据主键删除代码生成表
+ */
+async function deleteCodegenTable(id: string) {
+  return requestClient.delete<boolean>(`/codegenTable/${id}`);
+}
+
+export {
+  codegenPage,
+  dataSourceList,
+  deleteCodegenTable,
+  queryById,
+  updateCodegenTable,
+};

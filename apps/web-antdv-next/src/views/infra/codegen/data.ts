@@ -9,14 +9,14 @@ export function useFormSchema(): VbenFormSchema[] {
   return [
     {
       component: 'Input',
-      fieldName: 'name',
-      label: $t('system.role.roleName'),
+      fieldName: 'tableName',
+      label: $t('infra.codegen.tableName'),
       rules: 'required',
     },
     {
       component: 'Input',
-      fieldName: 'code',
-      label: $t('system.role.code'),
+      fieldName: 'tableComment',
+      label: $t('infra.codegen.tableComment'),
       rules: 'required',
     },
     {
