@@ -1,7 +1,8 @@
 import type { VbenFormSchema } from '#/adapter/form';
 import type { OnActionClickFn, VxeTableGridColumns } from '#/adapter/vxe-table';
+import type { SystemRoleApi } from '#/api';
 
-import { dataSourceList, type SystemRoleApi } from '#/api';
+import { dataSourceList } from '#/api';
 import { $t } from '#/locales';
 
 export function useFormSchema(): VbenFormSchema[] {
@@ -76,44 +77,43 @@ export function useGridFormSchema(): VbenFormSchema[] {
 
 export function useColumns<T = SystemRoleApi.SystemRole>(
   onActionClick: OnActionClickFn<T>,
-  onStatusChange?: (newStatus: any, row: T) => PromiseLike<boolean | undefined>,
 ): VxeTableGridColumns {
   return [
     {
-      field: 'name',
-      title: $t('system.role.name'),
+      field: 'tableName',
+      title: $t('infra.codegen.tableName'),
       width: 200,
     },
     {
-      field: 'id',
-      title: $t('system.role.id'),
+      field: 'tableComment',
+      title: $t('infra.codegen.tableComment'),
       width: 200,
     },
     {
-      cellRender: {
-        attrs: { beforeChange: onStatusChange },
-        name: onStatusChange ? 'CellSwitch' : 'CellTag',
-      },
-      field: 'status',
-      title: $t('system.role.status'),
-      width: 100,
-    },
-    {
-      field: 'remark',
-      minWidth: 100,
-      title: $t('system.role.remark'),
-    },
-    {
-      field: 'createTime',
-      title: $t('system.role.createTime'),
+      field: 'dataSourceKey',
+      title: $t('infra.codegen.dataSource'),
       width: 200,
+    },
+    {
+      field: 'scene',
+      title: $t('infra.codegen.scene'),
+      width: 200,
+    },
+    {
+      field: 'frontType',
+      title: $t('infra.codegen.frontType'),
+      width: 200,
+    },
+    {
+      field: 'lastGenTime',
+      title: $t('infra.codegen.lastGenTime'),
     },
     {
       align: 'center',
       cellRender: {
         attrs: {
           nameField: 'name',
-          nameTitle: $t('system.role.name'),
+          nameTitle: $t('infra.codegen.name'),
           onClick: onActionClick,
         },
         name: 'CellOperation',

@@ -13,8 +13,7 @@ import { IconifyIcon } from '@vben/icons';
 import { Spin } from 'ant-design-vue';
 
 import { useVbenForm } from '#/adapter/form';
-import { getMenuList } from '#/api/system/menu';
-import { createRole, updateRole } from '#/api/system/role';
+import { queryById, updateCodegenTable } from '#/api/infra/codegen';
 import { $t } from '#/locales';
 
 import { useFormSchema } from '../data';
@@ -42,7 +41,7 @@ const [Drawer, drawerApi] = useVbenDrawer({
     if (formData.value?.id) {
       values.id = formData.value.id;
     }
-    (id.value ? updateRole(values) : createRole(values))
+    updateCodegenTable(values)
       .then(() => {
         emits('success');
         drawerApi.close();
@@ -54,37 +53,22 @@ const [Drawer, drawerApi] = useVbenDrawer({
 
   async onOpenChange(isOpen) {
     if (isOpen) {
-      const data = drawerApi.getData<SystemRoleApi.SystemRole>();
       formApi.resetForm();
-
-      if (data) {
-        formData.value = data;
-        id.value = data.id;
-      } else {
-        id.value = undefined;
-      }
-
-      if (permissions.value.length === 0) {
-        await loadPermissions();
-      }
+      const data = drawerApi.getData();
       // Wait for Vue to flush DOM updates (form fields mounted)
       await nextTick();
+
       if (data) {
-        formApi.setValues(data);
+        // 编辑时加载数据
+        await queryById(data.id).then((data) => {
+          formApi.setValues(data);
+        });
+      } else {
+        id.value = undefined;
       }
     }
   },
 });
-
-async function loadPermissions() {
-  loadingPermissions.value = true;
-  try {
-    const res = await getMenuList();
-    permissions.value = res as unknown as DataNode[];
-  } finally {
-    loadingPermissions.value = false;
-  }
-}
 
 const getDrawerTitle = computed(() => {
   return formData.value?.id
