@@ -121,11 +121,11 @@ export function useColumns<T = CodegenTablePageResponse>(
             text: $t('infra.codegen.generate'),
             type: 'link',
           },
-          {
-            code: 'edit',
-            text: $t('common.edit'),
-            type: 'link',
-          },
+          // {
+          //   code: 'edit',
+          //   text: $t('common.edit'),
+          //   type: 'link',
+          // },
           {
             code: 'delete',
             danger: true,
