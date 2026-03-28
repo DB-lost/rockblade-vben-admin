@@ -15,14 +15,17 @@
     "edit": "Modify {0}",
     "create": "Create {0}",
     "delete": "Delete {0}",
-    "view": "View {0}"
+    "view": "View {0}",
+    "import": "Import {0}",
+    "export": "Export {0}"
   },
   "actionMessage": {
     "deleteConfirm": "Are you sure to delete {0}?",
     "deleting": "Deleting {0} ...",
     "deleteSuccess": "{0} deleted successfully",
     "operationSuccess": "Operation succeeded",
-    "operationFailed": "Operation failed"
+    "operationFailed": "Operation failed",
+    "importing": "Importing {0} ..."
   },
   "placeholder": {
     "input": "Please enter",
