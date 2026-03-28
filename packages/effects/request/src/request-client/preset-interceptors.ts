@@ -9,7 +9,7 @@ import axios from 'axios';
 export const defaultResponseInterceptor = ({
   codeField = 'code',
   dataField = 'data',
-  successCode = 0,
+  successCode = 200,
 }: {
   /** 响应数据中代表访问结果的字段名 */
   codeField: string;
@@ -111,11 +111,12 @@ export const authenticateResponseInterceptor = ({
 
 export const errorMessageResponseInterceptor = (
   makeErrorMessage?: MakeErrorMessageFn,
+  doReAuthenticate?: () => Promise<void>,
 ): ResponseInterceptorConfig => {
   return {
-    rejected: (error: any) => {
+    rejected: async (error: any) => {
       if (axios.isCancel(error)) {
-        return Promise.reject(error);
+        throw error;
       }
 
       const err: string = error?.toString?.() ?? '';
@@ -127,13 +128,16 @@ export const errorMessageResponseInterceptor = (
       }
       if (errMsg) {
         makeErrorMessage?.(errMsg, error);
-        return Promise.reject(error);
+        throw error;
       }
 
       let errorMessage: string;
-      const status = error?.response?.status;
-
-      switch (status) {
+      const status =
+        error?.response?.status === 200 && error?.response?.data?.code !== null
+          ? error.response.data.code
+          : error?.response?.status;
+      const statusCode = Number(status);
+      switch (statusCode) {
         case 400: {
           errorMessage = $t('ui.fallback.http.badRequest');
           break;
@@ -154,12 +158,22 @@ export const errorMessageResponseInterceptor = (
           errorMessage = $t('ui.fallback.http.requestTimeout');
           break;
         }
+        case 11_012:
+        case 11_013:
+        case 11_014:
+        case 11_015: {
+          errorMessage = $t('ui.fallback.http.unauthorized');
+          if (doReAuthenticate) {
+            await doReAuthenticate();
+          }
+          break;
+        }
         default: {
           errorMessage = $t('ui.fallback.http.internalServerError');
         }
       }
       makeErrorMessage?.(errorMessage, error);
-      return Promise.reject(error);
+      throw error;
     },
   };
 };

@@ -1,0 +1,17 @@
+{
+  "title": "Infrastructure",
+  "codegen": {
+    "name": "CodeGen",
+    "list": "List",
+    "title": "Code Generation",
+    "tableName": "Table Name",
+    "tableComment": "Table Comment",
+    "dataSource": "Data Source",
+    "scene": "Scene",
+    "frontType": "Front Type",
+    "lastGenTime": "Last Generation Time",
+    "operation": "Operation",
+    "codegenSuccess": "Code generation successful",
+    "generate": "Generate"
+  }
+}
