@@ -38,7 +38,6 @@ const [Grid, gridApi] = useVbenVxeGrid({
     height: 'auto',
     keepSource: true,
     proxyConfig: {
-      autoLoad: false,
       ajax: {
         query: async ({ page }, formValues) => {
           return await codegenPage({

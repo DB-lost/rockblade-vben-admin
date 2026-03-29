@@ -56,7 +56,6 @@ export function useGridFormSchema(): VbenFormSchema[] {
       componentProps: {
         api: dataSourceList,
         allowClear: false,
-        autoSelect: 'first',
         fieldNames: { label: 'key', value: 'value' },
       },
       fieldName: 'dataSourceKey',
@@ -138,6 +137,33 @@ export function useColumns<T = CodegenTablePageResponse>(
       fixed: 'right',
       title: $t('infra.codegen.operation'),
       width: 240,
+    },
+  ];
+}
+
+export function useTableGridFormSchema(): VbenFormSchema[] {
+  return [
+    // { component: 'Input', fieldName: 'id', label: $t('system.role.id') },
+    {
+      component: 'ApiSelect',
+      componentProps: {
+        api: dataSourceList,
+        allowClear: false,
+        autoSelect: 'first',
+        fieldNames: { label: 'key', value: 'value' },
+      },
+      fieldName: 'dataSourceKey',
+      label: $t('infra.codegen.dataSource'),
+    },
+    {
+      component: 'Input',
+      fieldName: 'tableName',
+      label: $t('infra.codegen.tableName'),
+    },
+    {
+      component: 'Input',
+      fieldName: 'tableComment',
+      label: $t('infra.codegen.tableComment'),
     },
   ];
 }
