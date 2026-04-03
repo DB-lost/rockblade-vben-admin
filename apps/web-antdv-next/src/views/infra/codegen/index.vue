@@ -5,10 +5,10 @@ import type {
 } from '#/adapter/vxe-table';
 import type { CodegenTablePageResponse } from '#/api';
 
-import { Page, useVbenDrawer, useVbenModal } from '@vben/common-ui';
+import { Page, useVbenDrawer, useVbenModal, VbenButton } from '@vben/common-ui';
 import { downloadFileFromBlobPart } from '@vben/utils';
 
-import { Button, message } from 'ant-design-vue';
+import { message } from 'ant-design-vue';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import { codegenPage, codegenTable, deleteCodegenTable } from '#/api';
@@ -143,9 +143,9 @@ function onImport() {
     <TableModal @success="onRefresh" />
     <Grid :table-title="$t('infra.codegen.list')">
       <template #toolbar-tools>
-        <Button type="primary" @click="onImport">
+        <VbenButton variant="default" @click="onImport">
           {{ $t('ui.actionTitle.import', [$t('infra.codegen.name')]) }}
-        </Button>
+        </VbenButton>
       </template>
     </Grid>
   </Page>
