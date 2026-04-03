@@ -6,6 +6,7 @@ import type {
 import type { CodegenTablePageResponse } from '#/api';
 
 import { Page, useVbenDrawer, useVbenModal, VbenButton } from '@vben/common-ui';
+import { Plus } from '@vben/icons';
 import { downloadFileFromBlobPart } from '@vben/utils';
 
 import { message } from 'ant-design-vue';
@@ -144,6 +145,7 @@ function onImport() {
     <Grid :table-title="$t('infra.codegen.list')">
       <template #toolbar-tools>
         <VbenButton variant="default" @click="onImport">
+          <Plus class="size-5" />
           {{ $t('ui.actionTitle.import', [$t('infra.codegen.name')]) }}
         </VbenButton>
       </template>

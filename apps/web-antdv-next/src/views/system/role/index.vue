@@ -8,6 +8,7 @@ import type {
 import type { SystemRoleApi } from '#/api';
 
 import { Page, useVbenDrawer, VbenButton } from '@vben/common-ui';
+import { Plus } from '@vben/icons';
 
 import { message, Modal } from 'ant-design-vue';
 
@@ -164,6 +165,7 @@ function onCreate() {
     <Grid :table-title="$t('system.role.list')">
       <template #toolbar-tools>
         <VbenButton variant="default" @click="onCreate">
+          <Plus class="size-5" />
           {{ $t('ui.actionTitle.create', [$t('system.role.name')]) }}
         </VbenButton>
       </template>

@@ -6,7 +6,7 @@ import type {
 import type { SystemDeptApi } from '#/api/system/dept';
 
 import { Page, useVbenModal, VbenButton } from '@vben/common-ui';
-
+import { Plus } from '@vben/icons';
 import { message } from 'ant-design-vue';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
@@ -133,6 +133,7 @@ function refreshGrid() {
     <Grid table-title="部门列表">
       <template #toolbar-tools>
         <VbenButton variant="default" @click="onCreate">
+          <Plus class="size-5" />
           {{ $t('ui.actionTitle.create', [$t('system.dept.name')]) }}
         </VbenButton>
       </template>

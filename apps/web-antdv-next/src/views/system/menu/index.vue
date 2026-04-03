@@ -5,7 +5,7 @@ import type {
 } from '#/adapter/vxe-table';
 
 import { Page, useVbenDrawer, VbenButton } from '@vben/common-ui';
-import { IconifyIcon } from '@vben/icons';
+import { IconifyIcon, Plus } from '@vben/icons';
 import { $t } from '@vben/locales';
 
 import { MenuBadge } from '@vben-core/menu-ui';
@@ -116,6 +116,7 @@ function onDelete(row: SystemMenuApi.SystemMenu) {
     <Grid>
       <template #toolbar-tools>
         <VbenButton variant="default" @click="onCreate">
+          <Plus class="size-5" />
           {{ $t('ui.actionTitle.create', [$t('system.menu.name')]) }}
         </VbenButton>
       </template>
