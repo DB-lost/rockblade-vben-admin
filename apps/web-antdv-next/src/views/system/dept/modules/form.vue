@@ -3,9 +3,7 @@ import type { SystemDeptApi } from '#/api/system/dept';
 
 import { computed, ref } from 'vue';
 
-import { useVbenModal } from '@vben/common-ui';
-
-import { Button } from 'ant-design-vue';
+import { useVbenModal, VbenButton } from '@vben/common-ui';
 
 import { useVbenForm } from '#/adapter/form';
 import { createDept, updateDept } from '#/api/system/dept';
@@ -71,9 +69,9 @@ const [Modal, modalApi] = useVbenModal({
     <Form class="mx-4" />
     <template #prepend-footer>
       <div class="flex-auto">
-        <Button type="primary" danger @click="resetForm">
+        <VbenButton variant="destructive" @click="resetForm">
           {{ $t('common.reset') }}
-        </Button>
+        </VbenButton>
       </div>
     </template>
   </Modal>
