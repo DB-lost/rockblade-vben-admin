@@ -83,13 +83,17 @@ setupVbenVxeTable({
 
     // 单元格渲染： Tag
     vxeUI.renderer.add('CellTag', {
-      renderTableDefault({ options, props }, { column, row }) {
+      renderTableDefault({ attrs, options, props }, { column, row }) {
         const value = get(row, column.field);
-        const tagOptions = options ?? [
-          { color: 'success', label: $t('common.enabled'), value: 1 },
-          { color: 'error', label: $t('common.disabled'), value: 0 },
-        ];
-        const tagItem = tagOptions.find((item) => item.value === value);
+        const tagOptions = options ??
+          attrs?.options ?? [
+            { color: 'success', label: $t('common.enabled'), value: 1 },
+            { color: 'error', label: $t('common.disabled'), value: 0 },
+          ];
+        const tagItem = tagOptions?.find(
+          (item: { value: number | string }) =>
+            String(item.value) === String(value),
+        );
         return h(
           Tag,
           {

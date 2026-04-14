@@ -13,11 +13,11 @@ import { message } from 'antdv-next';
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import { codegenTablePage, saveCodegenTable } from '#/api';
 
-import { useGridFormSchema, useTableColumns } from '../data';
+import { useTableColumns, useTableGridFormSchema } from '../data';
 
 const [Grid, gridApi] = useVbenVxeGrid({
   formOptions: {
-    schema: useGridFormSchema(),
+    schema: useTableGridFormSchema(),
   },
   gridOptions: {
     columns: useTableColumns(onActionClick),
@@ -28,7 +28,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
       ajax: {
         query: async ({ page }, formValues) => {
           return await codegenTablePage({
-            page: page.currentPage,
+            pageNum: page.currentPage,
             pageSize: page.pageSize,
             ...formValues,
           });
@@ -46,7 +46,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
     toolbarConfig: {
       custom: true,
       export: false,
-      refresh: true,
+      refresh: false,
       search: true,
       zoom: true,
     },

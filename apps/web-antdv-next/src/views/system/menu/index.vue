@@ -4,13 +4,13 @@ import type {
   VxeTableGridOptions,
 } from '#/adapter/vxe-table';
 
-import { Page, useVbenDrawer } from '@vben/common-ui';
-import { IconifyIcon } from '@vben/icons';
+import { Page, useVbenDrawer, VbenButton } from '@vben/common-ui';
+import { IconifyIcon, Plus } from '@vben/icons';
 import { $t } from '@vben/locales';
 
 import { MenuBadge } from '@vben-core/menu-ui';
 
-import { Button, message } from 'ant-design-vue';
+import { message } from 'ant-design-vue';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import { deleteMenu, getMenuList, SystemMenuApi } from '#/api/system/menu';
@@ -115,9 +115,10 @@ function onDelete(row: SystemMenuApi.SystemMenu) {
     <FormDrawer @success="onRefresh" />
     <Grid>
       <template #toolbar-tools>
-        <Button type="primary" @click="onCreate">
+        <VbenButton variant="default" @click="onCreate">
+          <Plus class="size-5" />
           {{ $t('ui.actionTitle.create', [$t('system.menu.name')]) }}
-        </Button>
+        </VbenButton>
       </template>
       <template #title="{ row }">
         <div class="flex w-full items-center gap-1">
