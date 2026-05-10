@@ -8,6 +8,7 @@ const routes: RouteRecordRaw[] = [
       icon: 'ion:settings-outline',
       order: 9997,
       title: $t('system.title'),
+      authority: ['DevelopRoleCode', 'InitAdminCode'],
     },
     name: 'System',
     path: '/system',
@@ -18,6 +19,7 @@ const routes: RouteRecordRaw[] = [
         meta: {
           icon: 'mdi:menu',
           title: $t('system.menu.title'),
+          authority: ['DevelopRoleCode'],
         },
         component: () => import('#/views/system/menu/index.vue'),
       },
@@ -27,6 +29,7 @@ const routes: RouteRecordRaw[] = [
         meta: {
           icon: 'mdi:account-group',
           title: $t('system.role.title'),
+          authority: ['DevelopRoleCode', 'InitAdminCode'],
         },
         component: () => import('#/views/system/role/index.vue'),
       },
@@ -36,6 +39,7 @@ const routes: RouteRecordRaw[] = [
         meta: {
           icon: 'charm:organisation',
           title: $t('system.dept.title'),
+          authority: ['DevelopRoleCode', 'InitAdminCode'],
         },
         component: () => import('#/views/system/dept/index.vue'),
       },
