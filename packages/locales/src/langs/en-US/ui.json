@@ -25,7 +25,8 @@
     "deleteSuccess": "{0} deleted successfully",
     "operationSuccess": "Operation succeeded",
     "operationFailed": "Operation failed",
-    "importing": "Importing {0} ..."
+    "importing": "Importing {0} ...",
+    "importSuccess": "{0} imported successfully"
   },
   "placeholder": {
     "input": "Please enter",
