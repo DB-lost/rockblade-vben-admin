@@ -1,7 +1,5 @@
 <script lang="ts" setup>
-import type { NotificationItem } from '@vben/layouts';
-
-import { computed, ref, watch } from 'vue';
+import { computed, watch } from 'vue';
 import { useRouter } from 'vue-router';
 
 import { AuthenticationLoginExpiredModal } from '@vben/common-ui';
@@ -15,20 +13,19 @@ import {
 import { preferences } from '@vben/preferences';
 import { useAccessStore, useUserStore } from '@vben/stores';
 
+import { useNotification } from '#/composables/notification/useNotification';
 import { $t } from '#/locales';
 import { useAuthStore } from '#/store';
 import LoginForm from '#/views/_core/authentication/login.vue';
-
-const notifications = ref<NotificationItem[]>([]);
 
 const router = useRouter();
 const userStore = useUserStore();
 const authStore = useAuthStore();
 const accessStore = useAccessStore();
 const { destroyWatermark, updateWatermark } = useWatermark();
-const showDot = computed(() =>
-  notifications.value.some((item) => !item.isRead),
-);
+const { notifications, unreadCount, markRead, markAllRead, remove, clearAll } =
+  useNotification();
+const showDot = computed(() => unreadCount.value > 0);
 
 const menus = computed(() => [
   {
@@ -49,22 +46,23 @@ async function handleLogout() {
 }
 
 function handleNoticeClear() {
-  notifications.value = [];
+  clearAll();
 }
 
-function markRead(id: number | string) {
-  const item = notifications.value.find((item) => item.id === id);
-  if (item) {
-    item.isRead = true;
+function handleRead(item: { id?: number | string }) {
+  if (item.id) {
+    markRead(item.id);
   }
 }
 
-function remove(id: number | string) {
-  notifications.value = notifications.value.filter((item) => item.id !== id);
+function handleRemove(item: { id?: number | string }) {
+  if (item.id) {
+    remove(item.id);
+  }
 }
 
 function handleMakeAll() {
-  notifications.value.forEach((item) => (item.isRead = true));
+  markAllRead();
 }
 watch(
   () => ({
@@ -105,8 +103,8 @@ watch(
         :dot="showDot"
         :notifications="notifications"
         @clear="handleNoticeClear"
-        @read="(item) => item.id && markRead(item.id)"
-        @remove="(item) => item.id && remove(item.id)"
+        @read="handleRead"
+        @remove="handleRemove"
         @make-all="handleMakeAll"
       />
     </template>
