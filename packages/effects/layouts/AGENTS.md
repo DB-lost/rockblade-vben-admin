@@ -20,7 +20,7 @@ src/
 ## WHERE TO LOOK
 
 | Task | Location |
-|------|----------|
+| --- | --- |
 | Main layout shell | `src/basic/layout.vue` |
 | Menu rendering | `src/basic/menu/` — menu.vue, mixed-menu.vue, extra-menu.vue, plus use-mixed-menu.ts, use-navigation.ts, use-extra-menu.ts |
 | Header slot map | `src/basic/header/header.vue` and `src/basic/README.md` |

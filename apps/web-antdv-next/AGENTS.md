@@ -1,9 +1,11 @@
 # APP KNOWLEDGE BASE
 
 ## OVERVIEW
+
 Main admin SPA. Package `@vben/web-antdv-next` v5.7.0. Ant Design Vue Next (antdv-next) UI layer.
 
 ## STRUCTURE
+
 ```
 src/
 ├── main.ts              # Entry: compute namespace, initPreferences, lazy bootstrap
@@ -32,11 +34,13 @@ src/
 ```
 
 ## BOOTSTRAP FLOW
+
 `main.ts` -> `initPreferences(namespace, overrides)` -> lazy import `bootstrap.ts` -> `createApp(App)` -> `registerLoadingDirective` -> `setupI18n` -> `initStores` -> `registerAccessDirective` -> `app.use(router)` -> `MotionPlugin` -> `app.mount('#app')`
 
 ## WHERE TO LOOK
+
 | Task | Location | Notes |
-|------|----------|-------|
+| --- | --- | --- |
 | Auth flow | `src/store/auth.ts` | RSA-encrypted login, token refresh, redirect on logout |
 | API client | `src/api/request.ts` | Bearer token header, 401 auto-refresh, error message mapping |
 | Component adapter | `src/adapter/component/index.ts` | Async Antd imports, globalShareState registration |
@@ -47,6 +51,7 @@ src/
 | App preferences | `src/preferences.ts` | Overrides defaults before bootstrap |
 
 ## CONVENTIONS
+
 - Import Antd components from `antdv-next/dist/<name>/index` for tree-shaking
 - Use `defineAsyncComponent` for all Antd component imports in adapter
 - API functions live in `src/api/` grouped by domain (`core/`, `system/`, `infra/`)
@@ -55,6 +60,7 @@ src/
 - Proxy target switches on `VITE_NITRO_MOCK`
 
 ## ANTI-PATTERNS
+
 - DO NOT import full `ant-design-vue` — use `antdv-next` subpath imports only
 - DO NOT skip `initComponentAdapter()` before mounting; forms and modals depend on globalShareState
 - DO NOT hardcode `apiURL` — read from `useAppConfig(import.meta.env, import.meta.env.PROD)`

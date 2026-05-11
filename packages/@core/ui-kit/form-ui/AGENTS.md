@@ -1,9 +1,11 @@
 # @vben-core/form-ui
 
 ## OVERVIEW
-Schema-driven form system built on VeeValidate + Zod. Part of @vben-core/ui-kit foundation. Zero workspace deps outside @vben-core/*.
+
+Schema-driven form system built on VeeValidate + Zod. Part of @vben-core/ui-kit foundation. Zero workspace deps outside @vben-core/\*.
 
 ## STRUCTURE
+
 ```
 src/
 ├── index.ts                  # Public exports: setupVbenForm, useVbenForm, z, types
@@ -28,8 +30,9 @@ src/
 ```
 
 ## WHERE TO LOOK
+
 | Task | Location | Notes |
-|------|----------|-------|
+| --- | --- | --- |
 | Add a new base component | `src/config.ts` | Register in COMPONENT_MAP and COMPONENT_BIND_EVENT_MAP |
 | Change form layout/grid | `src/form-render/form.vue` | wrapperClass, formItemClass computed |
 | Dynamic field rules | `src/types.ts` | FormItemDependencies with triggerFields |
@@ -40,6 +43,7 @@ src/
 | Form state store | `src/form-api.ts` | Store<VbenFormProps> with subscribe |
 
 ## CONVENTIONS
+
 - Two entry patterns: `<VbenForm>` template or `useVbenForm()` returning `[Form, api]`
 - FormApi state mutations go through `store.setState()`; never mutate `api.state` directly
 - Schema arrays merged with `mergeWithArrayOverride`; object values override arrays
@@ -49,7 +53,8 @@ src/
 - FormField props inherit from FormCommonConfig; schema-level props override common config
 
 ## ANTI-PATTERNS
-- DO NOT import @vben/* or effects packages in this package. Foundation restriction.
+
+- DO NOT import @vben/\* or effects packages in this package. Foundation restriction.
 - DO NOT mutate `formApi.state` directly. Use `formApi.setState()` or Store methods.
 - DO NOT forget `fieldName` when calling `updateSchema()`. Every item must have it.
 - DO NOT use Zod `ZodNullable` or `ZodOptional` to mean optional UI. They flip `required` flag.

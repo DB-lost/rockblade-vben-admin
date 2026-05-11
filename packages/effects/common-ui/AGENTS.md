@@ -31,7 +31,7 @@ src/
 ## WHERE TO LOOK
 
 | Task | Location | Notes |
-|---|---|---|
+| --- | --- | --- |
 | Login form | `src/ui/authentication/login.vue` | Uses `useVbenForm`, remember-me via localStorage |
 | Register / forgot-password | `src/ui/authentication/` | `register.vue`, `forget-password.vue` |
 | QR code login | `src/ui/authentication/qrcode-login.vue` | Depends on `qrcode` package |

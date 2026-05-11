@@ -1,13 +1,13 @@
 # PROJECT KNOWLEDGE BASE
 
-**Generated:** 2026-05-11
-**Commit:** 318223d1
-**Branch:** release/v1.0.1
+**Generated:** 2026-05-11 **Commit:** 318223d1 **Branch:** release/v1.0.1
 
 ## OVERVIEW
+
 Vben-Admin v5.x monorepo — Vue 3 + Vite + TypeScript admin framework. RockBlade fork with Ant Design Vue Next (antdv-next). pnpm workspaces + Turborepo build orchestration.
 
 ## STRUCTURE
+
 ```
 ./
 ├── apps/
@@ -28,8 +28,9 @@ Vben-Admin v5.x monorepo — Vue 3 + Vite + TypeScript admin framework. RockBlad
 ```
 
 ## WHERE TO LOOK
+
 | Task | Location | Notes |
-|------|----------|-------|
+| --- | --- | --- |
 | App entry / bootstrap | `apps/web-antdv-next/src/main.ts` → `bootstrap.ts` | Async pref init → lazy import bootstrap |
 | Route definitions | `apps/web-antdv-next/src/router/routes/modules/` | Auto-loaded via `import.meta.glob` |
 | Store definitions | `packages/stores/src/modules/` | Pinia with encrypted persistence |
@@ -45,8 +46,9 @@ Vben-Admin v5.x monorepo — Vue 3 + Vite + TypeScript admin framework. RockBlad
 | Shared utils | `packages/@core/base/shared/src/utils/` | Color, date, diff, tree, cache, state |
 
 ## CODE MAP
+
 | Symbol | Type | Location | Role |
-|--------|------|----------|------|
+| --- | --- | --- | --- |
 | `bootstrap()` | function | `apps/web-antdv-next/src/bootstrap.ts` | Vue app init (directives, i18n, stores, router) |
 | `initStores()` | function | `packages/stores/src/setup.ts` | Pinia init with SecureLS persistence |
 | `initPreferences()` | function | `packages/@core/preferences/src/` | User settings init (localStorage) |
@@ -57,6 +59,7 @@ Vben-Admin v5.x monorepo — Vue 3 + Vite + TypeScript admin framework. RockBlad
 | `useUserStore` | store | `packages/stores/src/modules/user.ts` | User info, roles |
 
 ## CONVENTIONS
+
 - **Import architecture**: `@vben-core/*` → no workspace deps (pure foundation). `@vben/*` → wraps `@vben-core/*`. `@vben/effects/*` → combines multiple `@vben/*` with Pinia. Apps → can use all.
 - **ESLint enforces layering**: `@core` cannot import `@vben/*`. `@core/base` cannot import any `@vben-core/*` or `@vben/*` package. Apps/effects cannot import `#/api`, `#/layouts`, `#/locales`, `#/stores` (use `@core` packages).
 - **Component naming**: PascalCase templates, hyphenated attributes, self-closing void components
@@ -67,6 +70,7 @@ Vben-Admin v5.x monorepo — Vue 3 + Vite + TypeScript admin framework. RockBlad
 - **pnpm catalog versioning**: All deps managed via `pnpm-workspace.yaml` catalog
 
 ## ANTI-PATTERNS (THIS PROJECT)
+
 - **DO NOT** use `#/api`, `#/layouts`, `#/locales`, `#/stores` imports in `@core` or `effects` packages — use `@vben-core/*` re-exports
 - **DO NOT** add workspace deps to `@vben-core/*` packages — they must remain framework-agnostic
 - **DO NOT** commit with `--no-verify` — lefthook runs oxlint+oxfmt+eslint+stylelint
@@ -75,6 +79,7 @@ Vben-Admin v5.x monorepo — Vue 3 + Vite + TypeScript admin framework. RockBlad
 - **`onFinished`/`onStarted`** events in `count-to-animator.vue` are deprecated — use `finished`/`started`
 
 ## UNIQUE STYLES
+
 - **Dual-stage linting**: oxlint (fast Rust linter) runs first with `--fix`, then eslint (thorough)
 - **Lefthook** (not Husky) for git hooks — parallel pre-commit checks via `pnpm vsh`
 - **Turbo interactive runner**: `pnpm dev` launches TUI package selector (`scripts/turbo-run/`)
@@ -83,6 +88,7 @@ Vben-Admin v5.x monorepo — Vue 3 + Vite + TypeScript admin framework. RockBlad
 - **Two-tier package naming**: `@vben-core/*` (npm-publishable foundation) vs `@vben/*` (monorepo internal)
 
 ## COMMANDS
+
 ```bash
 pnpm dev                    # Interactive turbo package selector
 pnpm build                  # Full monorepo build (8GB heap)
@@ -96,6 +102,7 @@ pnpm changeset              # Create changeset for versioning
 ```
 
 ## NOTES
+
 - `pnpm-workspace.yaml` references `packages/business/*`, `docs/`, `playground/` but these don't exist on disk
 - Mock backend auto-starts during dev via Vite plugin — no manual startup needed
 - App namespace for storage: `{VITE_APP_NAMESPACE}-{VITE_APP_VERSION}-{env}`

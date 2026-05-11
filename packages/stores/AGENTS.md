@@ -1,9 +1,11 @@
 # AGENTS.md — @vben/stores
 
 ## OVERVIEW
+
 Pinia stores package for the Vben Admin business layer, re-exporting `defineStore` and `storeToRefs` plus four domain-specific store modules with encrypted persistence.
 
 ## STRUCTURE
+
 ```
 src/
 ├── index.ts          # Re-exports defineStore, storeToRefs, modules, setup
@@ -16,8 +18,9 @@ src/
 ```
 
 ## WHERE TO LOOK
+
 | Symbol | Location | Role |
-|--------|----------|------|
+| --- | --- | --- |
 | `initStores` | `src/setup.ts` | Creates Pinia, wires `pinia-plugin-persistedstate` with namespace-scoped SecureLS |
 | `useAccessStore` | `src/modules/access.ts` | accessToken, refreshToken, accessCodes, accessMenus, isAccessChecked, loginExpired, lockScreen |
 | `useUserStore` | `src/modules/user.ts` | userInfo, userRoles; setUserInfo syncs roles automatically |
@@ -26,6 +29,7 @@ src/
 | `resetAllStores` | `src/setup.ts` | Iterates `_s` map and calls `$reset` on every store instance |
 
 ## CONVENTIONS
+
 - Store IDs use `core-` prefix: `core-access`, `core-user`, `core-tabbar`, `core-timezone`.
 - `initStores` requires a `namespace` string to isolate localStorage keys per app.
 - Persistence key format: `{namespace}-{store.id}`.
@@ -35,6 +39,7 @@ src/
 - Every store accepts HMR via `acceptHMRUpdate`.
 
 ## ANTI-PATTERNS
+
 - DO NOT import `@vben/stores` from `@vben-core/*` packages. Core packages must remain store-agnostic.
 - DO NOT add non-serializable state to persisted stores without a custom serializer.
 - DO NOT call `pinia.use` outside `initStores`. Plugin setup is centralized in setup.ts.
