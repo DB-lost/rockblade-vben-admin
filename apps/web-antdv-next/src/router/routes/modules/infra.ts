@@ -8,6 +8,7 @@ const routes: RouteRecordRaw[] = [
       icon: 'ion:information-circle',
       order: 9997,
       title: $t('infra.title'),
+      authority: ['DevelopRoleCode'],
     },
     name: 'Infra',
     path: '/infra',

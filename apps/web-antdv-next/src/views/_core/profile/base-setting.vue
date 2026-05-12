@@ -11,20 +11,7 @@ import { getUserInfoApi } from '#/api';
 
 const profileBaseSettingRef = ref();
 
-const MOCK_ROLES_OPTIONS: BasicOption[] = [
-  {
-    label: '管理员',
-    value: 'super',
-  },
-  {
-    label: '用户',
-    value: 'user',
-  },
-  {
-    label: '测试',
-    value: 'test',
-  },
-];
+const MOCK_ROLES_OPTIONS: BasicOption[] = [];
 
 const formSchema = computed((): VbenFormSchema[] => {
   return [

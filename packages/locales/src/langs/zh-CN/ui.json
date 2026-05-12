@@ -25,7 +25,8 @@
     "deleteSuccess": "{0} 删除成功",
     "operationSuccess": "操作成功",
     "operationFailed": "操作失败",
-    "importing": "正在导入 {0} ..."
+    "importing": "正在导入 {0} ...",
+    "importSuccess": "{0} 导入成功"
   },
   "placeholder": {
     "input": "请输入",
