@@ -15,6 +15,8 @@ import { codegenTablePage, saveCodegenTable } from '#/api';
 
 import { useTableColumns, useTableGridFormSchema } from '../data';
 
+const emits = defineEmits(['success']);
+
 const [Grid, gridApi] = useVbenVxeGrid({
   formOptions: {
     schema: useTableGridFormSchema(),
@@ -79,6 +81,7 @@ async function onImport(row: TableInfoResponse) {
         key: 'action_process_msg',
       });
       modalApi.close();
+      emits('success');
     })
     .catch(() => {
       hideLoading();
