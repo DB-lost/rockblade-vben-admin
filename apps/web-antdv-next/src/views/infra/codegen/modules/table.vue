@@ -5,7 +5,7 @@ import type {
 } from '#/adapter/vxe-table';
 import type { TableInfoResponse } from '#/api';
 
-import { Page, useVbenModal } from '@vben/common-ui';
+import { useVbenModal } from '@vben/common-ui';
 import { $t } from '@vben/locales';
 
 import { message } from 'antdv-next';
@@ -99,21 +99,8 @@ function onActionClick(e: OnActionClickParams<TableInfoResponse>) {
 </script>
 <template>
   <Modal>
-    <Page auto-content-height>
-      <Grid :table-title="$t('infra.codegen.list')" />
-    </Page>
+    <Grid :table-title="$t('infra.codegen.list')" />
   </Modal>
 </template>
 <style lang="css" scoped>
-:deep(.ant-tree-title) {
-  .tree-actions {
-    @apply ml-5 hidden;
-  }
-}
-
-:deep(.ant-tree-title:hover) {
-  .tree-actions {
-    @apply ml-5 flex flex-auto justify-end;
-  }
-}
 </style>

@@ -12,6 +12,7 @@
     "lastGenTime": "Last Generation Time",
     "operation": "Operation",
     "codegenSuccess": "Code generation successful",
-    "generate": "Generate"
+    "generate": "Generate",
+    "generating": "Generating code..."
   }
 }

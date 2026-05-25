@@ -12,6 +12,7 @@
     "lastGenTime": "最后生成时间",
     "operation": "操作",
     "codegenSuccess": "代码生成成功",
-    "generate": "代码生成"
+    "generate": "代码生成",
+    "generating": "代码生成中..."
   }
 }
