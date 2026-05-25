@@ -5,7 +5,7 @@ import type { BackendMessage } from './types';
 import { computed, ref, watch } from 'vue';
 
 import { preferences } from '@vben/preferences';
-import { useUserStore } from '@vben/stores';
+import { useAccessStore, useUserStore } from '@vben/stores';
 
 import { notification } from 'antdv-next';
 
@@ -119,12 +119,13 @@ function processMessage(msg: BackendMessage) {
 }
 
 export function useNotification() {
+  const accessStore = useAccessStore();
   const userStore = useUserStore();
 
   const wsUrl = computed(() => {
-    const userId = userStore.userInfo?.userId;
-    if (!userId) return null;
-    return `${import.meta.env.VITE_GLOB_WS_URL}/${userId}`;
+    const token = accessStore.accessToken;
+    if (!token) return null;
+    return `${import.meta.env.VITE_GLOB_WS_URL}?Authorization=Bearer+${token}`;
   });
 
   // 使用全局 WebSocket 实例，按需创建

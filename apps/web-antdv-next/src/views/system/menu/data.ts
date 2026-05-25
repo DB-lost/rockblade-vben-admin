@@ -26,7 +26,6 @@ export function useColumns(
 ): VxeTableGridColumns<SystemMenuApi.SystemMenu> {
   return [
     {
-      align: 'left',
       field: 'meta.title',
       fixed: 'left',
       slots: { default: 'title' },
@@ -47,14 +46,12 @@ export function useColumns(
       width: 200,
     },
     {
-      align: 'left',
       field: 'path',
       title: $t('system.menu.path'),
       width: 200,
     },
 
     {
-      align: 'left',
       field: 'component',
       formatter: ({ row }) => {
         switch (row.type) {

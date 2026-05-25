@@ -4,47 +4,35 @@ import { computed, nextTick, ref } from 'vue';
 import { useVbenDrawer } from '@vben/common-ui';
 
 import { useVbenForm } from '#/adapter/form';
-import { queryById, updateCodegenTable } from '#/api/infra/codegen';
+import { queryOperateLogById } from '#/api';
 import { $t } from '#/locales';
 
 import { useFormSchema } from '../data';
 
-const emits = defineEmits(['success']);
-
 const [Form, formApi] = useVbenForm({
   schema: useFormSchema(),
   showDefaultActions: false,
+  commonConfig: {
+    colon: true,
+    formItemClass: 'col-span-2 md:col-span-1',
+  },
+  wrapperClass: 'grid-cols-2 gap-x-4',
 });
 
 const id = ref();
 const [Drawer, drawerApi] = useVbenDrawer({
-  async onConfirm() {
-    const { valid } = await formApi.validate();
-    if (!valid) return;
-    const values = await formApi.getValues();
-    drawerApi.lock();
-
-    updateCodegenTable(values)
-      .then(() => {
-        emits('success');
-        drawerApi.close();
-      })
-      .catch(() => {
-        drawerApi.unlock();
-      });
-  },
+  showConfirmButton: false,
 
   async onOpenChange(isOpen) {
     if (isOpen) {
-      formApi.resetForm();
       const data = drawerApi.getData();
       // Wait for Vue to flush DOM updates (form fields mounted)
       await nextTick();
 
-      if (data) {
+      if (data && data.id) {
         id.value = data.id;
         // 编辑时加载数据
-        await queryById(data.id).then((data) => {
+        await queryOperateLogById(data.id).then((data) => {
           formApi.setValues(data);
         });
       } else {
@@ -56,13 +44,12 @@ const [Drawer, drawerApi] = useVbenDrawer({
 
 const getDrawerTitle = computed(() => {
   return id.value
-    ? $t('common.edit', $t('infra.codegen.name'))
-    : $t('common.create', $t('infra.codegen.name'));
+    ? $t('common.edit', $t('infra.operateLog.name'))
+    : $t('common.create', $t('infra.operateLog.name'));
 });
 </script>
 <template>
-  <Drawer :title="getDrawerTitle">
+  <Drawer class="w-full max-w-200" :title="getDrawerTitle">
     <Form />
   </Drawer>
 </template>
-<style lang="css" scoped></style>

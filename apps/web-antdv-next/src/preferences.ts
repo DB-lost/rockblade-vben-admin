@@ -16,8 +16,9 @@ export const overridesPreferences = defineOverridesPreferences({
     source: '/logo.svg',
   },
   theme: {
-    builtinType: 'gray',
-    mode: 'auto',
+    builtinType: 'neutral',
+    mode: 'light',
+    colorPrimary: 'hsl(240 5.9% 10%)',
   },
   copyright: {
     companyName: 'RockBlade',
