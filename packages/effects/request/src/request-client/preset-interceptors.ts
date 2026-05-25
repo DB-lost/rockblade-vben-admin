@@ -158,6 +158,7 @@ export const errorMessageResponseInterceptor = (
           errorMessage = $t('ui.fallback.http.requestTimeout');
           break;
         }
+        case 11_011:
         case 11_012:
         case 11_013:
         case 11_014:

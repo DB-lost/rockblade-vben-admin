@@ -12,6 +12,25 @@
     "lastGenTime": "最后生成时间",
     "operation": "操作",
     "codegenSuccess": "代码生成成功",
-    "generate": "代码生成"
+    "generate": "代码生成",
+    "generating": "代码生成中..."
+  },
+  "operateLog": {
+    "title": "操作日志",
+    "name": "操作日志",
+    "list": "列表",
+    "operation": "操作",
+    "traceId": "追踪ID",
+    "userId": "用户ID",
+    "userType": "用户类型",
+    "logType": "日志类型",
+    "logSubType": "日志子类型",
+    "bizId": "业务ID",
+    "action": "行为",
+    "extra": "拓展信息",
+    "requestMethod": "请求方法",
+    "requestUrl": "请求路径",
+    "userIp": "用户地址",
+    "nickname": "昵称"
   }
 }
