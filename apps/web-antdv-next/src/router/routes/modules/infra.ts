@@ -26,7 +26,7 @@ const routes: RouteRecordRaw[] = [
         path: '/infra/operate-log',
         name: 'InfraOperateLog',
         meta: {
-          icon: 'ion:code-download',
+          icon: 'icon-park-solid:log',
           title: $t('infra.operateLog.title'),
         },
         component: () => import('#/views/infra/operate-log/index.vue'),
