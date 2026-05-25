@@ -23,9 +23,11 @@ const tokenTheme = computed(() => {
     algorithm.push(theme.compactAlgorithm);
   }
 
+  // spread to plain object to prevent antd from invoking slots
+  // outside render function when tokens are deeply reactive
   return {
     algorithm,
-    token: tokens,
+    token: { ...tokens },
   };
 });
 </script>

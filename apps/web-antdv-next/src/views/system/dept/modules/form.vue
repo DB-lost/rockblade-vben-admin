@@ -3,7 +3,7 @@ import type { SystemDeptApi } from '#/api/system/dept';
 
 import { computed, ref } from 'vue';
 
-import { useVbenModal, VbenButton } from '@vben/common-ui';
+import { useVbenDrawer, VbenButton } from '@vben/common-ui';
 
 import { useVbenForm } from '#/adapter/form';
 import { createDept, updateDept } from '#/api/system/dept';
@@ -23,6 +23,11 @@ const [Form, formApi] = useVbenForm({
   layout: 'vertical',
   schema: useSchema(),
   showDefaultActions: false,
+  commonConfig: {
+    colon: true,
+    formItemClass: 'col-span-2 md:col-span-1',
+  },
+  wrapperClass: 'grid-cols-2 gap-x-4',
 });
 
 function resetForm() {
@@ -30,7 +35,7 @@ function resetForm() {
   formApi.setValues(formData.value || {});
 }
 
-const [Modal, modalApi] = useVbenModal({
+const [Drawer, modalApi] = useVbenDrawer({
   async onConfirm() {
     const { valid } = await formApi.validate();
     if (valid) {
@@ -65,7 +70,7 @@ const [Modal, modalApi] = useVbenModal({
 </script>
 
 <template>
-  <Modal :title="getTitle">
+  <Drawer :title="getTitle" class="w-full max-w-200">
     <Form class="mx-4" />
     <template #prepend-footer>
       <div class="flex-auto">
@@ -74,5 +79,5 @@ const [Modal, modalApi] = useVbenModal({
         </VbenButton>
       </div>
     </template>
-  </Modal>
+  </Drawer>
 </template>

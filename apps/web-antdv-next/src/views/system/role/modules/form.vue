@@ -26,6 +26,11 @@ const formData = ref<SystemRoleApi.SystemRole>();
 const [Form, formApi] = useVbenForm({
   schema: useFormSchema(),
   showDefaultActions: false,
+  commonConfig: {
+    colon: true,
+    formItemClass: 'col-span-2 md:col-span-1',
+  },
+  wrapperClass: 'grid-cols-2 gap-x-4',
 });
 
 const permissions = ref<DataNode[]>([]);
@@ -102,7 +107,7 @@ function getNodeClass(node: Recordable<any>) {
 }
 </script>
 <template>
-  <Drawer :title="getDrawerTitle">
+  <Drawer :title="getDrawerTitle" class="w-full max-w-200">
     <Form>
       <template #permissions="slotProps">
         <Spin :spinning="loadingPermissions" wrapper-class-name="w-full">
