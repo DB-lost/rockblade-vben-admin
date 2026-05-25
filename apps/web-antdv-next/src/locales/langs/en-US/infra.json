@@ -14,5 +14,23 @@
     "codegenSuccess": "Code generation successful",
     "generate": "Generate",
     "generating": "Generating code..."
+  },
+  "operateLog": {
+    "title": "Operate Log",
+    "name": "Operate Log",
+    "list": "List",
+    "operation": "Operation",
+    "traceId": "Trace ID",
+    "userId": "User ID",
+    "userType": "User Type",
+    "logType": "Log Type",
+    "logSubType": "Log Sub Type",
+    "bizId": "Business ID",
+    "action": "Action",
+    "extra": "Extra Info",
+    "requestMethod": "Request Method",
+    "requestUrl": "Request URL",
+    "userIp": "User IP",
+    "nickname": "Nickname"
   }
 }

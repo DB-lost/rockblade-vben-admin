@@ -22,6 +22,15 @@ const routes: RouteRecordRaw[] = [
         },
         component: () => import('#/views/infra/codegen/index.vue'),
       },
+      {
+        path: '/infra/operate-log',
+        name: 'InfraOperateLog',
+        meta: {
+          icon: 'ion:code-download',
+          title: $t('infra.operateLog.title'),
+        },
+        component: () => import('#/views/infra/operate-log/index.vue'),
+      },
     ],
   },
 ];
