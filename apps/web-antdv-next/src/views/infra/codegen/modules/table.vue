@@ -102,5 +102,4 @@ function onActionClick(e: OnActionClickParams<TableInfoResponse>) {
     <Grid :table-title="$t('infra.codegen.list')" />
   </Modal>
 </template>
-<style lang="css" scoped>
-</style>
+<style lang="css" scoped></style>
