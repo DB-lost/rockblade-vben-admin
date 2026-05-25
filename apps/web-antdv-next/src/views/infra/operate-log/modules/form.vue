@@ -4,7 +4,7 @@ import { computed, nextTick, ref } from 'vue';
 import { useVbenDrawer } from '@vben/common-ui';
 
 import { useVbenForm } from '#/adapter/form';
-import { queryOperateLogById} from '#/api';
+import { queryOperateLogById } from '#/api';
 import { $t } from '#/locales';
 
 import { useFormSchema } from '../data';
@@ -47,7 +47,6 @@ const getDrawerTitle = computed(() => {
     ? $t('common.edit', $t('infra.operateLog.name'))
     : $t('common.create', $t('infra.operateLog.name'));
 });
-
 </script>
 <template>
   <Drawer class="w-full max-w-200" :title="getDrawerTitle">

@@ -69,7 +69,6 @@ function onActionClick(e: OnActionClickParams<OperateLogPageResponse>) {
 function onEdit(row: OperateLogPageResponse) {
   formDrawerApi.setData(row).open();
 }
-
 </script>
 <template>
   <Page auto-content-height>

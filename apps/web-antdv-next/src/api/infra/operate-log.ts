@@ -1,112 +1,111 @@
-
 import { requestClient } from '#/api/request';
 
 /**
-* 分页查询参数
-*/
+ * 分页查询参数
+ */
 export interface OperateLogPageRequest {
   /**
    * 追踪ID
    */
-  traceId?: string,
+  traceId?: string;
   /**
    * 用户id
    */
-  userId?: string,
-  pageNum?: number
-  pageSize?: number
+  userId?: string;
+  pageNum?: number;
+  pageSize?: number;
 }
 
 /**
-* 接口响应参数
-*/
+ * 接口响应参数
+ */
 export interface OperateLogPageResponse {
   /**
    * ID
    */
-  id?: string,
+  id?: string;
   /**
    * 追踪ID
    */
-  traceId?: string,
+  traceId?: string;
   /**
    * 用户id
    */
-  userId?: string,
+  userId?: string;
   /**
    * 昵称
    */
-  nickname?: string,
+  nickname?: string;
   /**
    * 日志类型
    */
-  type?: string,
+  type?: string;
   /**
    * 日志子类型
    */
-  subType?: string,
+  subType?: string;
   /**
    * 行为
    */
-  action?: string,
+  action?: string;
 }
 
 /**
-* 响应实体
-*/
+ * 响应实体
+ */
 export interface OperateLogResponse {
   /**
    * ID
    */
-  id?: string,
+  id?: string;
   /**
    * 追踪ID
    */
-  traceId?: string,
+  traceId?: string;
   /**
    * 用户id
    */
-  userId?: string,
+  userId?: string;
   /**
    * 昵称
    */
-  nickname?: string,
+  nickname?: string;
   /**
    * 用户类型
    */
-  userType?: string,
+  userType?: string;
   /**
    * 日志类型
    */
-  type?: string,
+  type?: string;
   /**
    * 日志子类型
    */
-  subType?: string,
+  subType?: string;
   /**
    * 业务id
    */
-  bizId?: string,
+  bizId?: string;
   /**
    * 行为
    */
-  action?: string,
+  action?: string;
   /**
    * 拓展信息
    */
-  extra?: string,
+  extra?: string;
   /**
    * 请求方法
    */
-  requestMethod?: string,
+  requestMethod?: string;
   /**
    * 请求路径
    */
-  requestUrl?: string,
+  requestUrl?: string;
   /**
    * 用户地址
    */
-  userIp?: string,
+  userIp?: string;
 }
 
 enum Api {
@@ -117,20 +116,19 @@ enum Api {
 }
 
 /**
-* 分页查询操作日志列表
-*/
+ * 分页查询操作日志列表
+ */
 async function pageOperateLog(request: OperateLogPageRequest) {
-  return requestClient.get<OperateLogPageResponse>(Api.Page, { params: request })
+  return requestClient.get<OperateLogPageResponse>(Api.Page, {
+    params: request,
+  });
 }
 
 /**
-* 根据ID获取操作日志详情
-*/
+ * 根据ID获取操作日志详情
+ */
 async function queryOperateLogById(id: string) {
-  return requestClient.get<OperateLogResponse>(`${Api.QueryById}/${id}`)
+  return requestClient.get<OperateLogResponse>(`${Api.QueryById}/${id}`);
 }
 
-export {
-  pageOperateLog,
-  queryOperateLogById,
-};
+export { pageOperateLog, queryOperateLogById };
