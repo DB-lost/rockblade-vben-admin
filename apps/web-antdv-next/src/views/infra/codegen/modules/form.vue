@@ -65,16 +65,4 @@ const getDrawerTitle = computed(() => {
     <Form />
   </Drawer>
 </template>
-<style lang="css" scoped>
-:deep(.ant-tree-title) {
-  .tree-actions {
-    @apply ml-5 hidden;
-  }
-}
-
-:deep(.ant-tree-title:hover) {
-  .tree-actions {
-    @apply ml-5 flex flex-auto justify-end;
-  }
-}
-</style>
+<style lang="css" scoped></style>
