@@ -9,7 +9,13 @@ import type { UserPageResponse } from '#/api';
 
 import { ref } from 'vue';
 
-import { Page, useVbenDrawer, useVbenModal, VbenButton, VbenInputPassword } from '@vben/common-ui';
+import {
+  Page,
+  useVbenDrawer,
+  useVbenModal,
+  VbenButton,
+  VbenInputPassword,
+} from '@vben/common-ui';
 import { Plus } from '@vben/icons';
 
 import { message, Modal } from 'ant-design-vue';
@@ -214,7 +220,11 @@ function onCreate() {
     </Grid>
 
     <ResetPasswordModal>
-      <VbenInputPassword v-model:model-value="resetPasswordValue" placeholder="请输入新密码" class="w-full" />
+      <VbenInputPassword
+        v-model:model-value="resetPasswordValue"
+        placeholder="请输入新密码"
+        class="w-full"
+      />
     </ResetPasswordModal>
   </Page>
 </template>
