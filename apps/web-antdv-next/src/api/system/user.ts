@@ -239,6 +239,8 @@ enum Api {
   Page = '/user/page',
   QueryAll = '/user/queryAll',
   QueryById = '/user/queryById',
+  ChangePassword = '/user/changePassword',
+  ResetPassword = '/user/resetPassword',
 }
 
 /**
@@ -283,11 +285,38 @@ async function deleteUser(id: string | undefined) {
   return requestClient.delete(`${Api.Base}/${id}`);
 }
 
+/**
+ * 修改密码（登录用户）
+ */
+export interface ChangePasswordRequest {
+  oldPassword: string;
+  newPassword: string;
+  nonce?: string;
+}
+
+async function changePassword(data: ChangePasswordRequest) {
+  return requestClient.post(Api.ChangePassword, data);
+}
+
+/**
+ * 管理员重置用户密码
+ */
+export interface ResetUserPasswordRequest {
+  newPassword: string;
+  nonce?: string;
+}
+
+async function resetUserPassword(id: string, data: ResetUserPasswordRequest) {
+  return requestClient.put(`${Api.ResetPassword}/${id}`, data);
+}
+
 export {
+  changePassword,
   deleteUser,
   pageUser,
   queryAllUser,
   queryUserById,
+  resetUserPassword,
   saveUser,
   updateUser,
 };
