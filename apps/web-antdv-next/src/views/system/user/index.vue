@@ -100,10 +100,7 @@ function confirm(content: string, title: string) {
 /**
  * 状态切换确认
  */
-async function onStatusChange(
-  newStatus: number,
-  row: UserPageResponse,
-) {
+async function onStatusChange(newStatus: number, row: UserPageResponse) {
   const statusText: Recordable<string> = {
     0: $t('system.user.disable'),
     1: $t('system.user.enable'),

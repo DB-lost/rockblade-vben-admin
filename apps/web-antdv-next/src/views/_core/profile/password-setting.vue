@@ -7,8 +7,8 @@ import { ProfilePasswordSetting, z } from '@vben/common-ui';
 
 import { message } from 'antdv-next';
 
-import { changePassword } from '#/api/system/user';
 import { getPublicKeyApi } from '#/api/core/auth';
+import { changePassword } from '#/api/system/user';
 import { $t } from '#/locales';
 import { cryptoUtil } from '#/utils/crypto';
 
@@ -54,7 +54,9 @@ const formSchema = computed((): VbenFormSchema[] => {
         rules(values) {
           const { newPassword } = values;
           return z
-            .string({ required_error: $t('profile.confirmPasswordPlaceholder') })
+            .string({
+              required_error: $t('profile.confirmPasswordPlaceholder'),
+            })
             .min(1, { message: $t('profile.confirmPasswordPlaceholder') })
             .refine((value) => value === newPassword, {
               message: $t('profile.confirmPasswordMismatch'),

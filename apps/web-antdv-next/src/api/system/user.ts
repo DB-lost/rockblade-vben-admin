@@ -236,10 +236,10 @@ export interface UserListResponse {
 
 enum Api {
   Base = '/user',
+  ChangePassword = '/user/changePassword',
   Page = '/user/page',
   QueryAll = '/user/queryAll',
   QueryById = '/user/queryById',
-  ChangePassword = '/user/changePassword',
   ResetPassword = '/user/resetPassword',
 }
 
