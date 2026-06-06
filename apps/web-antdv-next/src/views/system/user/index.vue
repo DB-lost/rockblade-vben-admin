@@ -15,7 +15,7 @@ import { Plus } from '@vben/icons';
 import { Input, message, Modal } from 'ant-design-vue';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
-import { deleteUser, pageUser, resetUserPassword, updateUser } from '#/api';
+import { deleteUser, pageUser, ResetPasswordEnums, resetUserPassword, updateUser } from '#/api';
 import { getPublicKeyApi } from '#/api/core/auth';
 import { $t } from '#/locales';
 import { cryptoUtil } from '#/utils/crypto';
@@ -147,9 +147,11 @@ async function handleResetPassword() {
       message.error('密码加密失败');
       return;
     }
-    await resetUserPassword(resetPasswordUserId.value, {
+    await resetUserPassword({
+      id: resetPasswordUserId.value,
       newPassword: encrypted,
       nonce,
+      resetPasswordEnums: ResetPasswordEnums.Reset,
     });
     message.success('密码重置成功');
     resetPasswordVisible.value = false;
@@ -198,16 +200,8 @@ function onCreate() {
       </template>
     </Grid>
 
-    <Modal
-      v-model:open="resetPasswordVisible"
-      :title="`重置密码 - ${resetPasswordUsername}`"
-      @ok="handleResetPassword"
-    >
-      <Input.Password
-        v-model:value="resetPasswordValue"
-        placeholder="请输入新密码"
-        style="width: 100%"
-      />
+    <Modal v-model:open="resetPasswordVisible" :title="`重置密码 - ${resetPasswordUsername}`" @ok="handleResetPassword">
+      <Input.Password v-model:value="resetPasswordValue" placeholder="请输入新密码" style="width: 100%" />
     </Modal>
   </Page>
 </template>

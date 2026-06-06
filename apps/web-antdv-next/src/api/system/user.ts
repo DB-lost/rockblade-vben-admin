@@ -7,10 +7,6 @@ import { requestClient } from '#/api/request';
  */
 export interface UserPageRequest {
   /**
-   * 主键ID
-   */
-  id?: string;
-  /**
    * 用户名
    */
   username?: string;
@@ -19,33 +15,9 @@ export interface UserPageRequest {
    */
   nickname?: string;
   /**
-   * 密码
-   */
-  password?: string;
-  /**
-   * 头像
-   */
-  avatar?: string;
-  /**
-   * 手机号
-   */
-  phone?: string;
-  /**
-   * 邮箱
-   */
-  email?: string;
-  /**
-   * 用户类型
-   */
-  userType?: string;
-  /**
    * 用户状态（0:禁用；1：启用）
    */
   status?: number;
-  /**
-   * 是否删除
-   */
-  deleted?: boolean;
   pageNum?: number;
   pageSize?: number;
 }
@@ -67,10 +39,6 @@ export interface UserPageResponse {
    */
   nickname?: string;
   /**
-   * 密码
-   */
-  password?: string;
-  /**
    * 头像
    */
   avatar?: string;
@@ -83,17 +51,9 @@ export interface UserPageResponse {
    */
   email?: string;
   /**
-   * 用户类型
-   */
-  userType?: string;
-  /**
    * 用户状态（0:禁用；1：启用）
    */
   status?: number;
-  /**
-   * 是否删除
-   */
-  deleted?: boolean;
 }
 
 /**
@@ -129,17 +89,9 @@ export interface UserRequest {
    */
   email?: string;
   /**
-   * 用户类型
-   */
-  userType?: string;
-  /**
    * 用户状态（0:禁用；1：启用）
    */
   status?: number;
-  /**
-   * 是否删除
-   */
-  deleted?: boolean;
 }
 
 /**
@@ -182,10 +134,6 @@ export interface UserResponse {
    * 用户状态（0:禁用；1：启用）
    */
   status?: number;
-  /**
-   * 是否删除
-   */
-  deleted?: boolean;
 }
 
 /**
@@ -234,13 +182,52 @@ export interface UserListResponse {
   deleted?: boolean;
 }
 
+/**
+ * ResetPasswordRequest，重置密码
+ *
+ * ChangePasswordRequest，修改密码
+ */
+export interface ResetPasswordRequest {
+  /**
+   * id
+   */
+  id?: string;
+  /**
+   * 新密码
+   */
+  newPassword: string;
+  /**
+   * 标志
+   */
+  nonce?: string;
+  /**
+   * 重置密码枚举
+   */
+  resetPasswordEnums: ResetPasswordEnums;
+}
+
+export interface ChangePasswordRequest extends ResetPasswordRequest {
+  /**
+   * 旧密码
+   */
+  oldPassword: string;
+}
+
+/**
+ * 重置密码枚举
+ */
+export enum ResetPasswordEnums {
+  Change = "CHANGE",
+  Reset = "RESET",
+}
+
 enum Api {
   Base = '/user',
   ChangePassword = '/user/changePassword',
   Page = '/user/page',
   QueryAll = '/user/queryAll',
   QueryById = '/user/queryById',
-  ResetPassword = '/user/resetPassword',
+  ResetPassword = '/user/updatePassword',
 }
 
 /**
@@ -288,12 +275,6 @@ async function deleteUser(id: string | undefined) {
 /**
  * 修改密码（登录用户）
  */
-export interface ChangePasswordRequest {
-  oldPassword: string;
-  newPassword: string;
-  nonce?: string;
-}
-
 async function changePassword(data: ChangePasswordRequest) {
   return requestClient.post(Api.ChangePassword, data);
 }
@@ -301,13 +282,8 @@ async function changePassword(data: ChangePasswordRequest) {
 /**
  * 管理员重置用户密码
  */
-export interface ResetUserPasswordRequest {
-  newPassword: string;
-  nonce?: string;
-}
-
-async function resetUserPassword(id: string, data: ResetUserPasswordRequest) {
-  return requestClient.put(`${Api.ResetPassword}/${id}`, data);
+async function resetUserPassword(data: ResetPasswordRequest) {
+  return requestClient.put(`${Api.ResetPassword}`, data);
 }
 
 export {

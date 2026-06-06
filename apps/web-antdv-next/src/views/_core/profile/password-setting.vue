@@ -8,7 +8,7 @@ import { ProfilePasswordSetting, z } from '@vben/common-ui';
 import { message } from 'antdv-next';
 
 import { getPublicKeyApi } from '#/api/core/auth';
-import { changePassword } from '#/api/system/user';
+import { changePassword, ResetPasswordEnums } from '#/api/system/user';
 import { $t } from '#/locales';
 import { cryptoUtil } from '#/utils/crypto';
 
@@ -82,6 +82,7 @@ async function handleSubmit(values: Record<string, any>) {
       oldPassword: encryptedOldPassword,
       newPassword: encryptedNewPassword,
       nonce,
+      resetPasswordEnums: ResetPasswordEnums.Change,
     });
     message.success($t('profile.changeSuccess'));
   } catch {
