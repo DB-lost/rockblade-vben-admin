@@ -13,6 +13,7 @@ const allowedScopes = [
   'dev',
   'deploy',
   'other',
+  'infra',
 ];
 
 // precomputed scope
@@ -90,6 +91,7 @@ const userConfig = {
      * ^^^^^^^^^^^^^^ empty line.
      * - Something here
      */
+    'body-max-line-length': [0],
     'body-leading-blank': [2, 'always'],
     /**
      * type[scope]: [function] description
