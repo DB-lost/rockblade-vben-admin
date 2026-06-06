@@ -217,8 +217,8 @@ export interface ChangePasswordRequest extends ResetPasswordRequest {
  * 重置密码枚举
  */
 export enum ResetPasswordEnums {
-  Change = "CHANGE",
-  Reset = "RESET",
+  Change = 'CHANGE',
+  Reset = 'RESET',
 }
 
 enum Api {

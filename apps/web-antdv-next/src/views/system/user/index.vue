@@ -9,13 +9,19 @@ import type { UserPageResponse } from '#/api';
 
 import { ref } from 'vue';
 
-import { Page, useVbenDrawer, VbenButton } from '@vben/common-ui';
+import { Page, useVbenDrawer, useVbenModal, VbenButton, VbenInputPassword } from '@vben/common-ui';
 import { Plus } from '@vben/icons';
 
-import { Input, message, Modal } from 'ant-design-vue';
+import { message, Modal } from 'ant-design-vue';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
-import { deleteUser, pageUser, ResetPasswordEnums, resetUserPassword, updateUser } from '#/api';
+import {
+  deleteUser,
+  pageUser,
+  ResetPasswordEnums,
+  resetUserPassword,
+  updateUser,
+} from '#/api';
 import { getPublicKeyApi } from '#/api/core/auth';
 import { $t } from '#/locales';
 import { cryptoUtil } from '#/utils/crypto';
@@ -122,43 +128,50 @@ async function onStatusChange(newStatus: number, row: UserPageResponse) {
   }
 }
 
-const resetPasswordVisible = ref(false);
-const resetPasswordUsername = ref('');
 const resetPasswordValue = ref('');
-const resetPasswordUserId = ref('');
 
-function openResetPassword(row: UserPageResponse) {
-  resetPasswordUsername.value = row.username ?? '';
-  resetPasswordUserId.value = row.id ?? '';
-  resetPasswordValue.value = '';
-  resetPasswordVisible.value = true;
-}
-
-async function handleResetPassword() {
-  if (!resetPasswordValue.value) {
-    message.warning('请输入新密码');
-    return;
-  }
-  try {
-    const { publicKey, nonce } = await getPublicKeyApi();
-    cryptoUtil.setPublicKey(publicKey, nonce);
-    const encrypted = cryptoUtil.encryptWithRSA(resetPasswordValue.value);
-    if (!encrypted) {
-      message.error('密码加密失败');
+const [ResetPasswordModal, resetPasswordModalApi] = useVbenModal({
+  title: '',
+  confirmText: '确定',
+  onConfirm: async () => {
+    if (!resetPasswordValue.value) {
+      message.warning('请输入新密码');
       return;
     }
-    await resetUserPassword({
-      id: resetPasswordUserId.value,
-      newPassword: encrypted,
-      nonce,
-      resetPasswordEnums: ResetPasswordEnums.Reset,
-    });
-    message.success('密码重置成功');
-    resetPasswordVisible.value = false;
-    onRefresh();
-  } catch {
-    message.error('密码重置失败');
-  }
+    try {
+      const { publicKey, nonce } = await getPublicKeyApi();
+      cryptoUtil.setPublicKey(publicKey, nonce);
+      const encrypted = cryptoUtil.encryptWithRSA(resetPasswordValue.value);
+      if (!encrypted) {
+        message.error('密码加密失败');
+        return;
+      }
+      await resetUserPassword({
+        id: resetPasswordModalApi.getData().id,
+        newPassword: encrypted,
+        nonce,
+        resetPasswordEnums: ResetPasswordEnums.Reset,
+      });
+      message.success('密码重置成功');
+      resetPasswordModalApi.close();
+      onRefresh();
+    } catch {
+      message.error('密码重置失败');
+    }
+  },
+  onOpenChange: (isOpen) => {
+    if (!isOpen) {
+      resetPasswordValue.value = '';
+    }
+  },
+});
+
+function openResetPassword(row: UserPageResponse) {
+  resetPasswordValue.value = '';
+  resetPasswordModalApi
+    .setData({ id: row.id })
+    .setState({ title: `重置密码 - ${row.username}` })
+    .open();
 }
 
 function onDelete(row: UserPageResponse) {
@@ -200,8 +213,8 @@ function onCreate() {
       </template>
     </Grid>
 
-    <Modal v-model:open="resetPasswordVisible" :title="`重置密码 - ${resetPasswordUsername}`" @ok="handleResetPassword">
-      <Input.Password v-model:value="resetPasswordValue" placeholder="请输入新密码" style="width: 100%" />
-    </Modal>
+    <ResetPasswordModal>
+      <VbenInputPassword v-model:model-value="resetPasswordValue" placeholder="请输入新密码" class="w-full" />
+    </ResetPasswordModal>
   </Page>
 </template>

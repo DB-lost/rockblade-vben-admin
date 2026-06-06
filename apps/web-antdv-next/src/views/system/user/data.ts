@@ -130,6 +130,19 @@ export function useColumns<T = UserPageResponse>(
           onClick: onActionClick,
         },
         name: 'CellOperation',
+        options: [
+          {
+            code: 'resetPassword',
+            text: $t('common.resetPassword'),
+            type: 'link',
+          },
+          {
+            code: 'delete',
+            danger: true,
+            text: $t('common.delete'),
+            type: 'link',
+          },
+        ],
       },
       field: 'operation',
       fixed: 'right',
