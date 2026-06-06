@@ -1,0 +1,74 @@
+<script lang="ts" setup>
+import { computed, nextTick, ref } from 'vue';
+
+import { useVbenDrawer } from '@vben/common-ui';
+
+import { useVbenForm } from '#/adapter/form';
+import { queryUserById, saveUser, updateUser } from '#/api';
+import { $t } from '#/locales';
+
+import { useFormSchema } from '../data';
+
+const emits = defineEmits(['success']);
+
+const [Form, formApi] = useVbenForm({
+  schema: useFormSchema(),
+  showDefaultActions: false,
+  commonConfig: {
+    colon: true,
+    formItemClass: 'col-span-2 md:col-span-1',
+  },
+  wrapperClass: 'grid-cols-2 gap-x-4',
+});
+
+const id = ref();
+const [Drawer, drawerApi] = useVbenDrawer({
+  async onConfirm() {
+    const { valid } = await formApi.validate();
+    if (!valid) return;
+    const values = await formApi.getValues();
+    drawerApi.lock();
+    // 更新时补充主键
+    if (id.value) {
+      values.id = id.value;
+    }
+    (id.value ? updateUser : saveUser)(values)
+      .then(() => {
+        emits('success');
+        drawerApi.close();
+      })
+      .catch(() => {
+        drawerApi.unlock();
+      });
+  },
+
+  async onOpenChange(isOpen) {
+    if (isOpen) {
+      const data = drawerApi.getData();
+      // Wait for Vue to flush DOM updates (form fields mounted)
+      await nextTick();
+
+      if (data && data.id) {
+        id.value = data.id;
+        // 编辑时加载数据
+        await queryUserById(data.id).then((data) => {
+          formApi.setValues(data);
+        });
+      } else {
+        id.value = undefined;
+      }
+    }
+  },
+});
+
+const getDrawerTitle = computed(() => {
+  return id.value
+    ? $t('common.edit', $t('system.user.name'))
+    : $t('common.create', $t('system.user.name'));
+});
+</script>
+<template>
+  <Drawer class="w-full max-w-200" :title="getDrawerTitle">
+    <Form />
+  </Drawer>
+</template>

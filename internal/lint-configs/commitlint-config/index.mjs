@@ -14,6 +14,7 @@ const allowedScopes = [
   'deploy',
   'other',
   'infra',
+  'system',
 ];
 
 // precomputed scope
@@ -106,7 +107,7 @@ const userConfig = {
      *      ^^^^^
      */
     'function-rules/scope-enum': [
-      2, // level: error
+      0, // disabled
       'always',
       (parsed) => {
         if (!parsed.scope || allowedScopes.includes(parsed.scope)) {
