@@ -223,11 +223,10 @@ export enum ResetPasswordEnums {
 
 enum Api {
   Base = '/user',
-  ChangePassword = '/user/changePassword',
   Page = '/user/page',
   QueryAll = '/user/queryAll',
   QueryById = '/user/queryById',
-  ResetPassword = '/user/updatePassword',
+  UpdatePassword = '/user/updatePassword',
 }
 
 /**
@@ -276,14 +275,14 @@ async function deleteUser(id: string | undefined) {
  * 修改密码（登录用户）
  */
 async function changePassword(data: ChangePasswordRequest) {
-  return requestClient.post(Api.ChangePassword, data);
+  return requestClient.put(Api.UpdatePassword, data);
 }
 
 /**
  * 管理员重置用户密码
  */
 async function resetUserPassword(data: ResetPasswordRequest) {
-  return requestClient.put(`${Api.ResetPassword}`, data);
+  return requestClient.put(`${Api.UpdatePassword}`, data);
 }
 
 export {
