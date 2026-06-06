@@ -5,7 +5,9 @@ import { useVbenDrawer } from '@vben/common-ui';
 
 import { useVbenForm } from '#/adapter/form';
 import { saveUser } from '#/api';
+import { getPublicKeyApi } from '#/api/core/auth';
 import { $t } from '#/locales';
+import { cryptoUtil } from '#/utils/crypto';
 
 import { useFormSchema } from '../data';
 
@@ -27,6 +29,13 @@ const [Drawer, drawerApi] = useVbenDrawer({
     if (!valid) return;
     const values = await formApi.getValues();
     drawerApi.lock();
+    try {
+      const { publicKey, nonce } = await getPublicKeyApi();
+      cryptoUtil.setPublicKey(publicKey, nonce);
+      values.password = cryptoUtil.encryptWithRSA(values.password);
+    } catch {
+      // encryption failed, continue without encryption
+    }
     saveUser(values)
       .then(() => {
         emits('success');

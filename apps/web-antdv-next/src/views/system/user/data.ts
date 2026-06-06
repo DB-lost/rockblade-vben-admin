@@ -19,27 +19,20 @@ export function useFormSchema(): VbenFormSchema[] {
       rules: 'required',
     },
     {
-      component: 'Input',
+      component: 'InputPassword',
       fieldName: 'password',
       label: $t('system.user.password'),
       rules: 'required',
     },
     {
       component: 'Input',
-      fieldName: 'avatar',
-      label: $t('system.user.avatar'),
-    },
-    {
-      component: 'Input',
       fieldName: 'phone',
       label: $t('system.user.phone'),
-      rules: 'required',
     },
     {
       component: 'Input',
       fieldName: 'email',
       label: $t('system.user.email'),
-      rules: 'required',
     },
     {
       component: 'Select',
@@ -96,11 +89,6 @@ export function useColumns<T = UserPageResponse>(
       field: 'nickname',
       title: $t('system.user.nickname'),
       width: 150,
-    },
-    {
-      field: 'avatar',
-      title: $t('system.user.avatar'),
-      width: 200,
     },
     {
       field: 'phone',
