@@ -107,7 +107,6 @@ export function useColumns<T = UserPageResponse>(
       },
       field: 'status',
       title: $t('system.user.status'),
-      width: 150,
     },
     {
       align: 'center',
@@ -135,7 +134,7 @@ export function useColumns<T = UserPageResponse>(
       field: 'operation',
       fixed: 'right',
       title: $t('system.user.operation'),
-      //width: 130,
+      width: 150,
     },
   ];
 }

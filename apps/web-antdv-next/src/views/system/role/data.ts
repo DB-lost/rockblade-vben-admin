@@ -112,7 +112,6 @@ export function useColumns<T = SystemRoleApi.SystemRole>(
     {
       field: 'createTime',
       title: $t('system.role.createTime'),
-      width: 200,
     },
     {
       align: 'center',
@@ -127,7 +126,7 @@ export function useColumns<T = SystemRoleApi.SystemRole>(
       field: 'operation',
       fixed: 'right',
       title: $t('system.role.operation'),
-      width: 130,
+      width: 150,
     },
   ];
 }

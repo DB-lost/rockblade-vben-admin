@@ -171,7 +171,7 @@ export function useColumns<T = OperateLogPageResponse>(
       field: 'operation',
       fixed: 'right',
       title: $t('infra.operateLog.operation'),
-      //width: 130,
+      width: 150,
     },
   ];
 }

@@ -136,7 +136,7 @@ export function useColumns<T = CodegenTablePageResponse>(
       field: 'operation',
       fixed: 'right',
       title: $t('infra.codegen.operation'),
-      width: 240,
+      width: 150,
     },
   ];
 }
@@ -200,7 +200,7 @@ export function useTableColumns<T = TableInfoResponse>(
       field: 'operation',
       fixed: 'right',
       title: $t('infra.codegen.operation'),
-      width: 100,
+      width: 150,
     },
   ];
 }
