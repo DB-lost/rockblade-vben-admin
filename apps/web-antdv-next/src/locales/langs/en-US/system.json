@@ -69,5 +69,20 @@
     "operation": "Operation",
     "permissions": "Permissions",
     "setPermissions": "Permissions"
+  },
+  "user": {
+    "title": "User Management",
+    "name": "User",
+    "username": "Username",
+    "nickname": "Nickname",
+    "password": "Password",
+    "avatar": "Avatar",
+    "phone": "Phone",
+    "email": "Email",
+    "status": "Status",
+    "enable": "Enable",
+    "disable": "Disable",
+    "operation": "Operation",
+    "remark": "Remark"
   }
 }

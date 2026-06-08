@@ -6,6 +6,9 @@ import type { VbenFormSchema } from '@vben-core/form-ui';
 import { computed, reactive } from 'vue';
 
 import { useVbenForm } from '@vben-core/form-ui';
+import { VbenButton } from '@vben-core/shadcn-ui';
+
+import { $t } from '@vben/locales';
 
 interface Props {
   formSchema?: VbenFormSchema[];
@@ -48,8 +51,8 @@ defineExpose({
 <template>
   <div @keydown.enter.prevent="handleSubmit">
     <Form />
-    <!-- <VbenButton type="submit" class="mt-4" @click="handleSubmit">
+    <VbenButton type="submit" class="mt-4" @click="handleSubmit">
       {{ $t('profile.updateBasicProfile') }}
-    </VbenButton> -->
+    </VbenButton>
   </div>
 </template>

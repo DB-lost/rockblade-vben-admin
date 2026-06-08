@@ -147,6 +147,11 @@ export function useColumns<T = OperateLogPageResponse>(
       width: 200,
     },
     {
+      field: 'createTime',
+      title: $t('infra.operateLog.createTime'),
+      width: 200,
+    },
+    {
       align: 'center',
       cellRender: {
         attrs: {
