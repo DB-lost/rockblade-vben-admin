@@ -13,6 +13,8 @@ const allowedScopes = [
   'dev',
   'deploy',
   'other',
+  'infra',
+  'system',
 ];
 
 // precomputed scope
@@ -90,6 +92,7 @@ const userConfig = {
      * ^^^^^^^^^^^^^^ empty line.
      * - Something here
      */
+    'body-max-line-length': [0],
     'body-leading-blank': [2, 'always'],
     /**
      * type[scope]: [function] description
@@ -104,7 +107,7 @@ const userConfig = {
      *      ^^^^^
      */
     'function-rules/scope-enum': [
-      2, // level: error
+      0, // disabled
       'always',
       (parsed) => {
         if (!parsed.scope || allowedScopes.includes(parsed.scope)) {

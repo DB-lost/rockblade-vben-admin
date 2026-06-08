@@ -1,4 +1,13 @@
 {
   "updatePassword": "Update Password",
-  "updateBasicProfile": "Update Basic Profile"
+  "updateBasicProfile": "Update Basic Profile",
+  "oldPassword": "Old Password",
+  "newPassword": "New Password",
+  "confirmPassword": "Confirm Password",
+  "oldPasswordPlaceholder": "Please enter old password",
+  "newPasswordPlaceholder": "Please enter new password",
+  "confirmPasswordPlaceholder": "Please confirm new password",
+  "confirmPasswordMismatch": "Passwords do not match",
+  "changeSuccess": "Password changed successfully",
+  "changeFailed": "Password change failed"
 }
