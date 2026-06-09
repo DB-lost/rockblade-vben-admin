@@ -222,7 +222,11 @@ function onCreate() {
     </Grid>
 
     <ResetPasswordModal>
-      <VbenInputPassword v-model:model-value="resetPasswordValue" placeholder="请输入新密码" class="w-full" />
+      <VbenInputPassword
+        v-model:model-value="resetPasswordValue"
+        placeholder="请输入新密码"
+        class="w-full"
+      />
     </ResetPasswordModal>
   </Page>
 </template>
