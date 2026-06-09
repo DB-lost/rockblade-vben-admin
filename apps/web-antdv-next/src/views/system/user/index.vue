@@ -127,6 +127,8 @@ async function onStatusChange(newStatus: number, row: UserPageResponse) {
       username: row.username,
       nickname: row.nickname,
       status: newStatus,
+      email: row.email,
+      phone: row.phone,
     } as any);
     return true;
   } catch {
@@ -220,11 +222,7 @@ function onCreate() {
     </Grid>
 
     <ResetPasswordModal>
-      <VbenInputPassword
-        v-model:model-value="resetPasswordValue"
-        placeholder="请输入新密码"
-        class="w-full"
-      />
+      <VbenInputPassword v-model:model-value="resetPasswordValue" placeholder="请输入新密码" class="w-full" />
     </ResetPasswordModal>
   </Page>
 </template>
