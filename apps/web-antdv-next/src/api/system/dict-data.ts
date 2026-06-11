@@ -238,10 +238,8 @@ async function deleteDictData(id: string | undefined) {
 /**
  * 根据字典类型编码查询字典数据
  */
-async function queryByTypeApi(request: { dictType: string }) {
-  return requestClient.get<DictDataResponse[]>(Api.QueryByType, {
-    params: request,
-  });
+async function queryByTypeApi(dictType: string) {
+  return requestClient.get<DictDataResponse[]>(`${Api.QueryByType}/${dictType}`);
 }
 
 export {

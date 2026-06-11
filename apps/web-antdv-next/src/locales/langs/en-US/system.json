@@ -110,6 +110,7 @@
     "phone": "Phone",
     "email": "Email",
     "status": "Status",
+    "sex": "Gender",
     "enable": "Enable",
     "disable": "Disable",
     "operation": "Operation",

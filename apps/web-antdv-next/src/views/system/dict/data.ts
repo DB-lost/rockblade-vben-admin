@@ -111,7 +111,7 @@ export function useColumns<T = DictTypePageResponse>(
             type: 'link',
           },
           {
-            code: 'update',
+            code: 'edit',
             danger: false,
             text: $t('ui.actionTitle.edit'),
             type: 'link',

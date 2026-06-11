@@ -203,6 +203,10 @@ function onBackToTypes() {
       </Grid>
     </Page>
     <!-- DictData 子视图 -->
-    <DictDataView v-if="selectedType" :selected-type="selectedType" @back="onBackToTypes" />
+    <DictDataView
+      v-if="selectedType"
+      :selected-type="selectedType"
+      @back="onBackToTypes"
+    />
   </div>
 </template>

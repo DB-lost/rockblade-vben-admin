@@ -112,6 +112,7 @@
     "phone": "手机号",
     "email": "邮箱",
     "status": "用户状态",
+    "sex": "性别",
     "enable": "启用",
     "disable": "禁用",
     "operation": "操作",

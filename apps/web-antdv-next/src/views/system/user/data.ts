@@ -2,9 +2,13 @@ import type { VbenFormSchema } from '#/adapter/form';
 import type { OnActionClickFn, VxeTableGridColumns } from '#/adapter/vxe-table';
 import type { UserPageResponse } from '#/api';
 
+import { loadDictOptions } from '#/composables/useDict';
 import { $t } from '#/locales';
 
+const sexOptions = await loadDictOptions('sys_user_sex');
+
 export function useFormSchema(): VbenFormSchema[] {
+
   return [
     {
       component: 'Input',
@@ -33,6 +37,16 @@ export function useFormSchema(): VbenFormSchema[] {
       component: 'Input',
       fieldName: 'email',
       label: $t('system.user.email'),
+    },
+    {
+      component: 'Select',
+      fieldName: 'sex',
+      label: $t('system.user.sex'),
+      componentProps: {
+        allowClear: true,
+        placeholder: $t('ui.placeholder.select'),
+        options: sexOptions,
+      },
     },
     {
       component: 'Select',

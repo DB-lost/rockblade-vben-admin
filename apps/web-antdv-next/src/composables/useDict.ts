@@ -17,6 +17,49 @@ const cacheMap = new Map<string, DictOption[]>();
 const pendingMap = new Map<string, Promise<DictOption[]>>();
 
 /**
+ * 独立函数：根据字典类型编码获取选项列表（带缓存和并发去重）
+ * 可在 composable 外部直接调用（如 data.ts 配置文件中）
+ */
+export async function loadDictOptions(
+  dictType: string,
+): Promise<DictOption[]> {
+  if (cacheMap.has(dictType)) {
+    return cacheMap.get(dictType) as DictOption[];
+  }
+
+  if (pendingMap.has(dictType)) {
+    return pendingMap.get(dictType) as Promise<DictOption[]>;
+  }
+
+  const promise = queryByTypeApi(dictType)
+    .then((res) => {
+      const options: DictOption[] = (res ?? []).map((item) => ({
+        label: item.label ?? '',
+        value: item.value ?? '',
+      }));
+      cacheMap.set(dictType, options);
+      return options;
+    })
+    .finally(() => {
+      pendingMap.delete(dictType);
+    });
+
+  pendingMap.set(dictType, promise);
+  return promise;
+}
+
+/**
+ * 清除缓存
+ */
+export function clearDictCache(dictType?: string): void {
+  if (dictType) {
+    cacheMap.delete(dictType);
+  } else {
+    cacheMap.clear();
+  }
+}
+
+/**
  * 按需加载字典数据的 composable
  *
  * @example
@@ -29,45 +72,15 @@ const pendingMap = new Map<string, Promise<DictOption[]>>();
 export function useDict() {
   const loading = ref(false);
 
-  /**
-   * 根据字典类型编码获取选项列表（带缓存和并发去重）
-   * @param dictType - 字典类型编码，如 'sys_user_sex'
-   */
   async function getDictOptions(dictType: string): Promise<DictOption[]> {
-    // 命中缓存直接返回
-    if (cacheMap.has(dictType)) {
-      return cacheMap.get(dictType) as DictOption[];
-    }
-
-    if (pendingMap.has(dictType)) {
-      return pendingMap.get(dictType) as Promise<DictOption[]>;
-    }
-
     loading.value = true;
-    const promise = queryByTypeApi({ dictType })
-      .then((res) => {
-        const options: DictOption[] = (res ?? []).map((item) => ({
-          label: item.label ?? '',
-          value: item.value ?? '',
-        }));
-        cacheMap.set(dictType, options);
-        return options;
-      })
-      .finally(() => {
-        pendingMap.delete(dictType);
-        loading.value = false;
-      });
-
-    pendingMap.set(dictType, promise);
-    return promise;
+    try {
+      return await loadDictOptions(dictType);
+    } finally {
+      loading.value = false;
+    }
   }
 
-  /**
-   * 根据字典类型编码和值获取标签文本
-   * @param dictType - 字典类型编码
-   * @param value - 字典值
-   * @returns 标签文本，未找到时返回原值
-   */
   async function getDictLabel(
     dictType: string,
     value: string,
@@ -77,22 +90,9 @@ export function useDict() {
     return item?.label ?? value;
   }
 
-  /**
-   * 清除缓存
-   * @param dictType - 不传则清除所有缓存
-   */
   function clearCache(dictType?: string): void {
-    if (dictType) {
-      cacheMap.delete(dictType);
-    } else {
-      cacheMap.clear();
-    }
+    clearDictCache(dictType);
   }
 
-  return {
-    getDictOptions,
-    getDictLabel,
-    clearCache,
-    loading,
-  };
+  return { getDictOptions, getDictLabel, clearCache, loading };
 }
