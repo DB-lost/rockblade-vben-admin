@@ -6,7 +6,7 @@ import { computed, nextTick, ref } from 'vue';
 import { useVbenDrawer } from '@vben/common-ui';
 
 import { useVbenForm } from '#/adapter/form';
-import { queryDictTypeById, saveDictType, updateDictType } from '#/api';
+import { saveDictType, updateDictType } from '#/api';
 import { $t } from '#/locales';
 
 import { useFormSchema } from '../data';
