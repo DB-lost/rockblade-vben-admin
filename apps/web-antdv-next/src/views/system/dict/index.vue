@@ -8,7 +8,7 @@ import type { DictTypePageResponse } from '#/api';
 import { ref } from 'vue';
 
 import { Page, useVbenDrawer, VbenButton } from '@vben/common-ui';
-import { ArrowLeft, Plus } from '@vben/icons';
+import { Plus } from '@vben/icons';
 
 import { message, Modal } from 'ant-design-vue';
 
@@ -181,38 +181,27 @@ function onBackToTypes() {
   selectedType.value = null;
   onRefresh();
 }
+
+
 </script>
 <template>
-  <Page auto-content-height>
-    <!-- DictData 视图：返回按钮在左，类型信息在右 -->
-    <template v-if="selectedType" #title>
-      <VbenButton variant="link" class="px-0" @click="onBackToTypes">
-        <ArrowLeft class="size-5" />
-        {{ $t('common.back') }}
-      </VbenButton>
-    </template>
-    <template v-if="selectedType" #extra>
-      <span class="text-lg font-medium">
-        {{ selectedType.name }}
-      </span>
-    </template>
-
-    <FormDrawer @success="onRefresh" />
-
-    <!-- DictType 列表视图 -->
-    <Grid v-if="!selectedType">
-      <template #toolbar-tools>
-        <VbenButton variant="default" @click="onCreate">
-          <Plus class="size-5" />
-          {{ $t('ui.actionTitle.create', [$t('system.dict.type.name')]) }}
-        </VbenButton>
-        <VbenButton class="ml-2" variant="default" @click="onRefreshCache">
-          {{ $t('system.dict.type.refreshCache') }}
-        </VbenButton>
-      </template>
-    </Grid>
-
+  <div class="contents">
+    <Page v-if="!selectedType" auto-content-height>
+      <FormDrawer @success="onRefresh" />
+      <!-- DictType 列表视图 -->
+      <Grid>
+        <template #toolbar-tools>
+          <VbenButton variant="default" @click="onCreate">
+            <Plus class="size-5" />
+            {{ $t('ui.actionTitle.create', [$t('system.dict.type.name')]) }}
+          </VbenButton>
+          <VbenButton class="ml-2" variant="default" @click="onRefreshCache">
+            {{ $t('system.dict.type.refreshCache') }}
+          </VbenButton>
+        </template>
+      </Grid>
+    </Page>
     <!-- DictData 子视图 -->
-    <DictDataView v-if="selectedType" :key="selectedType.id" :dict-type-id="selectedType.id!" />
-  </Page>
+    <DictDataView v-if="selectedType" :selected-type="selectedType" @back="onBackToTypes" />
+  </div>
 </template>

@@ -111,15 +111,15 @@ export function useColumns<T = DictTypePageResponse>(
             type: 'link',
           },
           {
-            code: 'delete',
-            danger: true,
-            text: $t('ui.actionTitle.delete'),
-            type: 'link',
-          },
-          {
             code: 'update',
             danger: false,
             text: $t('ui.actionTitle.edit'),
+            type: 'link',
+          },
+          {
+            code: 'delete',
+            danger: true,
+            text: $t('ui.actionTitle.delete'),
             type: 'link',
           },
         ],
