@@ -19,6 +19,7 @@ import {
   refreshCacheApi,
   updateDictType,
 } from '#/api';
+import { useDict } from '#/composables/useDict';
 import { $t } from '#/locales';
 
 import { useColumns, useGridFormSchema } from './data';
@@ -26,6 +27,7 @@ import DictDataView from './data.vue';
 import Form from './modules/type-form.vue';
 
 const selectedType = ref<DictTypePageResponse | null>(null);
+const { clearCache } = useDict();
 
 const [FormDrawer, formDrawerApi] = useVbenDrawer({
   connectedComponent: Form,
@@ -162,6 +164,7 @@ function onRefreshCache() {
   });
   refreshCacheApi()
     .then(() => {
+      clearCache();
       message.success({
         content: $t('ui.actionMessage.operationSuccess'),
         key: 'action_process_msg',
@@ -200,10 +203,6 @@ function onBackToTypes() {
       </Grid>
     </Page>
     <!-- DictData 子视图 -->
-    <DictDataView
-      v-if="selectedType"
-      :selected-type="selectedType"
-      @back="onBackToTypes"
-    />
+    <DictDataView v-if="selectedType" :selected-type="selectedType" @back="onBackToTypes" />
   </div>
 </template>
