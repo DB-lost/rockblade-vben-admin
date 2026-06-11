@@ -72,6 +72,36 @@
     "permissions": "权限",
     "setPermissions": "授权"
   },
+  "dict": {
+    "title": "字典管理",
+    "type": {
+      "title": "字典类型",
+      "name": "字典类型",
+      "list": "字典类型列表",
+      "code": "字典编码",
+      "nameField": "字典名称",
+      "status": "状态",
+      "remark": "备注",
+      "operation": "操作",
+      "manageData": "管理数据",
+      "refreshCache": "刷新缓存"
+    },
+    "data": {
+      "title": "字典数据",
+      "name": "字典数据",
+      "list": "字典数据列表",
+      "label": "字典标签",
+      "value": "字典值",
+      "order": "排序",
+      "cssClass": "样式",
+      "listClass": "表格回显样式",
+      "isDefault": "是否默认",
+      "status": "状态",
+      "remark": "备注",
+      "operation": "操作",
+      "dictType": "字典类型"
+    }
+  },
   "user": {
     "title": "用户管理",
     "name": "用户",

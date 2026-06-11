@@ -53,6 +53,27 @@ const routes: RouteRecordRaw[] = [
         },
         component: () => import('#/views/system/user/index.vue'),
       },
+      {
+        path: '/system/dict',
+        name: 'SystemDict',
+        meta: {
+          icon: 'mdi:book-open-outline',
+          title: $t('system.dict.title'),
+          authority: ['DevelopRoleCode', 'InitAdminCode'],
+        },
+        component: () => import('#/views/system/dict/index.vue'),
+        children: [
+          {
+            path: '/system/dict/data',
+            name: 'SystemDictData',
+            meta: {
+              title: $t('system.dict.data.title'),
+              hideInMenu: true,
+            },
+            component: () => import('#/views/system/dict/data.vue'),
+          },
+        ],
+      },
     ],
   },
 ];
