@@ -78,6 +78,10 @@ function onActionClick(e: OnActionClickParams<DictTypePageResponse>) {
       onEdit(e.row);
       break;
     }
+    case 'manageData': {
+      onManageData(e.row);
+      break;
+    }
   }
 }
 
@@ -189,11 +193,6 @@ function onManageData(row: DictTypePageResponse) {
         </VbenButton>
         <VbenButton class="ml-2" variant="default" @click="onRefreshCache">
           {{ $t('system.dict.type.refreshCache') }}
-        </VbenButton>
-      </template>
-      <template #manageData="{ row }">
-        <VbenButton variant="link" @click="onManageData(row)">
-          {{ $t('system.dict.type.manageData') }}
         </VbenButton>
       </template>
     </Grid>

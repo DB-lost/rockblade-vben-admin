@@ -10,17 +10,6 @@ import { $t } from '#/locales';
 export function useFormSchema(): VbenFormSchema[] {
   return [
     {
-      component: 'Select',
-      fieldName: 'dictTypeId',
-      label: $t('system.dict.data.dictType'),
-      rules: 'selectRequired',
-      componentProps: {
-        allowClear: true,
-        placeholder: $t('ui.placeholder.select'),
-        options: [],
-      },
-    },
-    {
       component: 'Input',
       fieldName: 'label',
       label: $t('system.dict.data.label'),
@@ -104,16 +93,6 @@ export function useFormSchema(): VbenFormSchema[] {
  */
 export function useGridFormSchema(): VbenFormSchema[] {
   return [
-    {
-      component: 'Select',
-      fieldName: 'dictTypeId',
-      label: $t('system.dict.data.dictType'),
-      componentProps: {
-        allowClear: true,
-        placeholder: $t('ui.placeholder.select'),
-        options: [],
-      },
-    },
     {
       component: 'Input',
       fieldName: 'label',

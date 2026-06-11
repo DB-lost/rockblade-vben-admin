@@ -98,25 +98,37 @@ export function useColumns<T = DictTypePageResponse>(
     },
     {
       align: 'center',
-      field: 'manageData',
-      slots: { default: 'manageData' },
-      title: '',
-      width: 100,
-    },
-    {
-      align: 'center',
       cellRender: {
         attrs: {
-          nameField: 'name',
-          nameTitle: $t('system.dict.type.nameField'),
           onClick: onActionClick,
         },
         name: 'CellOperation',
+        options: [
+          {
+            code: 'manageData',
+            danger: false,
+            text: $t('system.dict.type.manageData'),
+            type: 'link',
+          },
+          {
+            code: 'delete',
+            danger: true,
+            text: $t('ui.actionTitle.delete'),
+            type: 'link',
+          },
+          {
+            code: 'update',
+            danger: false,
+            text: $t('ui.actionTitle.edit'),
+            type: 'link',
+          },
+        ],
       },
       field: 'operation',
       fixed: 'right',
       title: $t('system.dict.type.operation'),
-      width: 150,
+      width: 200,
     },
+
   ];
 }
