@@ -7,8 +7,8 @@ import { requestClient } from '#/api/request';
  */
 export interface DictDataPageRequest {
   /**
-     * 字典类型ID
-     */
+   * 字典类型ID
+   */
   dictTypeId?: string;
   isAsc?: boolean;
   /**
@@ -34,8 +34,8 @@ export interface DictDataPageRequest {
  */
 export interface DictDataPageResponse {
   /**
-     * 样式（如 primary/danger）
-     */
+   * 样式（如 primary/danger）
+   */
   cssClass?: string;
   /**
    * 字典类型ID
@@ -80,8 +80,8 @@ export interface DictDataPageResponse {
  */
 export interface DictDataRequest {
   /**
-     * 样式（如 primary/danger）
-     */
+   * 样式（如 primary/danger）
+   */
   cssClass?: string;
   /**
    * 字典类型ID
@@ -126,8 +126,8 @@ export interface DictDataRequest {
  */
 export interface DictDataResponse {
   /**
-     * 样式（如 primary/danger）
-     */
+   * 样式（如 primary/danger）
+   */
   cssClass?: string;
   /**
    * 字典类型ID
@@ -172,8 +172,8 @@ export interface DictDataResponse {
  */
 export interface DictDataListResponse {
   /**
-     * 字典数据主键
-     */
+   * 字典数据主键
+   */
   id?: string;
   /**
    * 字典标签
@@ -239,7 +239,9 @@ async function deleteDictData(id: string | undefined) {
  * 根据字典类型编码查询字典数据
  */
 async function queryByTypeApi(request: { dictType: string }) {
-  return requestClient.get<DictDataResponse[]>(Api.QueryByType, { params: request });
+  return requestClient.get<DictDataResponse[]>(Api.QueryByType, {
+    params: request,
+  });
 }
 
 export {
@@ -249,5 +251,5 @@ export {
   queryByTypeApi,
   queryDictDataById,
   saveDictData,
-  updateDictData
+  updateDictData,
 };

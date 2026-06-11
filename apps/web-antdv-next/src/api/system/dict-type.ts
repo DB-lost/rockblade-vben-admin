@@ -56,8 +56,8 @@ export interface DictTypePageResponse {
  */
 export interface DictTypeRequest {
   /**
-     * 字典编码
-     */
+   * 字典编码
+   */
   code: string;
   /**
    * 字典主键
@@ -82,8 +82,8 @@ export interface DictTypeRequest {
  */
 export interface DictTypeResponse {
   /**
-     * 字典编码
-     */
+   * 字典编码
+   */
   code?: string;
   /**
    * 字典主键
@@ -108,8 +108,8 @@ export interface DictTypeResponse {
  */
 export interface DictTypeListResponse {
   /**
-     * 字典编码
-     */
+   * 字典编码
+   */
   code?: string;
   /**
    * 字典主键
@@ -139,7 +139,6 @@ export interface CheckCodeUniqueRequest {
    */
   excludeId: string;
 }
-
 
 enum Api {
   Base = '/dictType',
