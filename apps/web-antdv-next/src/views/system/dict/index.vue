@@ -184,20 +184,23 @@ function onBackToTypes() {
 </script>
 <template>
   <Page auto-content-height>
+    <!-- DictData 视图：返回按钮在左，类型信息在右 -->
     <template v-if="selectedType" #title>
       <VbenButton variant="link" class="px-0" @click="onBackToTypes">
         <ArrowLeft class="size-5" />
         {{ $t('common.back') }}
       </VbenButton>
-      <span class="ml-2 text-lg font-semibold">
-        {{ selectedType.name }} — {{ $t('system.dict.data.list') }}
+    </template>
+    <template v-if="selectedType" #extra>
+      <span class="text-lg font-medium">
+        {{ selectedType.name }}
       </span>
     </template>
 
     <FormDrawer @success="onRefresh" />
 
     <!-- DictType 列表视图 -->
-    <Grid v-if="!selectedType" :table-title="$t('system.dict.type.list')">
+    <Grid v-if="!selectedType">
       <template #toolbar-tools>
         <VbenButton variant="default" @click="onCreate">
           <Plus class="size-5" />

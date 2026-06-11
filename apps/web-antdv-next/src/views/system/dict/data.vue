@@ -110,7 +110,7 @@ function onCreate() {
 </script>
 <template>
   <FormDrawer @success="onRefresh" />
-  <Grid :table-title="$t('system.dict.data.list')">
+  <Grid>
     <template #toolbar-tools>
       <VbenButton variant="default" @click="onCreate">
         <Plus class="size-5" />
