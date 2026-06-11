@@ -7,31 +7,22 @@ import { requestClient } from '#/api/request';
  */
 export interface DictTypePageRequest {
   /**
-   * 字典主键
+   * 字典编码
    */
-  id?: string;
+  code?: string;
+  isAsc?: boolean;
   /**
    * 字典名称
    */
   name?: string;
-  /**
-   * 字典编码
-   */
-  code?: string;
+  offset?: number;
+  orderBy?: string;
+  pageNum?: number;
+  pageSize?: number;
   /**
    * 状态（0停用 1启用）
    */
   status?: number;
-  /**
-   * 备注
-   */
-  remark?: string;
-  /**
-   * 是否删除
-   */
-  deleted?: boolean;
-  pageNum?: number;
-  pageSize?: number;
 }
 
 /**
@@ -39,6 +30,10 @@ export interface DictTypePageRequest {
  */
 export interface DictTypePageResponse {
   /**
+   * 字典编码
+   */
+  code?: string;
+  /**
    * 字典主键
    */
   id?: string;
@@ -47,21 +42,13 @@ export interface DictTypePageResponse {
    */
   name?: string;
   /**
-   * 字典编码
-   */
-  code?: string;
-  /**
-   * 状态（0停用 1启用）
-   */
-  status?: number;
-  /**
    * 备注
    */
   remark?: string;
   /**
-   * 是否删除
+   * 状态（0停用 1启用）
    */
-  deleted?: boolean;
+  status?: number;
 }
 
 /**
@@ -69,29 +56,25 @@ export interface DictTypePageResponse {
  */
 export interface DictTypeRequest {
   /**
+     * 字典编码
+     */
+  code: string;
+  /**
    * 字典主键
    */
   id?: string;
   /**
    * 字典名称
    */
-  name?: string;
-  /**
-   * 字典编码
-   */
-  code?: string;
-  /**
-   * 状态（0停用 1启用）
-   */
-  status?: number;
+  name: string;
   /**
    * 备注
    */
   remark?: string;
   /**
-   * 是否删除
+   * 状态（0停用 1启用）
    */
-  deleted?: boolean;
+  status: number;
 }
 
 /**
@@ -99,6 +82,10 @@ export interface DictTypeRequest {
  */
 export interface DictTypeResponse {
   /**
+     * 字典编码
+     */
+  code?: string;
+  /**
    * 字典主键
    */
   id?: string;
@@ -107,21 +94,13 @@ export interface DictTypeResponse {
    */
   name?: string;
   /**
-   * 字典编码
-   */
-  code?: string;
-  /**
-   * 状态（0停用 1启用）
-   */
-  status?: number;
-  /**
    * 备注
    */
   remark?: string;
   /**
-   * 是否删除
+   * 状态（0停用 1启用）
    */
-  deleted?: boolean;
+  status?: number;
 }
 
 /**
@@ -129,6 +108,10 @@ export interface DictTypeResponse {
  */
 export interface DictTypeListResponse {
   /**
+     * 字典编码
+     */
+  code?: string;
+  /**
    * 字典主键
    */
   id?: string;
@@ -137,28 +120,34 @@ export interface DictTypeListResponse {
    */
   name?: string;
   /**
-   * 字典编码
-   */
-  code?: string;
-  /**
-   * 状态（0停用 1启用）
-   */
-  status?: number;
-  /**
    * 备注
    */
   remark?: string;
   /**
-   * 是否删除
+   * 状态（0停用 1启用）
    */
-  deleted?: boolean;
+  status?: number;
 }
+
+export interface CheckCodeUniqueRequest {
+  /**
+   * 字典类型编码
+   */
+  code: string;
+  /**
+   * 排除的ID（更新时使用）
+   */
+  excludeId: string;
+}
+
 
 enum Api {
   Base = '/dictType',
+  CheckCodeUnique = '/dictType/checkCodeUnique',
   Page = '/dictType/page',
   QueryAll = '/dictType/queryAll',
   QueryById = '/dictType/queryById',
+  RefreshCache = '/dictType/refreshCache',
 }
 
 /**
@@ -203,11 +192,27 @@ async function deleteDictType(id: string | undefined) {
   return requestClient.delete(`${Api.Base}/${id}`);
 }
 
+/**
+ * 检查字典类型编码是否唯一
+ */
+async function checkCodeUniqueApi(request: CheckCodeUniqueRequest) {
+  return requestClient.get<boolean>(Api.CheckCodeUnique, { params: request });
+}
+
+/**
+ * 刷新所有字典数据缓存
+ */
+async function refreshCacheApi() {
+  return requestClient.put(Api.RefreshCache);
+}
+
 export {
+  checkCodeUniqueApi,
   deleteDictType,
   pageDictType,
   queryAllDictType,
   queryDictTypeById,
+  refreshCacheApi,
   saveDictType,
   updateDictType,
 };

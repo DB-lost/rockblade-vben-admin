@@ -7,51 +7,26 @@ import { requestClient } from '#/api/request';
  */
 export interface DictDataPageRequest {
   /**
-   * 字典数据主键
-   */
-  id?: string;
-  /**
-   * 字典类型ID
-   */
+     * 字典类型ID
+     */
   dictTypeId?: string;
+  isAsc?: boolean;
   /**
    * 字典标签
    */
   label?: string;
-  /**
-   * 字典值
-   */
-  value?: string;
-  /**
-   * 排序
-   */
-  order?: number;
+  offset?: number;
+  orderBy?: string;
+  pageNum?: number;
+  pageSize?: number;
   /**
    * 状态（0停用 1启用）
    */
   status?: number;
   /**
-   * 样式（如 primary/danger）
+   * 字典值
    */
-  cssClass?: string;
-  /**
-   * 表格回显样式（如 default/warning）
-   */
-  listClass?: string;
-  /**
-   * 是否默认
-   */
-  isDefault?: boolean;
-  /**
-   * 备注
-   */
-  remark?: string;
-  /**
-   * 是否删除
-   */
-  deleted?: boolean;
-  pageNum?: number;
-  pageSize?: number;
+  value?: string;
 }
 
 /**
@@ -59,49 +34,45 @@ export interface DictDataPageRequest {
  */
 export interface DictDataPageResponse {
   /**
-   * 字典数据主键
-   */
-  id?: string;
+     * 样式（如 primary/danger）
+     */
+  cssClass?: string;
   /**
    * 字典类型ID
    */
   dictTypeId?: string;
   /**
-   * 字典标签
+   * 字典数据主键
    */
-  label?: string;
-  /**
-   * 字典值
-   */
-  value?: string;
-  /**
-   * 排序
-   */
-  order?: number;
-  /**
-   * 状态（0停用 1启用）
-   */
-  status?: number;
-  /**
-   * 样式（如 primary/danger）
-   */
-  cssClass?: string;
-  /**
-   * 表格回显样式（如 default/warning）
-   */
-  listClass?: string;
+  id?: string;
   /**
    * 是否默认
    */
   isDefault?: boolean;
   /**
+   * 字典标签
+   */
+  label?: string;
+  /**
+   * 表格回显样式（如 default/warning）
+   */
+  listClass?: string;
+  /**
+   * 排序
+   */
+  order?: number;
+  /**
    * 备注
    */
   remark?: string;
   /**
-   * 是否删除
+   * 状态（0停用 1启用）
    */
-  deleted?: boolean;
+  status?: number;
+  /**
+   * 字典值
+   */
+  value?: string;
 }
 
 /**
@@ -109,49 +80,45 @@ export interface DictDataPageResponse {
  */
 export interface DictDataRequest {
   /**
-   * 字典数据主键
-   */
-  id?: string;
+     * 样式（如 primary/danger）
+     */
+  cssClass?: string;
   /**
    * 字典类型ID
    */
-  dictTypeId?: string;
+  dictTypeId: string;
   /**
-   * 字典标签
+   * 字典数据主键
    */
-  label?: string;
-  /**
-   * 字典值
-   */
-  value?: string;
-  /**
-   * 排序
-   */
-  order?: number;
-  /**
-   * 状态（0停用 1启用）
-   */
-  status?: number;
-  /**
-   * 样式（如 primary/danger）
-   */
-  cssClass?: string;
-  /**
-   * 表格回显样式（如 default/warning）
-   */
-  listClass?: string;
+  id?: string;
   /**
    * 是否默认
    */
   isDefault?: boolean;
   /**
+   * 字典标签
+   */
+  label: string;
+  /**
+   * 表格回显样式（如 default/warning）
+   */
+  listClass?: string;
+  /**
+   * 排序
+   */
+  order?: number;
+  /**
    * 备注
    */
   remark?: string;
   /**
-   * 是否删除
+   * 状态（0停用 1启用）
    */
-  deleted?: boolean;
+  status: number;
+  /**
+   * 字典值
+   */
+  value: string;
 }
 
 /**
@@ -159,49 +126,45 @@ export interface DictDataRequest {
  */
 export interface DictDataResponse {
   /**
-   * 字典数据主键
-   */
-  id?: string;
+     * 样式（如 primary/danger）
+     */
+  cssClass?: string;
   /**
    * 字典类型ID
    */
   dictTypeId?: string;
   /**
-   * 字典标签
+   * 字典数据主键
    */
-  label?: string;
-  /**
-   * 字典值
-   */
-  value?: string;
-  /**
-   * 排序
-   */
-  order?: number;
-  /**
-   * 状态（0停用 1启用）
-   */
-  status?: number;
-  /**
-   * 样式（如 primary/danger）
-   */
-  cssClass?: string;
-  /**
-   * 表格回显样式（如 default/warning）
-   */
-  listClass?: string;
+  id?: string;
   /**
    * 是否默认
    */
   isDefault?: boolean;
   /**
+   * 字典标签
+   */
+  label?: string;
+  /**
+   * 表格回显样式（如 default/warning）
+   */
+  listClass?: string;
+  /**
+   * 排序
+   */
+  order?: number;
+  /**
    * 备注
    */
   remark?: string;
   /**
-   * 是否删除
+   * 状态（0停用 1启用）
    */
-  deleted?: boolean;
+  status?: number;
+  /**
+   * 字典值
+   */
+  value?: string;
 }
 
 /**
@@ -209,13 +172,9 @@ export interface DictDataResponse {
  */
 export interface DictDataListResponse {
   /**
-   * 字典数据主键
-   */
+     * 字典数据主键
+     */
   id?: string;
-  /**
-   * 字典类型ID
-   */
-  dictTypeId?: string;
   /**
    * 字典标签
    */
@@ -224,34 +183,6 @@ export interface DictDataListResponse {
    * 字典值
    */
   value?: string;
-  /**
-   * 排序
-   */
-  order?: number;
-  /**
-   * 状态（0停用 1启用）
-   */
-  status?: number;
-  /**
-   * 样式（如 primary/danger）
-   */
-  cssClass?: string;
-  /**
-   * 表格回显样式（如 default/warning）
-   */
-  listClass?: string;
-  /**
-   * 是否默认
-   */
-  isDefault?: boolean;
-  /**
-   * 备注
-   */
-  remark?: string;
-  /**
-   * 是否删除
-   */
-  deleted?: boolean;
 }
 
 enum Api {
@@ -259,6 +190,7 @@ enum Api {
   Page = '/dictData/page',
   QueryAll = '/dictData/queryAll',
   QueryById = '/dictData/queryById',
+  QueryByType = '/dictData/type',
 }
 
 /**
@@ -303,11 +235,19 @@ async function deleteDictData(id: string | undefined) {
   return requestClient.delete(`${Api.Base}/${id}`);
 }
 
+/**
+ * 根据字典类型编码查询字典数据
+ */
+async function queryByTypeApi(request: { dictType: string }) {
+  return requestClient.get<DictDataResponse[]>(Api.QueryByType, { params: request });
+}
+
 export {
   deleteDictData,
   pageDictData,
   queryAllDictData,
+  queryByTypeApi,
   queryDictDataById,
   saveDictData,
-  updateDictData,
+  updateDictData
 };
