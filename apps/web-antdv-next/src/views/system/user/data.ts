@@ -8,7 +8,6 @@ import { $t } from '#/locales';
 const sexOptions = await loadDictOptions('sys_user_sex');
 
 export function useFormSchema(): VbenFormSchema[] {
-
   return [
     {
       component: 'Input',
