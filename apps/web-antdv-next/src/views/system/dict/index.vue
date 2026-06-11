@@ -187,7 +187,7 @@ function onManageData(row: DictTypePageResponse) {
           <Plus class="size-5" />
           {{ $t('ui.actionTitle.create', [$t('system.dict.type.name')]) }}
         </VbenButton>
-        <VbenButton variant="default" @click="onRefreshCache">
+        <VbenButton class="ml-2" variant="default" @click="onRefreshCache">
           {{ $t('system.dict.type.refreshCache') }}
         </VbenButton>
       </template>
