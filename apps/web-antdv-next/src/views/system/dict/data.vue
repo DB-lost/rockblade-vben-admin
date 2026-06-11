@@ -5,9 +5,7 @@ import type {
 } from '#/adapter/vxe-table';
 import type { DictDataPageResponse } from '#/api';
 
-import { useRoute } from 'vue-router';
-
-import { Page, useVbenDrawer, VbenButton } from '@vben/common-ui';
+import { useVbenDrawer, VbenButton } from '@vben/common-ui';
 import { Plus } from '@vben/icons';
 
 import { message } from 'ant-design-vue';
@@ -19,18 +17,18 @@ import { $t } from '#/locales';
 import { useColumns, useGridFormSchema } from './data-data';
 import Form from './modules/data-form.vue';
 
-const route = useRoute();
+const props = defineProps<{
+  dictTypeId: string;
+}>();
 
 const [FormDrawer, formDrawerApi] = useVbenDrawer({
   connectedComponent: Form,
   destroyOnClose: true,
 });
 
-const FormSchema = useGridFormSchema();
-
 const [Grid, gridApi] = useVbenVxeGrid({
   formOptions: {
-    schema: FormSchema,
+    schema: useGridFormSchema(),
     submitOnChange: false,
   },
   gridOptions: {
@@ -44,8 +42,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
             pageNum: page.currentPage,
             pageSize: page.pageSize,
             ...formValues,
-            // Pre-filter by dictTypeId from route query (on initial load before form sets it)
-            dictTypeId: (route.query.dictTypeId as string) || undefined,
+            dictTypeId: props.dictTypeId,
           });
         },
       },
@@ -57,7 +54,6 @@ const [Grid, gridApi] = useVbenVxeGrid({
     rowConfig: {
       keyField: 'id',
     },
-
     toolbarConfig: {
       custom: true,
       export: false,
@@ -109,19 +105,17 @@ function onRefresh() {
 }
 
 function onCreate() {
-  formDrawerApi.open();
+  formDrawerApi.setData({ dictTypeId: props.dictTypeId }).open();
 }
 </script>
 <template>
-  <Page auto-content-height>
-    <FormDrawer @success="onRefresh" />
-    <Grid :table-title="$t('system.dict.data.list')">
-      <template #toolbar-tools>
-        <VbenButton variant="default" @click="onCreate">
-          <Plus class="size-5" />
-          {{ $t('ui.actionTitle.create', [$t('system.dict.data.name')]) }}
-        </VbenButton>
-      </template>
-    </Grid>
-  </Page>
+  <FormDrawer @success="onRefresh" />
+  <Grid :table-title="$t('system.dict.data.list')">
+    <template #toolbar-tools>
+      <VbenButton variant="default" @click="onCreate">
+        <Plus class="size-5" />
+        {{ $t('ui.actionTitle.create', [$t('system.dict.data.name')]) }}
+      </VbenButton>
+    </template>
+  </Grid>
 </template>

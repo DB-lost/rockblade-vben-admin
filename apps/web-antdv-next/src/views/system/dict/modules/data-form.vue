@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { computed, nextTick, ref } from 'vue';
-import { useRoute } from 'vue-router';
 
 import { useVbenDrawer } from '@vben/common-ui';
 
@@ -16,7 +15,6 @@ import { $t } from '#/locales';
 import { useFormSchema } from '../data-data';
 
 const emits = defineEmits(['success']);
-const route = useRoute();
 
 const dictTypeOptions = ref<Array<{ label: string; value: string }>>([]);
 
@@ -67,14 +65,6 @@ const [Drawer, drawerApi] = useVbenDrawer({
     if (isOpen) {
       await loadDictTypeOptions();
 
-      // 更新字典类型下拉选项
-      const dictTypeField = FormSchema.find(
-        (s) => s.fieldName === 'dictTypeId',
-      );
-      if (dictTypeField?.componentProps) {
-        dictTypeField.componentProps.options = dictTypeOptions.value;
-      }
-
       const data = drawerApi.getData();
       await nextTick();
 
@@ -86,10 +76,10 @@ const [Drawer, drawerApi] = useVbenDrawer({
       } else {
         id.value = undefined;
         formApi.resetForm();
-        // 新建时从路由参数预填字典类型
-        if (route.query.dictTypeId) {
+        // 新建时从父组件传入的 dictTypeId 预填字典类型
+        if (data?.dictTypeId) {
           formApi.setValues({
-            dictTypeId: route.query.dictTypeId as string,
+            dictTypeId: data.dictTypeId as string,
           });
         }
       }

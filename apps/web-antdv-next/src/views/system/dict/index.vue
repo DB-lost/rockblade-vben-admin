@@ -5,10 +5,10 @@ import type {
 } from '#/adapter/vxe-table';
 import type { DictTypePageResponse } from '#/api';
 
-import { useRouter } from 'vue-router';
+import { ref } from 'vue';
 
 import { Page, useVbenDrawer, VbenButton } from '@vben/common-ui';
-import { Plus } from '@vben/icons';
+import { ArrowLeft, Plus } from '@vben/icons';
 
 import { message, Modal } from 'ant-design-vue';
 
@@ -22,9 +22,10 @@ import {
 import { $t } from '#/locales';
 
 import { useColumns, useGridFormSchema } from './data';
+import DictDataView from './data.vue';
 import Form from './modules/type-form.vue';
 
-const router = useRouter();
+const selectedType = ref<DictTypePageResponse | null>(null);
 
 const [FormDrawer, formDrawerApi] = useVbenDrawer({
   connectedComponent: Form,
@@ -173,19 +174,30 @@ function onRefreshCache() {
 }
 
 function onManageData(row: DictTypePageResponse) {
-  router.push({
-    path: '/system/dict/data',
-    query: {
-      dictTypeId: row.id,
-      dictTypeName: row.name,
-    },
-  });
+  selectedType.value = row;
+}
+
+function onBackToTypes() {
+  selectedType.value = null;
+  onRefresh();
 }
 </script>
 <template>
   <Page auto-content-height>
+    <template v-if="selectedType" #title>
+      <VbenButton variant="link" class="px-0" @click="onBackToTypes">
+        <ArrowLeft class="size-5" />
+        {{ $t('common.back') }}
+      </VbenButton>
+      <span class="ml-2 text-lg font-semibold">
+        {{ selectedType.name }} — {{ $t('system.dict.data.list') }}
+      </span>
+    </template>
+
     <FormDrawer @success="onRefresh" />
-    <Grid :table-title="$t('system.dict.type.list')">
+
+    <!-- DictType 列表视图 -->
+    <Grid v-if="!selectedType" :table-title="$t('system.dict.type.list')">
       <template #toolbar-tools>
         <VbenButton variant="default" @click="onCreate">
           <Plus class="size-5" />
@@ -196,5 +208,8 @@ function onManageData(row: DictTypePageResponse) {
         </VbenButton>
       </template>
     </Grid>
+
+    <!-- DictData 子视图 -->
+    <DictDataView v-if="selectedType" :key="selectedType.id" :dict-type-id="selectedType.id!" />
   </Page>
 </template>
