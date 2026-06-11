@@ -45,9 +45,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
             pageSize: page.pageSize,
             ...formValues,
             // Pre-filter by dictTypeId from route query (on initial load before form sets it)
-            dictTypeId:
-              (route.query.dictTypeId as string) ||
-              undefined,
+            dictTypeId: (route.query.dictTypeId as string) || undefined,
           });
         },
       },

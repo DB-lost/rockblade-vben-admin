@@ -129,6 +129,5 @@ export function useColumns<T = DictTypePageResponse>(
       title: $t('system.dict.type.operation'),
       width: 200,
     },
-
   ];
 }
