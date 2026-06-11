@@ -70,6 +70,36 @@
     "permissions": "Permissions",
     "setPermissions": "Permissions"
   },
+  "dict": {
+    "title": "Dictionary Management",
+    "type": {
+      "title": "Dict Type",
+      "name": "Dict Type",
+      "list": "Dict Type List",
+      "code": "Dict Code",
+      "nameField": "Dict Name",
+      "status": "Status",
+      "remark": "Remark",
+      "operation": "Operation",
+      "manageData": "Manage Data",
+      "refreshCache": "Refresh Cache"
+    },
+    "data": {
+      "title": "Dict Data",
+      "name": "Dict Data",
+      "list": "Dict Data List",
+      "label": "Dict Label",
+      "value": "Dict Value",
+      "order": "Sort",
+      "cssClass": "Style",
+      "listClass": "List Style",
+      "isDefault": "Default",
+      "status": "Status",
+      "remark": "Remark",
+      "operation": "Operation",
+      "dictType": "Dict Type"
+    }
+  },
   "user": {
     "title": "User Management",
     "name": "User",
@@ -80,6 +110,7 @@
     "phone": "Phone",
     "email": "Email",
     "status": "Status",
+    "sex": "Gender",
     "enable": "Enable",
     "disable": "Disable",
     "operation": "Operation",

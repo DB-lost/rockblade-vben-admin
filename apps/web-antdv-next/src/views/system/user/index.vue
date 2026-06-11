@@ -127,6 +127,8 @@ async function onStatusChange(newStatus: number, row: UserPageResponse) {
       username: row.username,
       nickname: row.nickname,
       status: newStatus,
+      email: row.email,
+      phone: row.phone,
     } as any);
     return true;
   } catch {

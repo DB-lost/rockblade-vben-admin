@@ -2,7 +2,10 @@ import type { VbenFormSchema } from '#/adapter/form';
 import type { OnActionClickFn, VxeTableGridColumns } from '#/adapter/vxe-table';
 import type { UserPageResponse } from '#/api';
 
+import { loadDictOptions } from '#/composables/useDict';
 import { $t } from '#/locales';
+
+const sexOptions = await loadDictOptions('sys_user_sex');
 
 export function useFormSchema(): VbenFormSchema[] {
   return [
@@ -33,6 +36,16 @@ export function useFormSchema(): VbenFormSchema[] {
       component: 'Input',
       fieldName: 'email',
       label: $t('system.user.email'),
+    },
+    {
+      component: 'Select',
+      fieldName: 'sex',
+      label: $t('system.user.sex'),
+      componentProps: {
+        allowClear: true,
+        placeholder: $t('ui.placeholder.select'),
+        options: sexOptions,
+      },
     },
     {
       component: 'Select',
@@ -107,7 +120,6 @@ export function useColumns<T = UserPageResponse>(
       },
       field: 'status',
       title: $t('system.user.status'),
-      width: 150,
     },
     {
       align: 'center',
@@ -135,7 +147,7 @@ export function useColumns<T = UserPageResponse>(
       field: 'operation',
       fixed: 'right',
       title: $t('system.user.operation'),
-      //width: 130,
+      width: 150,
     },
   ];
 }
