@@ -82,7 +82,7 @@ function onActionClick(e: OnActionClickParams<DictDataPageResponse>) {
 }
 
 function onEdit(row: DictDataPageResponse) {
-  formDrawerApi.setData(row).open();
+  formDrawerApi.setData({ ...row, dictTypeId: props.selectedType.id }).open();
 }
 
 function onDelete(row: DictDataPageResponse) {

@@ -31,6 +31,7 @@ const [Form, formApi] = useVbenForm({
 });
 
 const id = ref();
+const dictTypeId = ref<string>();
 
 async function loadDictTypeOptions() {
   if (dictTypeOptions.value.length > 0) return;
@@ -50,6 +51,10 @@ const [Drawer, drawerApi] = useVbenDrawer({
     // 更新时补充主键
     if (id.value) {
       values.id = id.value;
+    }
+    // 如果有 dictTypeId，则将其包含在内
+    if (dictTypeId.value) {
+      values.dictTypeId = dictTypeId.value;
     }
     (id.value ? updateDictData : saveDictData)(values)
       .then(() => {
@@ -76,12 +81,11 @@ const [Drawer, drawerApi] = useVbenDrawer({
       } else {
         id.value = undefined;
         formApi.resetForm();
-        // 新建时从父组件传入的 dictTypeId 预填字典类型
-        if (data?.dictTypeId) {
-          formApi.setValues({
-            dictTypeId: data.dictTypeId as string,
-          });
-        }
+
+      }
+      // 从父组件传入的 dictTypeId 预填字典类型
+      if (data?.dictTypeId) {
+        dictTypeId.value = data.dictTypeId;
       }
     }
   },
