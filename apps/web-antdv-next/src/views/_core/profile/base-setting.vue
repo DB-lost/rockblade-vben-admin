@@ -58,7 +58,7 @@ async function handleSubmit(values: Record<string, any>) {
       nickname: values.realName,
       email: values.email,
       phone: values.phone,
-      desc: values.desc,
+      // desc: values.desc,
     });
     message.success($t('ui.actionMessage.operationSuccess'));
   } catch {
@@ -73,10 +73,10 @@ onMounted(async () => {
     const info = await queryUserById(userId);
     profileBaseSettingRef.value.getFormApi().setValues({
       username: info.username,
-      realName: info.nickname ?? info.realName,
+      realName: info.nickname,
       email: info.email,
       phone: info.phone,
-      desc: info.desc,
+      //desc: info.desc,
     });
   } catch {
     // fallback to cached data
@@ -94,9 +94,5 @@ onMounted(async () => {
 });
 </script>
 <template>
-  <ProfileBaseSetting
-    ref="profileBaseSettingRef"
-    :form-schema="formSchema"
-    @submit="handleSubmit"
-  />
+  <ProfileBaseSetting ref="profileBaseSettingRef" :form-schema="formSchema" @submit="handleSubmit" />
 </template>
