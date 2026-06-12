@@ -1,18 +1,18 @@
 {
-  "name": "@vben/web-antdv-next",
-  "version": "5.7.0",
-  "homepage": "https://vben.pro",
-  "bugs": "https://github.com/vbenjs/vue-vben-admin/issues",
+  "name": "rockblade-vben-web",
+  "version": "1.0.5",
+  "homepage": "https://www.rockblade.cn",
+  "bugs": "https://gitee.com/DB-lost3800/rockblade-vben-admin/issues",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vbenjs/vue-vben-admin.git",
+    "url": "git+https://gitee.com/DB-lost3800/rockblade-vben-admin",
     "directory": "apps/web-antdv-next"
   },
   "license": "MIT",
   "author": {
-    "name": "vben",
-    "email": "ann.vben@gmail.com",
-    "url": "https://github.com/anncwb"
+    "name": "DB",
+    "email": "2502523450@qq.com",
+    "url": "https://gitee.com/DB-lost3800"
   },
   "type": "module",
   "scripts": {
