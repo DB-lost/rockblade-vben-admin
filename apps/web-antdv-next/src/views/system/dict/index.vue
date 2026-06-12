@@ -1,8 +1,5 @@
 <script lang="ts" setup>
-import type {
-  OnActionClickParams,
-  VxeTableGridOptions,
-} from '#/adapter/vxe-table';
+import type { OnActionClickParams, VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { DictTypePageResponse } from '#/api';
 
 import { ref } from 'vue';
@@ -13,12 +10,7 @@ import { Plus } from '@vben/icons';
 import { message, Modal } from 'ant-design-vue';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
-import {
-  deleteDictType,
-  pageDictType,
-  refreshCacheApi,
-  updateDictType,
-} from '#/api';
+import { deleteDictType, pageDictType, refreshCacheApi, updateDictType } from '#/api';
 import { useDict } from '#/composables/useDict';
 import { $t } from '#/locales';
 
@@ -109,10 +101,7 @@ async function onStatusChange(newStatus: number, row: DictTypePageResponse) {
     1: $t('common.enabled'),
   };
   try {
-    await confirm(
-      `你要将${row.name}的状态切换为 【${statusMap[newStatus]}】 吗？`,
-      `切换状态`,
-    );
+    await confirm(`你要将${row.name}的状态切换为 【${statusMap[newStatus]}】 吗？`, `切换状态`);
     await updateDictType({
       id: row.id,
       name: row.name ?? '',
@@ -203,10 +192,6 @@ function onBackToTypes() {
       </Grid>
     </Page>
     <!-- DictData 子视图 -->
-    <DictDataView
-      v-if="selectedType"
-      :selected-type="selectedType"
-      @back="onBackToTypes"
-    />
+    <DictDataView v-if="selectedType" :selected-type="selectedType" @back="onBackToTypes" />
   </div>
 </template>
