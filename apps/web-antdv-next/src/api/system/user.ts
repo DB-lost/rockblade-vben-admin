@@ -260,7 +260,7 @@ async function saveUser(request: Recordable<UserRequest>) {
 /**
  * 更新用户表
  */
-async function updateUser(request: Recordable<UserRequest>) {
+async function updateUser(request: UserRequest) {
   return requestClient.put<string>(Api.Base, request);
 }
 
