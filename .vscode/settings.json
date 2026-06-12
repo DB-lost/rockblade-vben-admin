@@ -10,7 +10,6 @@
   "workbench.editor.limit.enabled": true,
   "workbench.editor.limit.perEditorGroup": true,
   "workbench.editor.limit.value": 5,
-
   // editor
   "editor.tabSize": 2,
   "editor.detectIndentation": false,
@@ -35,12 +34,14 @@
   "editor.quickSuggestions": {
     "strings": "on"
   },
-
   // lint && format
   "oxc.enable": true,
   "oxc.typeAware": true,
   "oxc.configPath": "oxlint.config.ts",
   "oxc.fmt.configPath": "oxfmt.config.ts",
+  "oxc.path.oxlint": "${workspaceFolder}/node_modules/.bin/oxlint",
+  "oxc.path.oxfmt": "${workspaceFolder}/node_modules/.bin/oxfmt",
+  "oxc.useExecPath": true,
   "eslint.useFlatConfig": true,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit",
@@ -62,7 +63,7 @@
     "editor.defaultFormatter": "oxc.oxc-vscode"
   },
   "[typescript]": {
-    "editor.defaultFormatter": "vscode.typescript-language-features"
+    "editor.defaultFormatter": "oxc.oxc-vscode"
   },
   "[json]": {
     "editor.defaultFormatter": "oxc.oxc-vscode"
@@ -74,19 +75,16 @@
     "editor.defaultFormatter": "oxc.oxc-vscode"
   },
   "[vue]": {
-    "editor.defaultFormatter": "Vue.volar"
+    "editor.defaultFormatter": "oxc.oxc-vscode"
   },
-
   // extensions
   "extensions.ignoreRecommendations": true,
-
   // terminal
   "terminal.integrated.cursorBlinking": true,
   "terminal.integrated.persistentSessionReviveProcess": "never",
   "terminal.integrated.tabs.enabled": true,
   "terminal.integrated.scrollback": 10000,
   "terminal.integrated.stickyScroll.enabled": true,
-
   // files
   "files.eol": "\n",
   "files.insertFinalNewline": true,
@@ -99,7 +97,6 @@
     "*.json": "jsonc",
     "package.json": "json"
   },
-
   "files.exclude": {
     "**/.eslintcache": true,
     "**/bower_components": true,
@@ -126,9 +123,11 @@
     "**/dist/**": true,
     "**/yarn.lock": true
   },
-
-  "typescript.tsserver.exclude": ["**/node_modules", "**/dist", "**/.turbo"],
-
+  "typescript.tsserver.exclude": [
+    "**/node_modules",
+    "**/dist",
+    "**/.turbo"
+  ],
   // search
   "search.searchEditor.singleClickBehaviour": "peekDefinition",
   "search.followSymlinks": false,
@@ -158,32 +157,43 @@
     "**/pnpm-lock.yaml": true,
     "**/yarn.lock": true
   },
-
   "debug.onTaskErrors": "debugAnyway",
   "diffEditor.ignoreTrimWhitespace": false,
   "npm.packageManager": "pnpm",
-
   "css.validate": false,
   "less.validate": false,
   "scss.validate": false,
-
   // extension
   "emmet.showSuggestionsAsSnippets": true,
   "emmet.triggerExpansionOnTab": false,
-
-  "errorLens.enabledDiagnosticLevels": ["warning", "error"],
-  "errorLens.excludeBySource": ["cSpell", "Grammarly"],
-
+  "errorLens.enabledDiagnosticLevels": [
+    "warning",
+    "error"
+  ],
+  "errorLens.excludeBySource": [
+    "cSpell",
+    "Grammarly"
+  ],
   "stylelint.enable": true,
   "stylelint.packageManager": "pnpm",
-  "stylelint.validate": ["css", "less", "postcss", "scss", "vue"],
+  "stylelint.validate": [
+    "css",
+    "less",
+    "postcss",
+    "scss",
+    "vue"
+  ],
   "stylelint.customSyntax": "postcss-html",
-  "stylelint.snippet": ["css", "less", "postcss", "scss", "vue"],
-
+  "stylelint.snippet": [
+    "css",
+    "less",
+    "postcss",
+    "scss",
+    "vue"
+  ],
   "typescript.inlayHints.enumMemberValues.enabled": true,
   "typescript.preferences.preferTypeOnlyAutoImports": true,
   "typescript.preferences.includePackageJsonAutoImports": "on",
-
   "eslint.validate": [
     "javascript",
     "typescript",
@@ -197,34 +207,39 @@
     "json5",
     "yaml"
   ],
-
   "tailwindCSS.experimental.classRegex": [
-    ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]
+    [
+      "cva\\(([^)]*)\\)",
+      "[\"'`]([^\"'`]*).*?[\"'`]"
+    ]
   ],
-
   "github.copilot.enable": {
     "*": true,
     "markdown": true,
     "plaintext": false,
     "yaml": false
   },
-
-  "cssVariables.lookupFiles": ["packages/@core/base/design/src/**/*.css"],
-
+  "cssVariables.lookupFiles": [
+    "packages/@core/base/design/src/**/*.css"
+  ],
   "i18n-ally.localesPaths": [
     "packages/locales/src/langs",
     "playground/src/locales/langs",
     "apps/*/src/locales/langs"
   ],
   "i18n-ally.pathMatcher": "{locale}/{namespace}.{ext}",
-  "i18n-ally.enabledParsers": ["json"],
+  "i18n-ally.enabledParsers": [
+    "json"
+  ],
   "i18n-ally.sourceLanguage": "en",
   "i18n-ally.displayLanguage": "zh-CN",
-  "i18n-ally.enabledFrameworks": ["vue", "react"],
+  "i18n-ally.enabledFrameworks": [
+    "vue",
+    "react"
+  ],
   "i18n-ally.keystyle": "nested",
   "i18n-ally.sortKeys": true,
   "i18n-ally.namespace": true,
-
   // 控制相关文件嵌套展示
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.expand": false,

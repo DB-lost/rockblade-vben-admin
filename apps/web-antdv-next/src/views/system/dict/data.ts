@@ -1,6 +1,6 @@
 import type { VbenFormSchema } from '#/adapter/form';
 import type { OnActionClickFn, VxeTableGridColumns } from '#/adapter/vxe-table';
-import type { SystemRoleApi } from '#/api';
+import type { DictTypePageResponse } from '#/api';
 
 import { $t } from '#/locales';
 
@@ -9,13 +9,13 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       component: 'Input',
       fieldName: 'name',
-      label: $t('system.role.roleName'),
+      label: $t('system.dict.type.nameField'),
       rules: 'required',
     },
     {
       component: 'Input',
       fieldName: 'code',
-      label: $t('system.role.code'),
+      label: $t('system.dict.type.code'),
       rules: 'required',
     },
     {
@@ -30,19 +30,12 @@ export function useFormSchema(): VbenFormSchema[] {
       },
       defaultValue: 1,
       fieldName: 'status',
-      label: $t('system.role.status'),
+      label: $t('system.dict.type.status'),
     },
     {
       component: 'Textarea',
       fieldName: 'remark',
-      label: $t('system.role.remark'),
-    },
-    {
-      component: 'Input',
-      fieldName: 'permissions',
-      formItemClass: 'items-start',
-      label: $t('system.role.setPermissions'),
-      modelPropName: 'modelValue',
+      label: $t('system.dict.type.remark'),
     },
   ];
 }
@@ -52,9 +45,13 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       component: 'Input',
       fieldName: 'name',
-      label: $t('system.role.roleName'),
+      label: $t('system.dict.type.nameField'),
     },
-    // { component: 'Input', fieldName: 'id', label: $t('system.role.id') },
+    {
+      component: 'Input',
+      fieldName: 'code',
+      label: $t('system.dict.type.code'),
+    },
     {
       component: 'Select',
       componentProps: {
@@ -65,34 +62,24 @@ export function useGridFormSchema(): VbenFormSchema[] {
         ],
       },
       fieldName: 'status',
-      label: $t('system.role.status'),
+      label: $t('system.dict.type.status'),
     },
-    {
-      component: 'Input',
-      fieldName: 'remark',
-      label: $t('system.role.remark'),
-    },
-    // {
-    //   component: 'RangePicker',
-    //   fieldName: 'createTime',
-    //   label: $t('system.role.createTime'),
-    // },
   ];
 }
 
-export function useColumns<T = SystemRoleApi.SystemRole>(
+export function useColumns<T = DictTypePageResponse>(
   onActionClick: OnActionClickFn<T>,
   onStatusChange?: (newStatus: any, row: T) => PromiseLike<boolean | undefined>,
 ): VxeTableGridColumns {
   return [
     {
       field: 'name',
-      title: $t('system.role.name'),
+      title: $t('system.dict.type.nameField'),
       width: 200,
     },
     {
-      field: 'id',
-      title: $t('system.role.id'),
+      field: 'code',
+      title: $t('system.dict.type.code'),
       width: 200,
     },
     {
@@ -101,32 +88,46 @@ export function useColumns<T = SystemRoleApi.SystemRole>(
         name: onStatusChange ? 'CellSwitch' : 'CellTag',
       },
       field: 'status',
-      title: $t('system.role.status'),
+      title: $t('system.dict.type.status'),
       width: 100,
     },
     {
       field: 'remark',
       minWidth: 100,
-      title: $t('system.role.remark'),
-    },
-    {
-      field: 'createTime',
-      title: $t('system.role.createTime'),
+      title: $t('system.dict.type.remark'),
     },
     {
       align: 'center',
       cellRender: {
         attrs: {
-          nameField: 'name',
-          nameTitle: $t('system.role.name'),
           onClick: onActionClick,
         },
         name: 'CellOperation',
+        options: [
+          {
+            code: 'manageData',
+            danger: false,
+            text: $t('system.dict.type.manageData'),
+            type: 'link',
+          },
+          {
+            code: 'edit',
+            danger: false,
+            text: $t('ui.actionTitle.edit'),
+            type: 'link',
+          },
+          {
+            code: 'delete',
+            danger: true,
+            text: $t('ui.actionTitle.delete'),
+            type: 'link',
+          },
+        ],
       },
       field: 'operation',
       fixed: 'right',
-      title: $t('system.role.operation'),
-      width: 150,
+      title: $t('system.dict.type.operation'),
+      width: 200,
     },
   ];
 }

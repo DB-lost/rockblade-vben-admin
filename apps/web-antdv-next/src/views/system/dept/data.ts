@@ -161,7 +161,7 @@ export function useColumns(
       headerAlign: 'center',
       showOverflow: false,
       title: $t('system.dept.operation'),
-      width: 200,
+      width: 150,
     },
   ];
 }

@@ -30,18 +30,32 @@ function createRequestClient(baseURL: string, options?: RequestClientOptions) {
   /**
    * 重新认证逻辑
    */
+  let isReAuthenticating = false;
+
   async function doReAuthenticate() {
-    console.warn('Access token or refresh token is invalid or expired. ');
-    const accessStore = useAccessStore();
-    const authStore = useAuthStore();
-    accessStore.setAccessToken(null);
-    if (
-      preferences.app.loginExpiredMode === 'modal' &&
-      accessStore.isAccessChecked
-    ) {
-      accessStore.setLoginExpired(true);
-    } else {
-      await authStore.logout();
+    // 防止重入：如果已经在重新认证流程中，直接返回
+    if (isReAuthenticating) {
+      console.warn(
+        'Re-authentication already in progress, skipping duplicate call.',
+      );
+      return;
+    }
+    isReAuthenticating = true;
+    try {
+      console.warn('Access token or refresh token is invalid or expired. ');
+      const accessStore = useAccessStore();
+      const authStore = useAuthStore();
+      accessStore.setAccessToken(null);
+      if (
+        preferences.app.loginExpiredMode === 'modal' &&
+        accessStore.isAccessChecked
+      ) {
+        accessStore.setLoginExpired(true);
+      } else {
+        await authStore.logout();
+      }
+    } finally {
+      isReAuthenticating = false;
     }
   }
 

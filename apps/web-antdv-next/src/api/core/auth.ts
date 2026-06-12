@@ -193,9 +193,10 @@ export async function refreshTokenApi() {
 
 /**
  * 退出登录
+ * 使用 baseRequestClient 避免经过 auth 拦截器链，防止 401 触发 doReAuthenticate 递归
  */
 export async function logoutApi() {
-  return requestClient.post('/common/logout', {
+  return baseRequestClient.post('/common/logout', {
     withCredentials: true,
   });
 }
