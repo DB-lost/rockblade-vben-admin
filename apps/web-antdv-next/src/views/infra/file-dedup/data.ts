@@ -9,12 +9,12 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       component: 'Input',
       fieldName: 'fileName',
-      label: '原始文件名',
+      label: $t('infra.fileDedup.fileName'),
     },
     {
       component: 'Input',
       fieldName: 'mimeType',
-      label: '文件类型',
+      label: $t('infra.fileDedup.mimeType'),
     },
   ];
 }
@@ -25,37 +25,48 @@ export function useColumns<T = FileDedupPageResponse>(
   return [
     {
       field: 'fileName',
-      title: '原始文件名',
+      title: $t('infra.fileDedup.fileName'),
       width: 250,
     },
     {
       field: 'ossPath',
-      title: 'OSS 文件路径',
+      title: $t('infra.fileDedup.ossPath'),
     },
     {
       field: 'fileSize',
-      title: '文件大小 (字节)',
+      title: $t('infra.fileDedup.fileSize'),
       width: 150,
     },
     {
       field: 'mimeType',
-      title: '文件 MIME 类型',
+      title: $t('infra.fileDedup.fileMimeType'),
       width: 150,
     },
     {
       field: 'refCount',
-      title: '引用计数',
+      title: $t('infra.fileDedup.refCount'),
       width: 150,
     },
     {
       align: 'center',
       cellRender: {
         attrs: {
-          nameField: 'name',
-          nameTitle: $t('infra.fileDedup.name'),
           onClick: onActionClick,
         },
         name: 'CellOperation',
+        options: [
+          {
+            code: 'getFile',
+            text: $t('infra.fileDedup.getFile'),
+            type: 'link',
+          },
+          {
+            code: 'delete',
+            danger: true,
+            text: $t('common.delete'),
+            type: 'link',
+          },
+        ],
       },
       field: 'operation',
       fixed: 'right',

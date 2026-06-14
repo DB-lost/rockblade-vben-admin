@@ -95,6 +95,6 @@ function onRefresh() {
 </script>
 <template>
   <Page auto-content-height>
-    <Grid table-title="列表" />
+    <Grid :table-title="$t('infra.fileDedup.list')" />
   </Page>
 </template>

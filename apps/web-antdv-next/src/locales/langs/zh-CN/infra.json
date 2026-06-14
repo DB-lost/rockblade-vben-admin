@@ -15,6 +15,19 @@
     "generate": "代码生成",
     "generating": "代码生成中..."
   },
+  "fileDedup": {
+    "title": "文件",
+    "name": "文件",
+    "list": "列表",
+    "fileName": "原始文件名",
+    "mimeType": "文件类型",
+    "ossPath": "OSS 文件路径",
+    "fileSize": "文件大小 (字节)",
+    "fileMimeType": "文件 MIME 类型",
+    "refCount": "引用计数",
+    "operation": "操作",
+    "getFile": "查看文件"
+  },
   "operateLog": {
     "title": "操作日志",
     "name": "操作日志",
