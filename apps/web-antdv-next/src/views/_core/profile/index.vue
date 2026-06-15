@@ -63,7 +63,7 @@ async function handleFileChange(event: Event) {
   const hideLoading = message.loading('正在上传...', 0);
 
   try {
-    const avatarUrl = await fileUploadApi(file);
+    const avatarUrl = await fileUploadApi(file, true);
     await updateUser({
       ...userStore.userInfo,
       avatar: avatarUrl,

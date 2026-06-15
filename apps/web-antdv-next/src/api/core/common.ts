@@ -22,10 +22,13 @@ export async function getUserInfoApi() {
  * @param file 文件
  * @returns
  */
-export async function fileUploadApi(file: File) {
+export async function fileUploadApi(file: File, isPublic: boolean) {
   const formData = new FormData();
   formData.append('file', file);
   return requestClient.post<string>(`/fileDedup/fileUpload`, formData, {
     headers: { 'Content-Type': 'multipart/form-data' },
+    params: {
+      isPublic,
+    },
   });
 }
