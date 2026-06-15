@@ -22,17 +22,30 @@ withDefaults(defineProps<Props>(), {
   tabs: () => [],
 });
 
+const emit = defineEmits<{
+  avatarClick: [];
+}>();
+
 const tabsValue = defineModel<string>('modelValue');
+
+function handleAvatarClick() {
+  emit('avatarClick');
+}
 </script>
 <template>
   <Page auto-content-height>
     <div class="flex size-full">
       <Card class="w-1/6 flex-none">
         <div class="mt-4 flex-col-center h-40 gap-4">
-          <VbenAvatar
-            :src="userInfo?.avatar ?? preferences.app.defaultAvatar"
-            class="size-20"
-          />
+          <div
+            class="size-20 cursor-pointer transition-opacity hover:opacity-80"
+            @click="handleAvatarClick"
+          >
+            <VbenAvatar
+              :src="userInfo?.avatar ?? preferences.app.defaultAvatar"
+              class="size-full"
+            />
+          </div>
           <span class="text-lg font-semibold">
             {{ userInfo?.realName ?? '' }}
           </span>

@@ -5,7 +5,7 @@
       "path": "apps/backend-mock"
     },
     {
-      "name": "@vben/web-antdv-next",
+      "name": "rockblade-vben-web",
       "path": "apps/web-antdv-next"
     },
     {
