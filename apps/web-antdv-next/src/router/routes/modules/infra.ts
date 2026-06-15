@@ -31,6 +31,15 @@ const routes: RouteRecordRaw[] = [
         },
         component: () => import('#/views/infra/operate-log/index.vue'),
       },
+      {
+        path: '/infra/file-dedup',
+        name: 'InfraFileDedup',
+        meta: {
+          icon: 'formkit:file',
+          title: $t('infra.fileDedup.title'),
+        },
+        component: () => import('#/views/infra/file-dedup/index.vue'),
+      },
     ],
   },
 ];

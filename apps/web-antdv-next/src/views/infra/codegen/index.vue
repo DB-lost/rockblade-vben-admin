@@ -101,6 +101,7 @@ function onCodegen(row: CodegenTablePageResponse) {
         content: $t('infra.codegen.codegenSuccess', [row.tableName]),
         key: 'codegen_msg',
       });
+      onRefresh();
     })
     .catch(() => {
       hideLoading();
