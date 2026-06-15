@@ -6,6 +6,7 @@ import { loadDictOptions } from '#/composables/useDict';
 import { $t } from '#/locales';
 
 const sexOptions = await loadDictOptions('sys_user_sex');
+const statusOptions = await loadDictOptions('common_status');
 
 export function useFormSchema(): VbenFormSchema[] {
   return [
@@ -50,10 +51,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       component: 'Select',
       componentProps: {
-        options: [
-          { label: $t('system.user.enable'), value: 1 },
-          { label: $t('system.user.disable'), value: 0 },
-        ],
+        options: statusOptions,
       },
       fieldName: 'status',
       label: $t('system.user.status'),
@@ -77,10 +75,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       component: 'Select',
       componentProps: {
-        options: [
-          { label: $t('system.user.enable'), value: 1 },
-          { label: $t('system.user.disable'), value: 0 },
-        ],
+        options: statusOptions,
       },
       fieldName: 'status',
       label: $t('system.user.status'),
