@@ -13,6 +13,7 @@ import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import { deleteFileDedup, pageFileDedup } from '#/api';
 import { $t } from '#/locales';
 
+import { queryById } from '../../../api/infra/file-dedup';
 import { useColumns, useGridFormSchema } from './data';
 
 const [Grid, gridApi] = useVbenVxeGrid({
@@ -86,7 +87,13 @@ function onDelete(row: FileDedupPageResponse) {
 }
 
 function onGetFile(row: FileDedupPageResponse) {
-  window.open(row.ossPath, '_blank');
+  queryById(row.id).then((res) => {
+    if (res.ossPath) {
+      window.open(res.ossPath, '_blank');
+    } else {
+      message.warning($t('infra.fileDedup.noFile'));
+    }
+  });
 }
 
 function onRefresh() {
