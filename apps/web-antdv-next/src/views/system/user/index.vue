@@ -7,7 +7,7 @@ import type {
 } from '#/adapter/vxe-table';
 import type { UserPageResponse } from '#/api';
 
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
 import {
   Page,
@@ -32,8 +32,12 @@ import { getPublicKeyApi } from '#/api/core/auth';
 import { $t } from '#/locales';
 import { cryptoUtil } from '#/utils/crypto';
 
-import { useColumns, useGridFormSchema } from './data';
+import { reloadDictData, useColumns, useGridFormSchema } from './data';
 import Form from './modules/form.vue';
+
+onMounted(async () => {
+  await reloadDictData();
+});
 
 const [FormDrawer, formDrawerApi] = useVbenDrawer({
   connectedComponent: Form,
