@@ -1,11 +1,35 @@
 import type { VbenFormSchema } from '#/adapter/form';
 import type { OnActionClickFn, VxeTableGridColumns } from '#/adapter/vxe-table';
 import type { UserPageResponse } from '#/api';
+import type { DictOption } from '#/composables/useDict';
 
-import { loadDictOptions } from '#/composables/useDict';
+import { clearDictCache, loadDictOptions } from '#/composables/useDict';
 import { $t } from '#/locales';
 
-const sexOptions = await loadDictOptions('sys_user_sex');
+let sexOptions: DictOption[] = [];
+let statusOptions: DictOption[] = [];
+let componentMounted = false;
+
+async function _fetchDictOptions() {
+  const [sex, status] = await Promise.all([
+    loadDictOptions('sys_user_sex'),
+    loadDictOptions('common_status'),
+  ]);
+  sexOptions = sex;
+  statusOptions = status;
+}
+
+export async function reloadDictData(): Promise<void> {
+  if (!componentMounted) {
+    componentMounted = true;
+    return;
+  }
+  clearDictCache('sys_user_sex');
+  clearDictCache('common_status');
+  await _fetchDictOptions();
+}
+
+await _fetchDictOptions();
 
 export function useFormSchema(): VbenFormSchema[] {
   return [
@@ -50,10 +74,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       component: 'Select',
       componentProps: {
-        options: [
-          { label: $t('system.user.enable'), value: 1 },
-          { label: $t('system.user.disable'), value: 0 },
-        ],
+        options: statusOptions,
       },
       fieldName: 'status',
       label: $t('system.user.status'),
@@ -77,10 +98,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       component: 'Select',
       componentProps: {
-        options: [
-          { label: $t('system.user.enable'), value: 1 },
-          { label: $t('system.user.disable'), value: 0 },
-        ],
+        options: statusOptions,
       },
       fieldName: 'status',
       label: $t('system.user.status'),

@@ -145,13 +145,13 @@ export function useColumns<T = DictDataPageResponse>(
       cellRender: { name: 'CellTag' },
       field: 'cssClass',
       title: $t('system.dict.data.cssClass'),
-      width: 100,
+      width: 150,
     },
     {
       cellRender: { name: 'CellTag' },
       field: 'listClass',
       title: $t('system.dict.data.listClass'),
-      width: 120,
+      width: 150,
     },
     {
       cellRender: {
@@ -165,13 +165,13 @@ export function useColumns<T = DictDataPageResponse>(
       },
       field: 'isDefault',
       title: $t('system.dict.data.isDefault'),
-      width: 80,
+      width: 150,
     },
     {
       cellRender: { name: 'CellSwitch' },
       field: 'status',
       title: $t('system.dict.data.status'),
-      width: 80,
+      width: 150,
     },
     {
       field: 'remark',

@@ -19,8 +19,19 @@ const pendingMap = new Map<string, Promise<DictOption[]>>();
 /**
  * 独立函数：根据字典类型编码获取选项列表（带缓存和并发去重）
  * 可在 composable 外部直接调用（如 data.ts 配置文件中）
+ *
+ * @param dictType 字典类型编码
+ * @param forceReload 是否强制重新加载，默认 false（使用缓存）
  */
-export async function loadDictOptions(dictType: string): Promise<DictOption[]> {
+export async function loadDictOptions(
+  dictType: string,
+  forceReload = false,
+): Promise<DictOption[]> {
+  if (forceReload) {
+    cacheMap.delete(dictType);
+    pendingMap.delete(dictType);
+  }
+
   if (cacheMap.has(dictType)) {
     return cacheMap.get(dictType) as DictOption[];
   }
