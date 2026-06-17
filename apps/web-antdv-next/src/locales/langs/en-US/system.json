@@ -115,5 +115,20 @@
     "disable": "Disable",
     "operation": "Operation",
     "remark": "Remark"
+  },
+  "job-log": {
+    "name": "Job Log",
+    "title": "Job Log",
+    "list": "Job Log List",
+    "jobId": "Job ID",
+    "jobHandlerName": "Job Handler",
+    "jobHandlerParam": "Job Param",
+    "executeIndex": "Execute Index",
+    "beginTime": "Begin Time",
+    "endTime": "End Time",
+    "duration": "Duration(ms)",
+    "success": "Result",
+    "result": "Execute Info",
+    "operation": "Operation"
   }
 }

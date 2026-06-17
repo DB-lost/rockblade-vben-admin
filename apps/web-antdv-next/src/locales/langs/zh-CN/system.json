@@ -117,5 +117,20 @@
     "disable": "禁用",
     "operation": "操作",
     "remark": "备注"
+  },
+  "job-log": {
+    "name": "任务日志",
+    "title": "任务日志",
+    "list": "任务日志列表",
+    "jobId": "任务ID",
+    "jobHandlerName": "任务处理器",
+    "jobHandlerParam": "任务参数",
+    "executeIndex": "执行次数",
+    "beginTime": "开始时间",
+    "endTime": "结束时间",
+    "duration": "耗时(ms)",
+    "success": "执行结果",
+    "result": "执行信息",
+    "operation": "操作"
   }
 }

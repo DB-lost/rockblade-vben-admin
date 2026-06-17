@@ -9,6 +9,7 @@ import { Page, useVbenDrawer } from '@vben/common-ui';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import { pageJobLog } from '#/api';
+import { $t } from '#/locales';
 
 import { useColumns, useGridFormSchema } from './data';
 import Form from './modules/form.vue';
@@ -72,6 +73,6 @@ function onView(row: JobLogPageResponse) {
 <template>
   <Page auto-content-height>
     <FormDrawer />
-    <Grid table-title="列表" />
+    <Grid :table-title="$t('system.job-log.list')" />
   </Page>
 </template>

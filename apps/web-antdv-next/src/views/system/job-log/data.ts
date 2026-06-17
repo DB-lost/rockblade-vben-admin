@@ -4,140 +4,167 @@ import type { JobLogPageResponse } from '#/api';
 
 import { $t } from '#/locales';
 
+/**
+ * 详情表单（只读查看）
+ */
 export function useFormSchema(): VbenFormSchema[] {
   return [
     {
       component: 'Input',
       fieldName: 'jobId',
-      label: '任务ID',
+      label: $t('system.job-log.jobId'),
       disabled: true,
     },
     {
       component: 'Input',
       fieldName: 'jobHandlerName',
-      label: '任务处理器名称',
+      label: $t('system.job-log.jobHandlerName'),
       disabled: true,
     },
     {
       component: 'Input',
       fieldName: 'jobHandlerParam',
-      label: '任务参数',
+      label: $t('system.job-log.jobHandlerParam'),
       disabled: true,
     },
     {
       component: 'Input',
       fieldName: 'executeIndex',
-      label: '第几次执行',
+      label: $t('system.job-log.executeIndex'),
       disabled: true,
     },
     {
       component: 'Input',
       fieldName: 'beginTime',
-      label: '开始时间',
+      label: $t('system.job-log.beginTime'),
       disabled: true,
     },
     {
       component: 'Input',
       fieldName: 'endTime',
-      label: '结束时间',
+      label: $t('system.job-log.endTime'),
       disabled: true,
     },
     {
       component: 'Input',
       fieldName: 'duration',
-      label: '执行耗时(ms)',
+      label: $t('system.job-log.duration'),
       disabled: true,
     },
     {
       component: 'Input',
       fieldName: 'success',
-      label: '是否成功',
+      label: $t('system.job-log.success'),
       disabled: true,
     },
     {
-      component: 'Input',
+      component: 'Textarea',
       fieldName: 'result',
-      label: '执行结果/异常信息',
+      label: $t('system.job-log.result'),
       disabled: true,
+      componentProps: {
+        rows: 6,
+      },
     },
   ];
 }
 
+/**
+ * 搜索表单
+ */
 export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       component: 'Input',
       fieldName: 'jobId',
-      label: '任务ID',
+      label: $t('system.job-log.jobId'),
     },
     {
       component: 'Input',
       fieldName: 'jobHandlerName',
-      label: '任务处理器名称',
+      label: $t('system.job-log.jobHandlerName'),
     },
     {
-      component: 'Input',
+      component: 'DatePicker',
       fieldName: 'beginTime',
-      label: '开始时间',
+      label: $t('system.job-log.beginTime'),
+      componentProps: {
+        showTime: true,
+        valueFormat: 'YYYY-MM-DD HH:mm:ss',
+      },
     },
     {
-      component: 'Input',
+      component: 'DatePicker',
       fieldName: 'endTime',
-      label: '结束时间',
+      label: $t('system.job-log.endTime'),
+      componentProps: {
+        showTime: true,
+        valueFormat: 'YYYY-MM-DD HH:mm:ss',
+      },
     },
     {
-      component: 'Input',
+      component: 'Select',
       fieldName: 'success',
-      label: '是否成功',
+      label: $t('system.job-log.success'),
+      componentProps: {
+        allowClear: true,
+        options: [
+          { label: $t('common.yes'), value: true },
+          { label: $t('common.no'), value: false },
+        ],
+      },
     },
   ];
 }
 
+/**
+ * 表格列配置
+ */
 export function useColumns<T = JobLogPageResponse>(
   onActionClick: OnActionClickFn<T>,
 ): VxeTableGridColumns {
   return [
     {
       field: 'jobId',
-      title: '任务ID',
-      width: 150,
+      title: $t('system.job-log.jobId'),
+      width: 100,
     },
     {
       field: 'jobHandlerName',
-      title: '任务处理器名称',
-      width: 150,
+      title: $t('system.job-log.jobHandlerName'),
+      minWidth: 160,
     },
     {
       field: 'executeIndex',
-      title: '第几次执行',
-      width: 150,
+      title: $t('system.job-log.executeIndex'),
+      width: 100,
     },
     {
       field: 'beginTime',
-      title: '开始时间',
-      width: 150,
+      title: $t('system.job-log.beginTime'),
+      width: 180,
     },
     {
       field: 'endTime',
-      title: '结束时间',
-      width: 150,
+      title: $t('system.job-log.endTime'),
+      width: 180,
     },
     {
       field: 'duration',
-      title: '执行耗时(ms)',
-      width: 150,
+      title: $t('system.job-log.duration'),
+      width: 120,
     },
     {
       field: 'success',
-      title: '是否成功',
-      width: 150,
+      title: $t('system.job-log.success'),
+      width: 100,
     },
     {
       align: 'center',
       cellRender: {
         attrs: {
-          nameField: 'name',
-          nameTitle: $t('system.jobLog.name'),
+          nameField: 'jobHandlerName',
+          nameTitle: $t('system.job-log.name'),
           onClick: onActionClick,
         },
         name: 'CellOperation',
@@ -151,8 +178,8 @@ export function useColumns<T = JobLogPageResponse>(
       },
       field: 'operation',
       fixed: 'right',
-      title: $t('system.jobLog.operation'),
-      width: 150,
+      title: $t('system.job-log.operation'),
+      width: 120,
     },
   ];
 }

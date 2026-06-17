@@ -41,9 +41,7 @@ const [Drawer, drawerApi] = useVbenDrawer({
 });
 
 const getDrawerTitle = computed(() => {
-  return id.value
-    ? $t('common.edit', $t('system.jobLog.name'))
-    : $t('common.create', $t('system.jobLog.name'));
+  return $t('ui.actionTitle.view', [$t('system.job-log.name')]);
 });
 </script>
 <template>
