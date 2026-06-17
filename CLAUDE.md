@@ -71,37 +71,51 @@ scripts/                   # turbo-run, vsh CLI, deploy scripts
 ## Key Patterns
 
 ### App Entry Flow
+
 `main.ts` → `bootstrap.ts`: initComponentAdapter → initSetupVbenForm → createApp → registerAccessDirective → registerLoadingDirective → setupI18n → initStores (Pinia) → router → app.mount
 
 ### Dynamic Route Generation
+
 Backend menus fetched via `getAllMenusApi` → `generateAccessible()` maps to `import.meta.glob('../views/**/*.vue')` → routes generated with layout/page components from `layoutMap`/`pageMap`. See `router/access.ts`.
 
 ### API Layer
+
 All API calls in `src/api/` organized by domain (`system/`, `infra/`, `core/`). Uses `RequestClient` from `@vben/effects/request` via `#/api/request`. Pattern:
+
 ```typescript
 import { requestClient } from '#/api/request';
 const Api = { Base: '/resource-name' };
-export async function listResource() { return requestClient.get(Api.Base); }
-export async function saveResource(data: ReqType) { return requestClient.post(Api.Base, data); }
+export async function listResource() {
+  return requestClient.get(Api.Base);
+}
+export async function saveResource(data: ReqType) {
+  return requestClient.post(Api.Base, data);
+}
 ```
 
 ### View Pattern (VxeTable Grid)
+
 Each CRUD view follows: `index.vue` (grid setup) → `modules/form.vue` (drawer form) → `data.ts` (columns + form schema). Uses:
+
 - `useVbenVxeGrid` for table with proxy config (ajax.query, response mapping)
 - `useVbenDrawer` for form drawers
 - Client-side filtering when server doesn't support it
 - Action column with dropdown menu for edit/delete/status toggle
 
 ### Form System
+
 VeeValidate + Zod schema-driven forms via `VbenForm` component. Schemas defined with field definitions (component type, rules, dependencies).
 
 ### Store Pattern
+
 Pinia stores with `pinia-plugin-persistedstate` (SecureLS encryption in production). Stores in `packages/stores/src/modules/`. Key stores: `useAccessStore` (token, permissions, menus), `useUserStore` (user info, roles).
 
 ### Adapter Layer
+
 `src/adapter/component/index.ts` swaps UI library components. Currently adapted for Ant Design Vue Next (`antdv-next`). This allows the core packages to remain UI-agnostic.
 
 ### Vite Config
+
 Main app `vite.config.ts` proxies `/api` → backend (mock at `localhost:5320` or real at `localhost:8080/rock-blade/admin`). Controlled by `VITE_NITRO_MOCK` env var.
 
 ## Conventions
