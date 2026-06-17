@@ -1,10 +1,11 @@
 <script lang="ts" setup>
+import type { JobRequest } from '#/api';
+
 import { computed, nextTick, ref } from 'vue';
 
 import { useVbenDrawer } from '@vben/common-ui';
 
 import { useVbenForm } from '#/adapter/form';
-import type { JobRequest } from '#/api';
 import { saveJob, updateJob } from '#/api';
 import { $t } from '#/locales';
 
