@@ -1,0 +1,81 @@
+<script lang="ts" setup>
+import { computed, nextTick, ref } from 'vue';
+
+import { useVbenDrawer } from '@vben/common-ui';
+
+import { useVbenForm } from '#/adapter/form';
+import type { JobRequest } from '#/api';
+import { saveJob, updateJob } from '#/api';
+import { $t } from '#/locales';
+
+import { useFormSchema } from '../data';
+
+const emits = defineEmits(['success']);
+
+const isEdit = ref(false);
+const originalHandlerName = ref('');
+
+const [Form, formApi] = useVbenForm({
+  schema: useFormSchema(),
+  showDefaultActions: false,
+  commonConfig: {
+    colon: true,
+    formItemClass: 'col-span-2 md:col-span-1',
+  },
+  wrapperClass: 'grid-cols-2 gap-x-4',
+});
+
+const [Drawer, drawerApi] = useVbenDrawer({
+  async onConfirm() {
+    const { valid } = await formApi.validate();
+    if (!valid) return;
+    const values = await formApi.getValues();
+    drawerApi.lock();
+    const payload: JobRequest = {
+      cronExpression: values.cronExpression,
+      jobHandlerName: isEdit.value
+        ? originalHandlerName.value
+        : values.jobHandlerName,
+      jobHandlerParam: values.jobHandlerParam,
+      retryCount: values.retryCount,
+      retryInterval: values.retryInterval,
+    };
+    (isEdit.value ? updateJob : saveJob)(payload)
+      .then(() => {
+        emits('success');
+        drawerApi.close();
+      })
+      .catch(() => {
+        drawerApi.unlock();
+      });
+  },
+
+  async onOpenChange(isOpen) {
+    if (isOpen) {
+      const data = drawerApi.getData();
+      await nextTick();
+
+      if (data && data.jobHandlerName) {
+        isEdit.value = true;
+        originalHandlerName.value = data.jobHandlerName;
+        formApi.setValues(data);
+      } else {
+        isEdit.value = false;
+        originalHandlerName.value = '';
+        formApi.setValues({});
+      }
+    }
+  },
+});
+
+const getDrawerTitle = computed(() => {
+  return isEdit.value
+    ? $t('ui.actionTitle.edit', [$t('system.job.name')])
+    : $t('ui.actionTitle.create', [$t('system.job.name')]);
+});
+</script>
+<template>
+  <Drawer class="w-full max-w-200" :title="getDrawerTitle">
+    <Form />
+  </Drawer>
+</template>

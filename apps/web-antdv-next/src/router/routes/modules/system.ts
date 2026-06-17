@@ -64,6 +64,16 @@ const routes: RouteRecordRaw[] = [
         component: () => import('#/views/system/dict/index.vue'),
       },
       {
+        path: '/system/job',
+        name: 'SystemJob',
+        meta: {
+          icon: 'mdi:timer-cog-outline',
+          title: $t('system.job.title'),
+          authority: ['DevelopRoleCode', 'InitAdminCode'],
+        },
+        component: () => import('#/views/system/job/index.vue'),
+      },
+      {
         path: '/system/job-log',
         name: 'SystemJobLog',
         meta: {
