@@ -1,6 +1,6 @@
 interface NotificationItem {
-  id: number | string;
-  avatar: string;
+  id: string | undefined;
+  avatar?: string;
   date: string;
   isRead?: boolean;
   message: string;
@@ -12,6 +12,12 @@ interface NotificationItem {
   link?: string;
   query?: Record<string, any>;
   state?: Record<string, any>;
+  /** 消息类型（用于展示图标/标签） */
+  type?: 'BUSINESS' | 'SYSTEM' | 'WARNING';
+  /** 紧急程度 */
+  level?: 'IMPORTANT' | 'NORMAL' | 'URGENT';
+  /** 发送人ID */
+  senderId?: string;
 }
 
 export type { NotificationItem };

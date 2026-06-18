@@ -63,6 +63,36 @@ const routes: RouteRecordRaw[] = [
         },
         component: () => import('#/views/system/dict/index.vue'),
       },
+      {
+        path: '/system/notification',
+        name: 'SystemNotification',
+        meta: {
+          icon: 'mdi:bell-outline',
+          title: $t('system.notification.title'),
+          hideInMenu: true,
+        },
+        component: () => import('#/views/system/notification/index.vue'),
+      },
+      {
+        path: '/system/job',
+        name: 'SystemJob',
+        meta: {
+          icon: 'mdi:timer-cog-outline',
+          title: $t('system.job.title'),
+          authority: ['DevelopRoleCode', 'InitAdminCode'],
+        },
+        component: () => import('#/views/system/job/index.vue'),
+      },
+      {
+        path: '/system/job-log',
+        name: 'SystemJobLog',
+        meta: {
+          icon: 'hugeicons:job-search',
+          title: $t('system.job-log.title'),
+          authority: ['DevelopRoleCode', 'InitAdminCode'],
+        },
+        component: () => import('#/views/system/job-log/index.vue'),
+      },
     ],
   },
 ];
