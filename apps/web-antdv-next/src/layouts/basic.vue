@@ -23,8 +23,17 @@ const userStore = useUserStore();
 const authStore = useAuthStore();
 const accessStore = useAccessStore();
 const { destroyWatermark, updateWatermark } = useWatermark();
-const { notifications, unreadCount, markRead, markAllRead, remove, clearAll } =
-  useNotification();
+const {
+  notifications,
+  unreadCount,
+  showRefreshBanner,
+  markRead,
+  markAllRead,
+  remove,
+  clearAll,
+  refreshNotifications,
+  setOpen,
+} = useNotification();
 const showDot = computed(() => unreadCount.value > 0);
 
 const menus = computed(() => [
@@ -64,6 +73,10 @@ function handleRemove(item: { id?: number | string }) {
 function handleMakeAll() {
   markAllRead();
 }
+
+function handleViewAll() {
+  router.push({ path: '/system/notification' });
+}
 watch(
   () => ({
     enable: preferences.app.watermark,
@@ -102,10 +115,14 @@ watch(
       <Notification
         :dot="showDot"
         :notifications="notifications"
+        :show-refresh-banner="showRefreshBanner"
         @clear="handleNoticeClear"
         @read="handleRead"
         @remove="handleRemove"
         @make-all="handleMakeAll"
+        @refresh="refreshNotifications"
+        @view-all="handleViewAll"
+        @update:open="setOpen"
       />
     </template>
     <template #extra>

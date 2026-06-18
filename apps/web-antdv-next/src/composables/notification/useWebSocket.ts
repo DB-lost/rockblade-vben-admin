@@ -35,7 +35,7 @@ export function useWebSocket(options: UseWebSocketOptions): UseWebSocketReturn {
     stopHeartbeat();
     heartbeatTimer = setTimeout(() => {
       if (ws?.readyState === WebSocket.OPEN) {
-        ws.send(JSON.stringify({ type: 'PING' }));
+        ws.send('PING');
         heartbeatTimeoutTimer = setTimeout(() => {
           ws?.close();
         }, heartbeatTimeout);
