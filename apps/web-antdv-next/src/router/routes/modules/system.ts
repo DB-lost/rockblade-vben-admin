@@ -64,6 +64,16 @@ const routes: RouteRecordRaw[] = [
         component: () => import('#/views/system/dict/index.vue'),
       },
       {
+        path: '/system/notification',
+        name: 'SystemNotification',
+        meta: {
+          icon: 'mdi:bell-outline',
+          title: $t('system.notification.title'),
+          hideInMenu: true,
+        },
+        component: () => import('#/views/system/notification/index.vue'),
+      },
+      {
         path: '/system/job',
         name: 'SystemJob',
         meta: {

@@ -2,25 +2,22 @@
  * WebSocket 消息类型定义
  *
  * 与后端 NotifyMessage 对齐：
- * - type: NOTIFICATION | SYSTEM | REMINDER
+ * - type: SYSTEM | BUSINESS | WARNING
  * - title: 标题
- * - content: 内容 (映射为 message)
+ * - level: NORMAL | IMPORTANT | URGENT
  * - data: 业务数据 (可选)
- * - timestamp: 时间戳
  */
 
 /** 后端发送的原始消息格式 */
 export interface BackendMessage {
-  /** 消息类型: NOTIFICATION | SYSTEM | REMINDER  */
-  type: 'NOTIFICATION' | 'REMINDER' | 'SYSTEM';
+  /** 消息类型: SYSTEM | BUSINESS | WARNING */
+  type: 'BUSINESS' | 'SYSTEM' | 'WARNING';
   /** 标题 */
   title: string;
-  /** 内容 */
-  content: string;
-  /** 业务数据，可包含 avatar、link、candidateId 等 */
+  /** 紧急程度: NORMAL | IMPORTANT | URGENT */
+  level: 'IMPORTANT' | 'NORMAL' | 'URGENT';
+  /** 附加数据，推送方自由填充 */
   data?: Record<string, unknown>;
-  /** 时间戳 (ISO 格式) */
-  timestamp: string;
 }
 
 /** 消息类型联合类型 */

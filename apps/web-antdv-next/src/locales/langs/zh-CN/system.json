@@ -1,5 +1,10 @@
 {
   "title": "系统管理",
+  "notification": {
+    "title": "通知管理",
+    "list": "通知列表",
+    "pushTitle": "新通知"
+  },
   "dept": {
     "list": "部门列表",
     "createTime": "创建时间",

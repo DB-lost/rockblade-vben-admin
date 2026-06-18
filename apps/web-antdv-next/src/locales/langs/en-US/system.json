@@ -1,5 +1,10 @@
 {
   "title": "System Management",
+  "notification": {
+    "title": "Notification Management",
+    "list": "Notification List",
+    "pushTitle": "New Notification"
+  },
   "dept": {
     "name": "Department",
     "title": "Department Management",

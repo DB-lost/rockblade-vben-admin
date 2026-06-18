@@ -5,5 +5,6 @@ export * from './dict-type';
 export * from './job';
 export * from './job-log';
 export * from './menu';
+export * from './notification';
 export * from './role';
 export * from './user';

@@ -2,6 +2,8 @@ import type { NotificationItem } from '@vben/layouts';
 
 import type { BackendMessage } from './types';
 
+import type { UserNotificationResponse } from '#/api';
+
 import { computed, ref, watch } from 'vue';
 
 import { preferences } from '@vben/preferences';
@@ -9,22 +11,40 @@ import { useAccessStore, useUserStore } from '@vben/stores';
 
 import { notification } from 'antdv-next';
 
+import {
+  deleteNotification,
+  listNotification,
+  readAllNotification,
+  readNotification,
+} from '#/api';
+import { $t } from '#/locales';
+
 import { useWebSocket } from './useWebSocket';
 
-const STORAGE_KEY_PREFIX = 'notification_list_';
-
-function getStorageKey(userId: string): string {
-  return `${STORAGE_KEY_PREFIX}${userId}`;
+interface ToastConfig {
+  type: 'error' | 'info' | 'warning';
+  duration: number;
 }
 
-function generateId(msg: BackendMessage): string {
-  if (msg.data?.id) return String(msg.data.id);
-  return `${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
-}
+const LEVEL_TOAST_CONFIG: Record<string, ToastConfig | undefined> = {
+  NORMAL: { type: 'info', duration: 4 },
+  IMPORTANT: { type: 'warning', duration: 6 },
+  URGENT: { type: 'error', duration: 0 },
+};
 
-function formatDate(timestamp: string): string {
+const TYPE_ICONS: Record<string, string> = {
+  SYSTEM: '⚙️',
+  BUSINESS: '📋',
+  WARNING: '⚠️',
+};
+
+/**
+ * 格式化通知时间
+ */
+function formatDate(dateStr: Date | string | undefined): string {
+  if (!dateStr) return '';
   try {
-    const date = new Date(timestamp);
+    const date = new Date(dateStr);
     const now = new Date();
     const diff = now.getTime() - date.getTime();
     const minutes = Math.floor(diff / 60_000);
@@ -37,85 +57,76 @@ function formatDate(timestamp: string): string {
     if (days < 7) return `${days}天前`;
     return date.toLocaleDateString('zh-CN');
   } catch {
-    return timestamp;
+    return String(dateStr);
   }
 }
 
-function toNotificationItem(msg: BackendMessage): NotificationItem {
-  const avatar = msg.data?.avatar as string | undefined;
-  const link = msg.data?.link as string | undefined;
-
+function apiToNotificationItem(
+  item: UserNotificationResponse,
+): NotificationItem {
   return {
-    id: generateId(msg),
-    avatar: avatar || preferences.app.defaultAvatar,
-    date: formatDate(msg.timestamp),
-    isRead: false,
-    link,
-    message: msg.content,
-    query: msg.data?.query as Record<string, any>,
-    state: msg.data?.state as Record<string, any>,
-    title: msg.title,
+    id: item.id ?? '',
+    avatar: TYPE_ICONS[item.type as string] ?? preferences.app.defaultAvatar,
+    date: formatDate(item.createTime),
+    isRead: item.readStatus === 1,
+    message: item.content ?? '',
+    title: item.title ?? '',
+    type: item.type as 'BUSINESS' | 'SYSTEM' | 'WARNING' | undefined,
+    level: item.level as 'IMPORTANT' | 'NORMAL' | 'URGENT' | undefined,
+    senderId: item.senderId,
   };
 }
 
-function loadFromStorage(userId: string): NotificationItem[] {
-  try {
-    const stored = localStorage.getItem(getStorageKey(userId));
-    return stored ? JSON.parse(stored) : [];
-  } catch {
-    return [];
-  }
-}
-
-function saveToStorage(userId: string, notifications: NotificationItem[]) {
-  try {
-    localStorage.setItem(getStorageKey(userId), JSON.stringify(notifications));
-  } catch {
-    // storage full, keep in memory only
-  }
+function getToastConfig(msg: BackendMessage): ToastConfig {
+  return LEVEL_TOAST_CONFIG[msg.level] ?? { type: 'info', duration: 4 };
 }
 
 // ---- Module-level singleton state ----
 const globalNotifications = ref<NotificationItem[]>([]);
-const globalNotificationIds = new Set<string>();
-let globalUserId: null | string = null;
+const unreadCount = ref(0);
+const hasNewNotification = ref(false);
+const showRefreshBanner = ref(false);
+const isNotificationOpen = ref(false);
 
-// 全局自定义消息处理器映射（单例）
-const globalCustomHandlers = new Map<
-  string,
-  Set<(msg: BackendMessage) => void>
->();
-
-// 全局 WebSocket 实例
 let globalWs: null | ReturnType<typeof useWebSocket> = null;
 
-function addNotification(msg: BackendMessage) {
-  const id = generateId(msg);
-  if (globalNotificationIds.has(id)) return;
-
-  const item = toNotificationItem(msg);
-  globalNotifications.value.unshift(item);
-  globalNotificationIds.add(id);
-
-  notification.info({
-    description: item.message,
-    duration: 3,
-    title: item.title,
-  });
-
-  if (globalUserId) {
-    saveToStorage(globalUserId, globalNotifications.value);
+/**
+ * 从 API 刷新通知列表
+ */
+async function refreshNotifications() {
+  try {
+    const data = await listNotification(50);
+    globalNotifications.value = (data ?? []).map((item) =>
+      apiToNotificationItem(item),
+    );
+    hasNewNotification.value = false;
+    showRefreshBanner.value = false;
+    unreadCount.value = globalNotifications.value.filter(
+      (n) => !n.isRead,
+    ).length;
+  } catch {
+    // API 失败时不覆盖已有数据
   }
 }
 
+/**
+ * WS 消息处理：仅弹 Toast + 标记有新通知
+ */
 function processMessage(msg: BackendMessage) {
-  const customHandlerSet = globalCustomHandlers.get(msg.type);
-  if (customHandlerSet && customHandlerSet.size > 0) {
-    customHandlerSet.forEach((handler) => handler(msg));
-    return;
-  }
+  const config = getToastConfig(msg);
+  notification[config.type]({
+    description: msg.title,
+    duration: config.duration,
+    title: $t('system.notification.pushTitle'),
+  });
 
-  addNotification(msg);
+  hasNewNotification.value = true;
+  unreadCount.value++;
+
+  // 通知栏打开时显示刷新横幅
+  if (isNotificationOpen.value) {
+    showRefreshBanner.value = true;
+  }
 }
 
 export function useNotification() {
@@ -128,7 +139,7 @@ export function useNotification() {
     return `${import.meta.env.VITE_GLOB_WS_URL}?Authorization=Bearer+${token}`;
   });
 
-  // 使用全局 WebSocket 实例，按需创建
+  // 全局单例 WebSocket
   if (!globalWs) {
     globalWs = useWebSocket({
       url: () => wsUrl.value || '',
@@ -141,60 +152,56 @@ export function useNotification() {
 
   ws.onMessage(processMessage);
 
-  const unreadCount = computed(() => {
-    return globalNotifications.value.filter((n) => !n.isRead).length;
-  });
-
-  function addCustomHandler(
-    messageType: string,
-    handler: (msg: BackendMessage) => void,
-  ) {
-    let handlers = globalCustomHandlers.get(messageType);
-    if (!handlers) {
-      handlers = new Set();
-      globalCustomHandlers.set(messageType, handlers);
+  function setOpen(open: boolean) {
+    isNotificationOpen.value = open;
+    if (open) {
+      refreshNotifications();
     }
-    handlers.add(handler);
-    return () => {
-      globalCustomHandlers.get(messageType)?.delete(handler);
-    };
   }
 
   function markRead(id: number | string) {
-    const item = globalNotifications.value.find((n) => n.id === id);
-    if (item) {
-      item.isRead = true;
-      const userId = userStore.userInfo?.userId;
-      if (userId) saveToStorage(userId, globalNotifications.value);
-    }
+    const userNotification = globalNotifications.value.find((n) => n.id === id);
+    if (!userNotification || userNotification.isRead) return;
+
+    readNotification(String(id)).then(() => {
+      userNotification.isRead = true;
+      unreadCount.value = Math.max(0, unreadCount.value - 1);
+    });
   }
 
   function markAllRead() {
-    globalNotifications.value.forEach((n) => {
-      n.isRead = true;
+    readAllNotification().then(() => {
+      globalNotifications.value.forEach((n) => {
+        n.isRead = true;
+      });
+      unreadCount.value = 0;
     });
-    const userId = userStore.userInfo?.userId;
-    if (userId) saveToStorage(userId, globalNotifications.value);
   }
 
   function removeNotification(id: number | string) {
-    const index = globalNotifications.value.findIndex((n) => n.id === id);
-    if (index !== -1) {
-      const item = globalNotifications.value[index];
-      if (item) {
-        globalNotificationIds.delete(String(item.id));
+    deleteNotification(String(id)).then(() => {
+      const idx = globalNotifications.value.findIndex((n) => n.id === id);
+      if (idx !== -1) {
+        const item = globalNotifications.value[idx];
+        globalNotifications.value.splice(idx, 1);
+        if (item && !item.isRead) {
+          unreadCount.value = Math.max(0, unreadCount.value - 1);
+        }
       }
-      globalNotifications.value.splice(index, 1);
-      const userId = userStore.userInfo?.userId;
-      if (userId) saveToStorage(userId, globalNotifications.value);
-    }
+    });
   }
 
   function clearAll() {
-    globalNotifications.value = [];
-    globalNotificationIds.clear();
-    const userId = userStore.userInfo?.userId;
-    if (userId) localStorage.removeItem(getStorageKey(userId));
+    // 批量删除所有通知
+    const promises = globalNotifications.value
+      .filter((n) => n.id !== null)
+      .map((n) => deleteNotification(String(n.id)).catch(() => {}));
+    Promise.all(promises).then(() => {
+      globalNotifications.value = [];
+      unreadCount.value = 0;
+      hasNewNotification.value = false;
+      showRefreshBanner.value = false;
+    });
   }
 
   function connect() {
@@ -214,16 +221,11 @@ export function useNotification() {
       if (!userId) {
         disconnect();
         globalNotifications.value = [];
-        globalNotificationIds.clear();
-        globalUserId = null;
+        unreadCount.value = 0;
+        hasNewNotification.value = false;
+        showRefreshBanner.value = false;
         return;
       }
-
-      globalUserId = userId;
-      globalNotifications.value = loadFromStorage(userId);
-      globalNotifications.value.forEach((n) => {
-        globalNotificationIds.add(String(n.id));
-      });
 
       if (ws.status.value !== 'connected') {
         connect();
@@ -235,8 +237,11 @@ export function useNotification() {
   return {
     notifications: globalNotifications,
     unreadCount,
+    hasNewNotification,
+    showRefreshBanner,
     isConnected: computed(() => ws.status.value === 'connected'),
-    addCustomHandler,
+    setOpen,
+    refreshNotifications,
     connect,
     disconnect,
     markRead,
