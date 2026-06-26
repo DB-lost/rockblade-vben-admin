@@ -32,7 +32,12 @@ import { getPublicKeyApi } from '#/api/core/auth';
 import { $t } from '#/locales';
 import { cryptoUtil } from '#/utils/crypto';
 
-import { reloadDictData, roleOptions, useColumns, useGridFormSchema } from './data';
+import {
+  reloadDictData,
+  roleOptions,
+  useColumns,
+  useGridFormSchema,
+} from './data';
 import Form from './modules/form.vue';
 
 onMounted(async () => {
