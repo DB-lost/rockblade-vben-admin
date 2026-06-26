@@ -3,6 +3,7 @@ import type { OnActionClickFn, VxeTableGridColumns } from '#/adapter/vxe-table';
 import type { UserPageResponse } from '#/api';
 import type { DictOption } from '#/composables/useDict';
 
+import { getRoleList } from '#/api';
 import { clearDictCache, loadDictOptions } from '#/composables/useDict';
 import { $t } from '#/locales';
 
@@ -69,6 +70,17 @@ export function useFormSchema(): VbenFormSchema[] {
         allowClear: true,
         placeholder: $t('ui.placeholder.select'),
         options: sexOptions,
+      },
+    },
+    {
+      component: 'ApiSelect',
+      fieldName: 'roleId',
+      label: $t('system.user.roleId'),
+      componentProps: {
+        api: getRoleList,
+        fieldNames: { label: 'name', value: 'id' },
+        allowClear: true,
+        placeholder: $t('ui.placeholder.select'),
       },
     },
     {

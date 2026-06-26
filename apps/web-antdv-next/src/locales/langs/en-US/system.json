@@ -119,7 +119,8 @@
     "enable": "Enable",
     "disable": "Disable",
     "operation": "Operation",
-    "remark": "Remark"
+    "remark": "Remark",
+    "roleId": "Role"
   },
   "job": {
     "name": "Job",
