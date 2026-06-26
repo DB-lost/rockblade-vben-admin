@@ -149,7 +149,7 @@ setupVbenVxeTable({
           }),
         );
         const finallyProps = {
-          allowClear: true,
+          allowClear: false,
           placeholder: $t('ui.placeholder.select'),
           ...props,
           disabled: isDisabled,

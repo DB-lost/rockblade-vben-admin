@@ -166,7 +166,7 @@ export function useColumns<T = UserPageResponse>(
       },
       field: 'roleId',
       title: $t('system.user.roleId'),
-      width: 160,
+      width: 300,
     },
     {
       cellRender: {
