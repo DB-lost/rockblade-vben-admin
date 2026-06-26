@@ -122,6 +122,10 @@ export function useColumns<T = SystemRoleApi.SystemRole>(
           onClick: onActionClick,
         },
         name: 'CellOperation',
+        options: [
+          { code: 'edit', show: (row: any) => row.id >= 10 },
+          { code: 'delete', show: (row: any) => row.id >= 10 },
+        ],
       },
       field: 'operation',
       fixed: 'right',

@@ -13,7 +13,7 @@ import { Plus } from '@vben/icons';
 import { message, Modal } from 'ant-design-vue';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
-import { deleteRole, getRoleList, updateRole } from '#/api';
+import { deleteRole, getRolePage, updateRole } from '#/api';
 import { $t } from '#/locales';
 
 import { useColumns, useGridFormSchema } from './data';
@@ -37,7 +37,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
     proxyConfig: {
       ajax: {
         query: async ({ page }, formValues) => {
-          return await getRoleList({
+          return await getRolePage({
             pageNum: page.currentPage,
             pageSize: page.pageSize,
             ...formValues,
