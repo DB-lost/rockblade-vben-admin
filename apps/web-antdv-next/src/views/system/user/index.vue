@@ -32,7 +32,7 @@ import { getPublicKeyApi } from '#/api/core/auth';
 import { $t } from '#/locales';
 import { cryptoUtil } from '#/utils/crypto';
 
-import { reloadDictData, useColumns, useGridFormSchema } from './data';
+import { reloadDictData, roleOptions, useColumns, useGridFormSchema } from './data';
 import Form from './modules/form.vue';
 
 onMounted(async () => {
@@ -50,7 +50,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
     submitOnChange: false,
   },
   gridOptions: {
-    columns: useColumns(onActionClick, onStatusChange),
+    columns: useColumns(onActionClick, onStatusChange, onRoleChange),
     height: 'auto',
     keepSource: true,
     proxyConfig: {
@@ -126,14 +126,26 @@ async function onStatusChange(newStatus: number, row: UserPageResponse) {
       `你要将 ${row.username} 的状态切换为【${statusText[String(newStatus)]}】吗？`,
       '切换状态',
     );
-    await updateUser({
-      id: row.id,
-      username: row.username,
-      nickname: row.nickname,
-      status: newStatus,
-      email: row.email,
-      phone: row.phone,
-    } as any);
+    await updateUser({ ...row, status: newStatus } as any);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * 角色切换确认
+ */
+async function onRoleChange(newRoleId: string, row: UserPageResponse) {
+  const roleName =
+    roleOptions.find((r: any) => String(r.value) === String(newRoleId))
+      ?.label ?? newRoleId;
+  try {
+    await confirm(
+      `你要将 ${row.username} 的角色切换为【${roleName}】吗？`,
+      '切换角色',
+    );
+    await updateUser({ ...row, roleId: newRoleId } as any);
     return true;
   } catch {
     return false;
