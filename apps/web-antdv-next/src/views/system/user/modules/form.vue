@@ -33,6 +33,7 @@ const [Drawer, drawerApi] = useVbenDrawer({
       const { publicKey, nonce } = await getPublicKeyApi();
       cryptoUtil.setPublicKey(publicKey, nonce);
       values.password = cryptoUtil.encryptWithRSA(values.password);
+      values.nonce = nonce;
     } catch {
       // encryption failed, continue without encryption
     }
