@@ -3,20 +3,30 @@ import type { OnActionClickFn, VxeTableGridColumns } from '#/adapter/vxe-table';
 import type { UserPageResponse } from '#/api';
 import type { DictOption } from '#/composables/useDict';
 
+import { getRoleList } from '#/api';
 import { clearDictCache, loadDictOptions } from '#/composables/useDict';
 import { $t } from '#/locales';
 
 let sexOptions: DictOption[] = [];
 let statusOptions: DictOption[] = [];
+const roleOptions: { label: string; value: string }[] = [];
 let componentMounted = false;
 
 async function _fetchDictOptions() {
-  const [sex, status] = await Promise.all([
+  const [sex, status, roles] = await Promise.all([
     loadDictOptions('sys_user_sex'),
     loadDictOptions('common_status'),
+    getRoleList(),
   ]);
   sexOptions = sex;
   statusOptions = status;
+  roleOptions.length = 0;
+  roleOptions.push(
+    ...(roles ?? []).map((r: any) => ({
+      label: r.name ?? r.roleName,
+      value: r.id ?? r.roleId,
+    })),
+  );
 }
 
 export async function reloadDictData(): Promise<void> {
@@ -72,6 +82,17 @@ export function useFormSchema(): VbenFormSchema[] {
       },
     },
     {
+      component: 'ApiSelect',
+      fieldName: 'roleId',
+      label: $t('system.user.roleId'),
+      componentProps: {
+        api: getRoleList,
+        fieldNames: { label: 'name', value: 'id' },
+        allowClear: true,
+        placeholder: $t('ui.placeholder.select'),
+      },
+    },
+    {
       component: 'Select',
       componentProps: {
         options: statusOptions,
@@ -106,9 +127,12 @@ export function useGridFormSchema(): VbenFormSchema[] {
   ];
 }
 
+export { roleOptions };
+
 export function useColumns<T = UserPageResponse>(
   onActionClick: OnActionClickFn<T>,
   onStatusChange?: (newStatus: any, row: T) => PromiseLike<boolean | undefined>,
+  onRoleChange?: (newRoleId: any, row: T) => PromiseLike<boolean | undefined>,
 ): VxeTableGridColumns {
   return [
     {
@@ -133,11 +157,25 @@ export function useColumns<T = UserPageResponse>(
     },
     {
       cellRender: {
+        attrs: {
+          beforeChange: onRoleChange,
+          disabled: (row: any) => Number(row.id) < 10,
+        },
+        name: 'CellSelect',
+        options: roleOptions,
+      },
+      field: 'roleId',
+      title: $t('system.user.roleId'),
+      width: 300,
+    },
+    {
+      cellRender: {
         attrs: { beforeChange: onStatusChange },
         name: onStatusChange ? 'CellSwitch' : 'CellTag',
       },
       field: 'status',
       title: $t('system.user.status'),
+      minWidth: 100,
     },
     {
       align: 'center',
@@ -157,6 +195,7 @@ export function useColumns<T = UserPageResponse>(
           {
             code: 'delete',
             danger: true,
+            show: (row: any) => row.id !== '1',
             text: $t('common.delete'),
             type: 'link',
           },

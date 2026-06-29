@@ -51,6 +51,14 @@ export interface UserPageResponse {
    */
   email?: string;
   /**
+   * 角色ID
+   */
+  roleId?: string;
+  /**
+   * 角色名称
+   */
+  roleName?: string;
+  /**
    * 用户状态（0:禁用；1：启用）
    */
   status?: number;
@@ -88,6 +96,10 @@ export interface UserRequest {
    * 邮箱
    */
   email?: string;
+  /**
+   * 角色ID
+   */
+  roleId?: string;
   /**
    * 用户状态（0:禁用；1：启用）
    */

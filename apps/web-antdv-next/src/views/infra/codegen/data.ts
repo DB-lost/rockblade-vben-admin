@@ -106,6 +106,7 @@ export function useColumns<T = CodegenTablePageResponse>(
     {
       field: 'lastGenTime',
       title: $t('infra.codegen.lastGenTime'),
+      minWidth: 180,
     },
     {
       align: 'center',
@@ -180,6 +181,7 @@ export function useTableColumns<T = TableInfoResponse>(
     {
       field: 'tableComment',
       title: $t('infra.codegen.tableComment'),
+      minWidth: 100,
     },
     {
       align: 'center',

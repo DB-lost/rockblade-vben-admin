@@ -157,7 +157,7 @@ export function useColumns<T = JobLogPageResponse>(
     {
       field: 'success',
       title: $t('system.job-log.success'),
-      width: 100,
+      minWidth: 100,
     },
     {
       align: 'center',

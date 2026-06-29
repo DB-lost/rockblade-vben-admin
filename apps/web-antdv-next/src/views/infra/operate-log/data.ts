@@ -149,7 +149,7 @@ export function useColumns<T = OperateLogPageResponse>(
     {
       field: 'createTime',
       title: $t('infra.operateLog.createTime'),
-      width: 200,
+      minWidth: 180,
     },
     {
       align: 'center',

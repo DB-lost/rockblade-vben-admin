@@ -14,9 +14,23 @@ export namespace SystemRoleApi {
 }
 
 /**
+ * 列表项
+ */
+export interface RoleListResponse {
+  /**
+   * 主键ID
+   */
+  id?: string;
+  /**
+   * 用户名
+   */
+  name?: string;
+}
+
+/**
  * 获取角色列表数据
  */
-async function getRoleList(params: Recordable<any>) {
+async function getRolePage(params: Recordable<any>) {
   return requestClient.get<Array<SystemRoleApi.SystemRole>>('/role/page', {
     params,
   });
@@ -48,4 +62,11 @@ async function deleteRole(id: string) {
   return requestClient.delete(`/role/${id}`);
 }
 
-export { createRole, deleteRole, getRoleList, updateRole };
+/**
+ * 获取角色列表数据
+ */
+async function getRoleList() {
+  return requestClient.get<Array<RoleListResponse>>('/role/queryAll');
+}
+
+export { createRole, deleteRole, getRoleList, getRolePage, updateRole };

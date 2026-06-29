@@ -125,7 +125,7 @@ export function useColumns<T = JobResponse>(
       },
       field: 'status',
       title: $t('system.job.status'),
-      width: 100,
+      minWidth: 100,
     },
     {
       align: 'center',

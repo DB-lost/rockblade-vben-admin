@@ -14,7 +14,7 @@ import {
 import { get, isFunction, isString } from '@vben/utils';
 
 import { objectOmit } from '@vueuse/core';
-import { Button, Image, Popconfirm, Switch, Tag } from 'ant-design-vue';
+import { Button, Image, Popconfirm, Select, Switch, Tag } from 'ant-design-vue';
 
 import { $t } from '#/locales';
 
@@ -130,6 +130,48 @@ setupVbenVxeTable({
           }
         }
         return h(Switch, finallyProps);
+      },
+    });
+
+    // 表格配置项可以用 cellRender: { name: 'CellSelect', options: [...], attrs: { beforeChange: fn } }
+    vxeUI.renderer.add('CellSelect', {
+      renderTableDefault({ attrs, options, props }, { column, row }) {
+        const loadingKey = `__loading_${column.field}`;
+        // 支持 disabled 动态函数
+        const isDisabled =
+          typeof attrs?.disabled === 'function'
+            ? attrs.disabled(row)
+            : Boolean(attrs?.disabled ?? props?.disabled ?? false);
+        const selectOptions = (options || attrs?.options || []).map(
+          (opt: Recordable<any>) => ({
+            label: opt.label ?? opt.name ?? opt.text,
+            value: String(opt.value ?? opt.id ?? opt.key),
+          }),
+        );
+        const finallyProps = {
+          allowClear: false,
+          placeholder: $t('ui.placeholder.select'),
+          ...props,
+          disabled: isDisabled,
+          fieldNames: { label: 'label', value: 'value' },
+          options: selectOptions,
+          value: String(row[column.field] ?? ''),
+          loading: row[loadingKey] ?? false,
+          'onUpdate:value': onChange,
+        };
+        async function onChange(newVal: any) {
+          if (isDisabled) return;
+          row[loadingKey] = true;
+          try {
+            const result = await attrs?.beforeChange?.(newVal, row);
+            if (result !== false) {
+              row[column.field] = newVal;
+            }
+          } finally {
+            row[loadingKey] = false;
+          }
+        }
+        return h(Select, finallyProps);
       },
     });
 
