@@ -75,6 +75,7 @@ export function useColumns(
       cellRender: { name: 'CellTag' },
       field: 'status',
       title: $t('system.menu.status'),
+      minWidth: 100,
     },
     {
       align: 'right',
@@ -98,7 +99,7 @@ export function useColumns(
       headerAlign: 'center',
       showOverflow: false,
       title: $t('system.menu.operation'),
-      width: 150,
+      width: 200,
     },
   ];
 }

@@ -112,6 +112,7 @@ export function useColumns<T = SystemRoleApi.SystemRole>(
     {
       field: 'createTime',
       title: $t('system.role.createTime'),
+      minWidth: 100,
     },
     {
       align: 'center',

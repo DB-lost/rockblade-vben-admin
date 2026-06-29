@@ -175,6 +175,7 @@ export function useColumns<T = UserPageResponse>(
       },
       field: 'status',
       title: $t('system.user.status'),
+      minWidth: 100,
     },
     {
       align: 'center',

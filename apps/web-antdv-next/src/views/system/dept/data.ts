@@ -132,6 +132,7 @@ export function useColumns(
     {
       field: 'remark',
       title: $t('system.dept.remark'),
+      minWidth: 100,
     },
     {
       align: 'right',
