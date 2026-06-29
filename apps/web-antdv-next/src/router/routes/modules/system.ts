@@ -39,7 +39,7 @@ const routes: RouteRecordRaw[] = [
         meta: {
           icon: 'charm:organisation',
           title: $t('system.dept.title'),
-          authority: ['DevelopRoleCode', 'InitAdminCode'],
+          authority: ['DevelopRoleCode'],
         },
         component: () => import('#/views/system/dept/index.vue'),
       },

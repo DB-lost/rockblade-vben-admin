@@ -167,9 +167,20 @@ async function loadApplicationPlugins(
       condition: pwa,
       plugins: () =>
         VitePWA({
-          injectRegister: false,
+          injectRegister: 'auto',
           workbox: {
-            globPatterns: [],
+            globPatterns: ['**/*.{js,css,html,png,svg,ico,jpg}'],
+            maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
+            runtimeCaching: [
+              {
+                urlPattern: /\/api\/.*/i,
+                handler: 'NetworkFirst',
+                options: {
+                  cacheName: 'api-cache',
+                  expiration: { maxEntries: 50, maxAgeSeconds: 60 * 60 },
+                },
+              },
+            ],
           },
           ...pwaOptions,
           manifest: {

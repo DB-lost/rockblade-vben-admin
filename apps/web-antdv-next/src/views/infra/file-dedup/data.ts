@@ -45,7 +45,7 @@ export function useColumns<T = FileDedupPageResponse>(
     {
       field: 'refCount',
       title: $t('infra.fileDedup.refCount'),
-      width: 150,
+      minWidth: 100,
     },
     {
       align: 'center',

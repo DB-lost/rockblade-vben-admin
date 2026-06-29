@@ -121,7 +121,8 @@
     "enable": "启用",
     "disable": "禁用",
     "operation": "操作",
-    "remark": "备注"
+    "remark": "备注",
+    "roleId": "角色"
   },
   "job": {
     "name": "定时任务",
