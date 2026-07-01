@@ -97,7 +97,7 @@ export interface RegisterRequest {
   voucher?: string;
 }
 
-export interface ResetPasswordRequest {
+export interface AuthResetPasswordRequest {
   /**
    * 账户(手机号/邮箱)
    */
@@ -220,9 +220,9 @@ export async function registerApi(data: RegisterRequest) {
 }
 
 /**
- * @param {ResetPasswordRequest} data
+ * @param {AuthResetPasswordRequest} data
  * @description: 重置密码（忘记密码流程）
  */
-export async function resetPasswordApi(data: ResetPasswordRequest) {
+export async function resetPasswordApi(data: AuthResetPasswordRequest) {
   return requestClient.post('auth/resetPassword', data);
 }
