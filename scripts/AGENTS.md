@@ -30,7 +30,7 @@ scripts/
 ## COMMANDS
 
 | Tool | Command | What it does |
-|------|---------|--------------|
+| --- | --- | --- |
 | vsh | `lint [--format]` | Parallel oxfmt + oxlint + eslint + stylelint. `--format` runs with `--fix` |
 | vsh | `check-circular` | circular-dependency-scanner across workspaces |
 | vsh | `check-dep` | depcheck for unused dependencies |

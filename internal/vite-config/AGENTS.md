@@ -31,7 +31,7 @@ src/
 ## PLUGINS
 
 | Plugin | Role |
-|--------|------|
+| --- | --- |
 | **Vue** | SFC compilation with `defineModel` support |
 | **Vue JSX** | JSX transform for Vue components |
 | **Tailwind CSS** | v4 Tailwind Vite integration + reference injection |

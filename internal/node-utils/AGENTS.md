@@ -5,7 +5,7 @@ Node.js utilities for monorepo build tooling.
 ## EXPORTS
 
 | Module | Purpose |
-|--------|---------|
+| --- | --- |
 | `fs.ts` | `outputJSON`, `readJSON`, `ensureFile` wrappers with auto-dir creation |
 | `git.ts` | Git helpers: getStagedFiles, gitAdd, branch/tag/tagExists utilities |
 | `hash.ts` | `generatorContentHash` for content-based cache busting |

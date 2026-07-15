@@ -1,7 +1,9 @@
 ## OVERVIEW
+
 Imperative modal, drawer, and alert components for Vue 3. Composable-driven APIs with builder patterns. No business dependencies.
 
 ## STRUCTURE
+
 ```
 src/
 ├── modal/       # modal.vue, modal-api.ts, use-modal.ts, draggable
@@ -10,6 +12,7 @@ src/
 ```
 
 ## WHERE TO LOOK
+
 | Symbol | File | Role |
 | --- | --- | --- |
 | ModalApi | `src/modal/modal-api.ts` | Imperative modal controller |

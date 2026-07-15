@@ -38,7 +38,7 @@ src/
 ## WHERE TO LOOK
 
 | Task | File | Note |
-|---|---|---|
+| --- | --- | --- |
 | Change accordion / collapse / theme behavior | `src/menu.vue` | Root props forwarded via MenuProvider |
 | Add badge logic or dot styling | `src/components/menu-badge.vue`, `menu-badge-dot.vue` | Consumes `MenuRecordBadgeRaw` |
 | Tweak submenu popup positioning | `src/components/sub-menu-content.vue` | Mouseenter / mouseleave depth dispatch |
