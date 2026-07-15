@@ -88,7 +88,7 @@ export function useColumns<T = any>(
       width: 100,
     },
     {
-      cellRender: { name: 'CellTag' },
+      cellRender: { name: 'CellTag', options: READ_STATUS_OPTIONS },
       field: 'readStatus',
       title: '阅读状态',
       width: 100,
