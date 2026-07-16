@@ -33,9 +33,6 @@ const [Grid, gridApi] = useVbenVxeGrid({
     columns: useColumns(onActionClick, onStatusChange),
     height: 'auto',
     keepSource: true,
-    pagerConfig: {
-      enabled: false,
-    },
     proxyConfig: {
       ajax: {
         query: async (_params, formValues) => {
@@ -56,21 +53,19 @@ const [Grid, gridApi] = useVbenVxeGrid({
           if (formValues.status) {
             records = records.filter((r) => r._rawStatus === formValues.status);
           }
-          return {
-            records,
-            totalRow: records.length,
-          };
+          return records;
         },
       },
       response: {
-        result: 'records',
-        total: 'totalRow',
+        result: 'data',
       },
     },
-    rowConfig: {
-      keyField: 'jobHandlerName',
+    pagerConfig: {
+      enabled: false,
     },
-
+    sortConfig: {
+      multiple: true,
+    },
     toolbarConfig: {
       custom: true,
       export: false,
