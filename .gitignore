@@ -57,3 +57,7 @@ vite.config.ts.*
 .claude
 .codex
 skills-lock.json
+reasonix.toml
+.opencode
+.reasonix
+.omo
